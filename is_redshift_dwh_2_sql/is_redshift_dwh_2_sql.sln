@@ -1,0 +1,19 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "is_redshift_dwh_2_sql", "is_redshift_dwh_2_sql\is_redshift_dwh_2_sql.dtproj", "{F8A47C50-719D-40A5-B3A5-C9A9BE3B2CC0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F8A47C50-719D-40A5-B3A5-C9A9BE3B2CC0}.Development|Default.ActiveCfg = Development
+		{F8A47C50-719D-40A5-B3A5-C9A9BE3B2CC0}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
