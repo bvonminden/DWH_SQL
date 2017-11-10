@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2006
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "Load_Dim_Nurse", "Load_Dim_Nurse\Load_Dim_Nurse.dtproj", "{150D12BF-56AA-48B9-BD40-852339128486}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{150D12BF-56AA-48B9-BD40-852339128486}.Development|Default.ActiveCfg = Development
+		{150D12BF-56AA-48B9-BD40-852339128486}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AC54E7C1-F392-4D9E-AE6D-B4AB4C622B1A}
+	EndGlobalSection
+EndGlobal

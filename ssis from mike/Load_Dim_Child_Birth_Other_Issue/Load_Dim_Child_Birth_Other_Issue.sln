@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2006
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "Load_Dim_Child_Birth_Other_Issue", "Load_Dim_Child_Birth_Other_Issue\Load_Dim_Child_Birth_Other_Issue.dtproj", "{CE8C9B4C-BF7E-4659-BA3D-529D7B3BA4E6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CE8C9B4C-BF7E-4659-BA3D-529D7B3BA4E6}.Development|Default.ActiveCfg = Development
+		{CE8C9B4C-BF7E-4659-BA3D-529D7B3BA4E6}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4DF9EB5B-3146-4765-98CC-F8B8AD5EC269}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2006
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "Load_a_xref_replace_survey_name", "Load_a_xref_replace_survey_name\Load_a_xref_replace_survey_name.dtproj", "{E302CBB9-BDCC-44AC-BF79-C144410A6B73}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E302CBB9-BDCC-44AC-BF79-C144410A6B73}.Development|Default.ActiveCfg = Development
+		{E302CBB9-BDCC-44AC-BF79-C144410A6B73}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {77C01602-5283-496C-85AF-F50D9CD439BB}
+	EndGlobalSection
+EndGlobal

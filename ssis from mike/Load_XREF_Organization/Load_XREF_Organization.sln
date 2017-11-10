@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2006
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "Load_XREF_Organization", "Load_XREF_Organization\Load_XREF_Organization.dtproj", "{028D4C05-E49C-4920-885D-716C17868370}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{028D4C05-E49C-4920-885D-716C17868370}.Development|Default.ActiveCfg = Development
+		{028D4C05-E49C-4920-885D-716C17868370}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0C1DF2B0-E20A-4C23-A656-02B5029A7C9F}
+	EndGlobalSection
+EndGlobal

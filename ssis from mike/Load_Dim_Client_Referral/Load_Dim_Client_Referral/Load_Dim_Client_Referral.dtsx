@@ -1,0 +1,2898 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/7/2017 9:46:42 AM"
+  DTS:CreationName=""
+  DTS:CreatorComputerName="NFPLAP174"
+  DTS:CreatorName="NFPDEN\mosborn"
+  DTS:DTSID="{57E247B2-B70E-4BEE-B7B4-008C8FFC00A4}"
+  DTS:ExecutableType=""
+  DTS:LastModifiedProductVersion="14.0.0800.98"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_Dim_Client_Referral"
+  DTS:PackageType="5"
+  DTS:VersionBuild="4"
+  DTS:VersionGUID="{50EFDBF8-6BF6-47CB-9B58-1B5D60219BB0}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[dwhdev01]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{96DD8923-3A18-48D4-A951-BFFB14921E63}"
+      DTS:ObjectName="dwhdev01">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">"Server=tcp:" + @[User::RS_HOST_NAME]  + "," + @[User::RS_PORT]  + ";Initial Catalog=" + @[User::RS_DATABASE_NAME] +  ";Persist Security Info=False;User ID=" + @[User::RS_USER_NAME]  + ";Password=" + @[User::RS_PASSWORD]  + ";MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[User::RS_PASSWORD]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::RS_HOST_NAME]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[User::RS_USER_NAME]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Server=nfpdw-dev.database.windows.net;User ID=etl01;Initial Catalog=dwhdev01;Persist Security Info=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAO+R7hHb7J0OZWxsm4jE1AQAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADcHU5V9BiKqGX4Y1uwcmfOAAAAAASAAACgAAAAEAAAAHMbgqb5TBdwdejg7oW1VlQgAAAA3Vf5Pl8XOjUWtWcb8QFnvLINAmk03syTDfGtNj5YERkUAAAA0fd3bTgmzsjAxLQ7sWxY0m2eBwg</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[etosolaris_one]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{9A236BE0-FBE6-41C2-8313-47A0034B9885}"
+      DTS:ObjectName="etosolaris_one">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">"Provider=SQLNCLI10.1;Persist Security Info=False;" + "User ID=" + @[User::ETO_USER_NAME] + ";Password=" + @[User::ETO_PASSWORD] + ";Initial Catalog=" + @[User::ETO_DATABASE_NAME] + ";Data Source=" +  @[User::ETO_HOST_NAME]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=eto.ccf0v3myj6k1.us-west-2.rds.amazonaws.com;User ID=dataintegrate;Initial Catalog=etosolaris_one;Provider=SQLNCLI10.1;Persist Security Info=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAO+R7hHb7J0OZWxsm4jE1AQAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAAjewp/7h8ALdF7amkM7xHgAAAAAASAAACgAAAAEAAAAC7Em07JCA+Rrv9eqDJ6u5ogAAAAxvdTUWCrk7rzGBt4TG6uqt+4b9x7u3dUG2JIv24MgPUUAAAAqE95EV8yViRZkI3sWjYMU46ykGg</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8CAC49FC-69BC-4FE9-9DDA-7BA740C219DE}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="AWS_ACCESS_KEY">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C11A05DB-7C72-4D9D-80DC-1D932A7EDA32}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="AWS_CREDS">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{674DE939-158B-4C83-9B12-630DE620363E}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="AWS_SECRET_KEY">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4B2BC405-8297-48E9-A712-10B7EC2F8D3F}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ETO_CONNECTION_NAME">
+      <DTS:VariableValue
+        DTS:DataType="8">etosolaris_one</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{57DB08B4-12C4-47AA-AF1A-5A3D79AC5564}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ETO_CONNECTION_TYPE">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6A781A21-7EDE-4CAA-9565-1232FD544598}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ETO_DATABASE_NAME">
+      <DTS:VariableValue
+        DTS:DataType="8">etosolaris_one</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{43854D61-A5E7-44A8-88B9-47C65FA30949}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ETO_HOST_NAME">
+      <DTS:VariableValue
+        DTS:DataType="8">eto.ccf0v3myj6k1.us-west-2.rds.amazonaws.com</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{063C4610-B7C2-4F1C-AA94-E99B0456D0AE}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ETO_PASSWORD">
+      <DTS:VariableValue
+        DTS:DataType="8">Welcome2NFP!</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3E43C311-4E50-4138-B927-62E63DF26EF8}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ETO_PORT">
+      <DTS:VariableValue
+        DTS:DataType="8">1433</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B677DC80-E247-49DD-9E45-7542BFE4D2D4}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ETO_USER_NAME">
+      <DTS:VariableValue
+        DTS:DataType="8">dataintegrate</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F581E030-8C29-4298-937D-31927BF83B97}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="RS_CONNECTION_NAME">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A134D218-41C8-4BF7-A0DA-F63941ED1A86}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="RS_CONNECTION_TYPE">
+      <DTS:VariableValue
+        DTS:DataType="8">AZURE-DW</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{57171E12-C8F9-49FA-B6C1-4D3A93047479}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="RS_DATABASE_NAME">
+      <DTS:VariableValue
+        DTS:DataType="8">dwhdev01</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A4084751-13F3-47AE-BDFD-5D9C1C8D2A2E}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="RS_HOST_NAME">
+      <DTS:VariableValue
+        DTS:DataType="8">nfpdw-dev.database.windows.net</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{314EAD18-B559-4216-A285-23B5CD1690BC}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="RS_PASSWORD">
+      <DTS:VariableValue
+        DTS:DataType="8">Welcome2NFP!</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{755DAB5C-3B74-4C53-9A41-2D818A4E5257}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="RS_PORT">
+      <DTS:VariableValue
+        DTS:DataType="8">1433</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{73257CB9-6F0D-4C64-8276-3795F7148198}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="RS_USER_NAME">
+      <DTS:VariableValue
+        DTS:DataType="8">etl01</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{4C0669A6-6E6A-4FD3-9D76-7F0F2565204E}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task\Dim_Client_Referral"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="Dim_Client_Referral"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."Dim_Client_Referral"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\Dim_Client_Referral.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[dwhdev01]"
+                  connectionManagerRefId="Package.ConnectionManagers[dwhdev01]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="ADO NET Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].Columns[client_id]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="client_id"
+                      externalMetadataColumnId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Client_ID]"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[client_id]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].Columns[Referral_Last_Name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Referral_Last_Name"
+                      externalMetadataColumnId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Referral_Last_Name]"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Last_Name]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].Columns[Referral_First_Name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Referral_First_Name"
+                      externalMetadataColumnId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Referral_First_Name]"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_First_Name]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].Columns[Referral_Primary_Language]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Referral_Primary_Language"
+                      externalMetadataColumnId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Referral_Primary_Language]"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Primary_Language]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].Columns[Referral_Address1]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Referral_Address1"
+                      externalMetadataColumnId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Referral_Address1]"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Address1]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].Columns[Referral_Address2]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Referral_Address2"
+                      externalMetadataColumnId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Referral_Address2]"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Address2]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].Columns[Referral_City_State_Zipcode]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Referral_City_State_Zipcode"
+                      externalMetadataColumnId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Referral_City_State_Zipcode]"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_City_State_Zipcode]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].Columns[Referral_Email]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="200"
+                      cachedName="Referral_Email"
+                      externalMetadataColumnId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Referral_Email]"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Email]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].Columns[Referral_Work_Phone]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Referral_Work_Phone"
+                      externalMetadataColumnId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Referral_Work_Phone]"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Work_Phone]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].Columns[Referral_Home_Phone]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Referral_Home_Phone"
+                      externalMetadataColumnId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Referral_Home_Phone]"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Home_Phone]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].Columns[Referral_Cell_Phone]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Referral_Cell_Phone"
+                      externalMetadataColumnId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Referral_Cell_Phone]"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Cell_Phone]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].Columns[Primary_Source_Name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Primary_Source_Name"
+                      externalMetadataColumnId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Primary_Source_Name]"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Primary_Source_Name]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].Columns[Primary_Source_Location]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Primary_Source_Location"
+                      externalMetadataColumnId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Primary_Source_Location]"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Primary_Source_Location]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].Columns[Secondary_Source_Name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Secondary_Source_Name"
+                      externalMetadataColumnId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Secondary_Source_Name]"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Secondary_Source_Name]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].Columns[Secondary_Source_Location]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Secondary_Source_Location"
+                      externalMetadataColumnId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Secondary_Source_Location]"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Secondary_Source_Location]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].Columns[Record_Created_Date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="Record_Created_Date"
+                      externalMetadataColumnId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Record_Created_Date]"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Record_Created_Date]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].Columns[Record_Modified_Date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="Record_Modified_Date"
+                      externalMetadataColumnId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Record_Modified_Date]"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Record_Modified_Date]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].Columns[referral_date_of_birth_key]"
+                      cachedDataType="i4"
+                      cachedName="referral_date_of_birth_key"
+                      externalMetadataColumnId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Referral_Date_Of_Birth_Key]"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[referral_date_of_birth_key]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Client_Referral_Key]"
+                      dataType="i8"
+                      name="Client_Referral_Key" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Client_ID]"
+                      dataType="wstr"
+                      length="20"
+                      name="Client_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Referral_First_Name]"
+                      dataType="wstr"
+                      length="100"
+                      name="Referral_First_Name" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Referral_Last_Name]"
+                      dataType="wstr"
+                      length="100"
+                      name="Referral_Last_Name" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Referral_Date_Of_Birth_Key]"
+                      dataType="i4"
+                      name="Referral_Date_Of_Birth_Key" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Referral_Address1]"
+                      dataType="wstr"
+                      length="100"
+                      name="Referral_Address1" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Referral_Address2]"
+                      dataType="wstr"
+                      length="100"
+                      name="Referral_Address2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Referral_City_State_Zipcode]"
+                      dataType="wstr"
+                      length="100"
+                      name="Referral_City_State_Zipcode" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Referral_Home_Phone]"
+                      dataType="wstr"
+                      length="20"
+                      name="Referral_Home_Phone" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Referral_Cell_Phone]"
+                      dataType="wstr"
+                      length="20"
+                      name="Referral_Cell_Phone" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Referral_Work_Phone]"
+                      dataType="wstr"
+                      length="20"
+                      name="Referral_Work_Phone" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Referral_Email]"
+                      dataType="wstr"
+                      length="200"
+                      name="Referral_Email" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Referral_Primary_Language]"
+                      dataType="wstr"
+                      length="100"
+                      name="Referral_Primary_Language" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Primary_Source_Name]"
+                      dataType="wstr"
+                      length="100"
+                      name="Primary_Source_Name" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Primary_Source_Location]"
+                      dataType="wstr"
+                      length="100"
+                      name="Primary_Source_Location" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Secondary_Source_Name]"
+                      dataType="wstr"
+                      length="100"
+                      name="Secondary_Source_Name" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Secondary_Source_Location]"
+                      dataType="wstr"
+                      length="100"
+                      name="Secondary_Source_Location" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Record_Created_Date]"
+                      dataType="dbTimeStamp"
+                      name="Record_Created_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input].ExternalColumns[Record_Modified_Date]"
+                      dataType="dbTimeStamp"
+                      name="Record_Modified_Date" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\Dim_Client_Referral.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Dim_Client_Referral.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Dim_Client_Referral.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Dim_Client_Referral.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\Dim_Date"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="Dim_Date"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT
+  date_key as referral_date_of_birth_key
+, date_actual
+FROM dim_date
+order by date_actual</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\Dim_Date.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[dwhdev01]"
+                  connectionManagerRefId="Package.ConnectionManagers[dwhdev01]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\Dim_Date.Outputs[ADO NET Source Output]"
+                  isSorted="true"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Dim_Date.Outputs[ADO NET Source Output].Columns[referral_date_of_birth_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Dim_Date.Outputs[ADO NET Source Output].ExternalColumns[referral_date_of_birth_key]"
+                      lineageId="Package\Data Flow Task\Dim_Date.Outputs[ADO NET Source Output].Columns[referral_date_of_birth_key]"
+                      name="referral_date_of_birth_key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Dim_Date.Outputs[ADO NET Source Output].Columns[date_actual]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Dim_Date.Outputs[ADO NET Source Output].ExternalColumns[date_actual]"
+                      lineageId="Package\Data Flow Task\Dim_Date.Outputs[ADO NET Source Output].Columns[date_actual]"
+                      name="date_actual"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Dim_Date.Outputs[ADO NET Source Output].ExternalColumns[referral_date_of_birth_key]"
+                      dataType="i4"
+                      name="referral_date_of_birth_key" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Dim_Date.Outputs[ADO NET Source Output].ExternalColumns[date_actual]"
+                      dataType="dbDate"
+                      name="date_actual" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task\Dim_Date.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Dim_Date.Outputs[ADO NET Source Error Output].Columns[referral_date_of_birth_key]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Dim_Date.Outputs[ADO NET Source Error Output].Columns[referral_date_of_birth_key]"
+                      name="referral_date_of_birth_key" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Dim_Date.Outputs[ADO NET Source Error Output].Columns[date_actual]"
+                      dataType="dbDate"
+                      lineageId="Package\Data Flow Task\Dim_Date.Outputs[ADO NET Source Error Output].Columns[date_actual]"
+                      name="date_actual" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Dim_Date.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Dim_Date.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Dim_Date.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Dim_Date.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\ETO Data"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="ETO Data"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select distinct 
+	sr.surveyresponseid, 
+	isnull(cast(CL_EN_GEN_ID as varchar (20)), 'Unknown') as client_id,
+	sr.programid,
+    sr.SurveyDate as Referral_Date,
+    isnull(cast(Lname.Lname as varchar(100)), 'Unknown') as Referral_Last_Name,
+    isnull(cast(Fname.Fname as varchar(100)), 'Unknown') as Referral_First_Name,
+    cast(dob.DOB as date) as Date_of_Birth,
+    --edd.EDD as Estimated_Due_Date,
+    isnull(cast(lang.PLanguage as varchar(100)), 'Unknown') as Referral_Primary_Language,
+    isnull(cast(ad.Add1 as varchar(100)), 'Unknown') as Referral_Address1,
+    cast(ad2.Add2 as varchar(100))as Referral_Address2,
+    cast(zip.Zip as varchar(100)) as Referral_City_State_Zipcode,
+    cast(email.Email as varchar(200)) as Referral_Email,
+    cast(wp.WPhone as varchar(20)) as Referral_Work_Phone,
+    cast(hp.HPhone as varchar(20)) as Referral_Home_Phone,
+    cast(cp.CPhone as varchar(20))as Referral_Cell_Phone,
+    isnull(cast(psrc.Psrc_name as varchar(100)), 'Unknown') as Primary_Source_Name,
+    isnull(cast(ploc.Psrc_Loc as varchar(100)), 'Unknown') as Primary_Source_Location,
+    isnull(cast(ssrc.Ssrc_name as varchar(100)), 'Unknown') as Secondary_Source_Name,
+    isnull(cast(sloc.Ssrc_Loc as varchar(100)), 'Unknown') as Secondary_Source_Location,
+	CURRENT_TIMESTAMP as Record_Created_Date,
+	CURRENT_TIMESTAMP as Record_Modified_Date
+    --select *
+from (select Surveyresponseid,
+   surveyid, 
+   surveydate, 
+   cl_en_gen_id, 
+   surveyrespondertype,
+   DraftSavedOn,
+   programid
+     from   SurveyResponses (nolock)
+      ) sr
+  
+      left outer join (select distinct SurveyResponseID, 
+         txt.TextValue as Lname --, Pseudoyn 
+        from   SurveyElementResponses (nolock) ser
+         join SurveyElementResponseArbText (nolock) txt
+           on ser.SurveyElementResponseID = txt.SurveyElementResponseID
+         --and ecr.EntityID is not null
+         join SurveyElements(nolock)  se
+              on ser.SurveyElementID = se.SurveyElementID
+        where  Pseudonym in ('REFERRAL_PROSPECT_DEMO_0_NAME_LAST')
+       ) Lname
+	  on sr.SurveyResponseID = Lname.SurveyResponseID
+	   left outer join (select distinct SurveyResponseID, 
+         txt.TextValue as Fname --, Pseudoyn 
+        from   SurveyElementResponses (nolock) ser
+         join SurveyElementResponseArbText (nolock) txt
+           on ser.SurveyElementResponseID = txt.SurveyElementResponseID
+         --and ecr.EntityID is not null
+         join SurveyElements(nolock)  se
+              on ser.SurveyElementID = se.SurveyElementID
+        where  Pseudonym in ('REFERRAL_PROSPECT_DEMO_1_NAME_FIRST')
+       ) Fname
+	  on sr.SurveyResponseID = Fname.SurveyResponseID
+		left outer join (select distinct SurveyResponseID, 
+         txt.DateValue as DOB --, Pseudoyn 
+        from   SurveyElementResponses (nolock) ser
+         join SurveyElementResponseDate (nolock) txt
+           on ser.SurveyElementResponseID = txt.SurveyElementResponseID
+         --and ecr.EntityID is not null
+         join SurveyElements(nolock)  se
+              on ser.SurveyElementID = se.SurveyElementID
+        where  Pseudonym in ('REFERRAL_PROSPECT_DEMO_1_DOB')
+		) DOB
+	  on sr.SurveyResponseID = DOB.SurveyResponseID
+		left outer join (select ser.SurveyResponseID, 
+        cho.choice as PLanguage
+       from   SurveyElementResponses (nolock) ser
+        join (select serc.SurveyElementResponseID,
+            sec.Choice
+           from   SurveyElementChoices sec
+            join SurveyElementResponseChoice serc
+             on  sec.SurveyElementChoiceID = serc.SurveyElementChoiceID
+         ) cho
+             on ser.SurveyElementResponseID = cho.SurveyElementResponseID
+        join SurveyElements(nolock)  se
+          on ser.SurveyElementID = se.SurveyElementID
+        join SurveyResponses sr
+          on ser.SurveyResponseID = sr.SurveyResponseID
+       where  Pseudonym in ('REFERRAL_PROSPECT_DEMO_1_PLANG')
+		) lang
+	  on sr.SurveyResponseID = lang.SurveyResponseID
+
+
+	   left outer join (select distinct SurveyResponseID, 
+         txt.TextValue as Add1 --, Pseudoyn 
+        from   SurveyElementResponses (nolock) ser
+         join SurveyElementResponsearbtext (nolock) txt
+           on ser.SurveyElementResponseID = txt.SurveyElementResponseID
+         --and ecr.EntityID is not null
+         join SurveyElements(nolock)  se
+              on ser.SurveyElementID = se.SurveyElementID
+        where  Pseudonym in ('REFERRAL_PROSPECT_DEMO_1_STREET')
+		) ad
+	  on sr.SurveyResponseID = ad.SurveyResponseID
+		left outer join (select distinct SurveyResponseID, 
+         txt.TextValue as Add2 --, Pseudoyn 
+        from   SurveyElementResponses (nolock) ser
+         join SurveyElementResponsearbtext (nolock) txt
+           on ser.SurveyElementResponseID = txt.SurveyElementResponseID
+         --and ecr.EntityID is not null
+         join SurveyElements(nolock)  se
+              on ser.SurveyElementID = se.SurveyElementID
+        where  Pseudonym in ('REFERRAL_PROSPECT_DEMO_1_STREET2')
+		) ad2
+	  on sr.SurveyResponseID = ad2.SurveyResponseID
+		left outer join (select distinct SurveyResponseID, 
+         txt.TextValue as Zip --, Pseudoyn 
+        from   SurveyElementResponses (nolock) ser
+         join SurveyElementResponsearbtext (nolock) txt
+           on ser.SurveyElementResponseID = txt.SurveyElementResponseID
+         --and ecr.EntityID is not null
+         join SurveyElements(nolock)  se
+              on ser.SurveyElementID = se.SurveyElementID
+        where  Pseudonym in ('REFERRAL_PROSPECT_DEMO_1_ZIP')
+		) zip
+	  on sr.SurveyResponseID = zip.SurveyResponseID
+		left outer join (select distinct SurveyResponseID, 
+         txt.TextValue as Email --, Pseudoyn 
+        from   SurveyElementResponses (nolock) ser
+         join SurveyElementResponsearbtext (nolock) txt
+           on ser.SurveyElementResponseID = txt.SurveyElementResponseID
+         --and ecr.EntityID is not null
+         join SurveyElements(nolock)  se
+              on ser.SurveyElementID = se.SurveyElementID
+        where  Pseudonym in ('REFERRAL_PROSPECT_DEMO_1_EMAIL')
+		) email
+	  on sr.SurveyResponseID = email.SurveyResponseID
+		left outer join (select distinct SurveyResponseID, 
+        replace(replace(replace( replace(replace(txt.TextValue,'-',''),'(',';'),')',''),' ',''),';','') as WPhone --, Pseudoyn 
+        from   SurveyElementResponses (nolock) ser
+         join SurveyElementResponsearbtext (nolock) txt
+           on ser.SurveyElementResponseID = txt.SurveyElementResponseID
+         --and ecr.EntityID is not null
+         join SurveyElements(nolock)  se
+              on ser.SurveyElementID = se.SurveyElementID
+        where  Pseudonym in ('REFERRAL_PROSPECT_DEMO_1_WORK')
+		) wp
+	  on sr.SurveyResponseID = wp.SurveyResponseID
+		left outer join (select distinct SurveyResponseID, 
+        replace(replace(replace( replace(replace(txt.TextValue,'-',''),'(',';'),')',''),' ',''),';','') as HPhone --, Pseudoyn 
+        from   SurveyElementResponses (nolock) ser
+         join SurveyElementResponsearbtext (nolock) txt
+           on ser.SurveyElementResponseID = txt.SurveyElementResponseID
+         --and ecr.EntityID is not null
+         join SurveyElements(nolock)  se
+              on ser.SurveyElementID = se.SurveyElementID
+        where  Pseudonym in ('REFERRAL_PROSPECT_DEMO_1_PHONE_HOME')
+		) hp
+	  on sr.SurveyResponseID = hp.SurveyResponseID
+		left outer join (select distinct SurveyResponseID, 
+        replace(replace(replace( replace(replace(txt.TextValue,'-',''),'(',';'),')',''),' ',''),';','') as CPhone --, Pseudoyn 
+        from   SurveyElementResponses (nolock) ser
+         join SurveyElementResponsearbtext (nolock) txt
+           on ser.SurveyElementResponseID = txt.SurveyElementResponseID
+         --and ecr.EntityID is not null
+         join SurveyElements(nolock)  se
+              on ser.SurveyElementID = se.SurveyElementID
+        where  Pseudonym in ('REFERRAL_PROSPECT_DEMO_1_CELL')
+		) cp
+	  on sr.SurveyResponseID = cp.SurveyResponseID
+		left outer join (select distinct SurveyResponseID, 
+        txt.TextValue as Psrc_name --, Pseudoyn 
+        from   SurveyElementResponses (nolock) ser
+         join SurveyElementResponsearbtext (nolock) txt
+           on ser.SurveyElementResponseID = txt.SurveyElementResponseID
+         --and ecr.EntityID is not null
+         join SurveyElements(nolock)  se
+              on ser.SurveyElementID = se.SurveyElementID
+        where  Pseudonym in ('REFERRAL_SOURCE_PRIMARY_0_NAME')
+		) psrc
+	  on sr.SurveyResponseID = psrc.SurveyResponseID
+		left outer join (select distinct SurveyResponseID, 
+        txt.TextValue as Psrc_Loc --, Pseudoyn 
+        from   SurveyElementResponses (nolock) ser
+         join SurveyElementResponsearbtext (nolock) txt
+           on ser.SurveyElementResponseID = txt.SurveyElementResponseID
+         --and ecr.EntityID is not null
+         join SurveyElements(nolock)  se
+              on ser.SurveyElementID = se.SurveyElementID
+        where  Pseudonym in ('REFERRAL_SOURCE_PRIMARY_1_LOCATION')
+		) ploc
+	  on sr.SurveyResponseID = ploc.SurveyResponseID
+		left outer join (select distinct SurveyResponseID, 
+        txt.TextValue as Ssrc_name --, Pseudoyn 
+        from   SurveyElementResponses (nolock) ser
+         join SurveyElementResponsearbtext (nolock) txt
+           on ser.SurveyElementResponseID = txt.SurveyElementResponseID
+         --and ecr.EntityID is not null
+         join SurveyElements(nolock)  se
+              on ser.SurveyElementID = se.SurveyElementID
+        where  Pseudonym in ('REFERRAL_SOURCE_SECONDARY_0_NAME')
+		) ssrc		
+	  on sr.SurveyResponseID = ssrc.SurveyResponseID		
+		left outer join (select distinct SurveyResponseID, 
+        txt.TextValue as Ssrc_Loc --, Pseudoyn 
+        from   SurveyElementResponses (nolock) ser
+         join SurveyElementResponsearbtext (nolock) txt
+           on ser.SurveyElementResponseID = txt.SurveyElementResponseID
+         --and ecr.EntityID is not null
+         join SurveyElements(nolock)  se
+              on ser.SurveyElementID = se.SurveyElementID
+        where  Pseudonym in ('REFERRAL_SOURCE_SECONDARY_1_LOCATION')
+		) sloc
+	  on sr.SurveyResponseID = sloc.SurveyResponseID
+   left outer join Surveys (nolock) sv
+          on  sr.SurveyID  = sv.SurveyID
+where SurveyName like '%referral%NFP%'
+and DOB is not null
+and   sr.DraftSavedOn is NULL
+order by Date_of_Birth asc</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\ETO Data.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[etosolaris_one]"
+                  connectionManagerRefId="Package.ConnectionManagers[etosolaris_one]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output]"
+                  isSorted="true"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[surveyresponseid]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[surveyresponseid]"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[surveyresponseid]"
+                      name="surveyresponseid"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[client_id]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[client_id]"
+                      length="20"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[client_id]"
+                      name="client_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[programid]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[programid]"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[programid]"
+                      name="programid"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Date]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Referral_Date]"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Date]"
+                      name="Referral_Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Last_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Referral_Last_Name]"
+                      length="100"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Last_Name]"
+                      name="Referral_Last_Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_First_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Referral_First_Name]"
+                      length="100"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_First_Name]"
+                      name="Referral_First_Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Date_of_Birth]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Date_of_Birth]"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Date_of_Birth]"
+                      name="Date_of_Birth"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Primary_Language]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Referral_Primary_Language]"
+                      length="100"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Primary_Language]"
+                      name="Referral_Primary_Language"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Address1]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Referral_Address1]"
+                      length="100"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Address1]"
+                      name="Referral_Address1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Address2]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Referral_Address2]"
+                      length="100"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Address2]"
+                      name="Referral_Address2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_City_State_Zipcode]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Referral_City_State_Zipcode]"
+                      length="100"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_City_State_Zipcode]"
+                      name="Referral_City_State_Zipcode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Email]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Referral_Email]"
+                      length="200"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Email]"
+                      name="Referral_Email"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Work_Phone]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Referral_Work_Phone]"
+                      length="20"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Work_Phone]"
+                      name="Referral_Work_Phone"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Home_Phone]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Referral_Home_Phone]"
+                      length="20"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Home_Phone]"
+                      name="Referral_Home_Phone"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Cell_Phone]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Referral_Cell_Phone]"
+                      length="20"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Cell_Phone]"
+                      name="Referral_Cell_Phone"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Primary_Source_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Primary_Source_Name]"
+                      length="100"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Primary_Source_Name]"
+                      name="Primary_Source_Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Primary_Source_Location]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Primary_Source_Location]"
+                      length="100"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Primary_Source_Location]"
+                      name="Primary_Source_Location"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Secondary_Source_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Secondary_Source_Name]"
+                      length="100"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Secondary_Source_Name]"
+                      name="Secondary_Source_Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Secondary_Source_Location]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Secondary_Source_Location]"
+                      length="100"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Secondary_Source_Location]"
+                      name="Secondary_Source_Location"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Record_Created_Date]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Record_Created_Date]"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Record_Created_Date]"
+                      name="Record_Created_Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Record_Modified_Date]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Record_Modified_Date]"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Record_Modified_Date]"
+                      name="Record_Modified_Date"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[surveyresponseid]"
+                      dataType="i4"
+                      name="surveyresponseid" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[client_id]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="client_id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[programid]"
+                      dataType="i2"
+                      name="programid" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Referral_Date]"
+                      dataType="dbTimeStamp"
+                      name="Referral_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Referral_Last_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="Referral_Last_Name" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Referral_First_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="Referral_First_Name" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Date_of_Birth]"
+                      dataType="dbDate"
+                      name="Date_of_Birth" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Referral_Primary_Language]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="Referral_Primary_Language" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Referral_Address1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="Referral_Address1" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Referral_Address2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="Referral_Address2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Referral_City_State_Zipcode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="Referral_City_State_Zipcode" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Referral_Email]"
+                      codePage="1252"
+                      dataType="str"
+                      length="200"
+                      name="Referral_Email" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Referral_Work_Phone]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Referral_Work_Phone" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Referral_Home_Phone]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Referral_Home_Phone" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Referral_Cell_Phone]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Referral_Cell_Phone" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Primary_Source_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="Primary_Source_Name" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Primary_Source_Location]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="Primary_Source_Location" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Secondary_Source_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="Secondary_Source_Name" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Secondary_Source_Location]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="Secondary_Source_Location" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Record_Created_Date]"
+                      dataType="dbTimeStamp"
+                      name="Record_Created_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].ExternalColumns[Record_Modified_Date]"
+                      dataType="dbTimeStamp"
+                      name="Record_Modified_Date" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[surveyresponseid]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[surveyresponseid]"
+                      name="surveyresponseid" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[client_id]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[client_id]"
+                      name="client_id" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[programid]"
+                      dataType="i2"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[programid]"
+                      name="programid" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Referral_Date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Referral_Date]"
+                      name="Referral_Date" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Referral_Last_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Referral_Last_Name]"
+                      name="Referral_Last_Name" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Referral_First_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Referral_First_Name]"
+                      name="Referral_First_Name" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Date_of_Birth]"
+                      dataType="dbDate"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Date_of_Birth]"
+                      name="Date_of_Birth" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Referral_Primary_Language]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Referral_Primary_Language]"
+                      name="Referral_Primary_Language" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Referral_Address1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Referral_Address1]"
+                      name="Referral_Address1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Referral_Address2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Referral_Address2]"
+                      name="Referral_Address2" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Referral_City_State_Zipcode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Referral_City_State_Zipcode]"
+                      name="Referral_City_State_Zipcode" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Referral_Email]"
+                      codePage="1252"
+                      dataType="str"
+                      length="200"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Referral_Email]"
+                      name="Referral_Email" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Referral_Work_Phone]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Referral_Work_Phone]"
+                      name="Referral_Work_Phone" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Referral_Home_Phone]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Referral_Home_Phone]"
+                      name="Referral_Home_Phone" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Referral_Cell_Phone]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Referral_Cell_Phone]"
+                      name="Referral_Cell_Phone" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Primary_Source_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Primary_Source_Name]"
+                      name="Primary_Source_Name" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Primary_Source_Location]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Primary_Source_Location]"
+                      name="Primary_Source_Location" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Secondary_Source_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Secondary_Source_Name]"
+                      name="Secondary_Source_Name" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Secondary_Source_Location]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Secondary_Source_Location]"
+                      name="Secondary_Source_Location" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Record_Created_Date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Record_Created_Date]"
+                      name="Record_Created_Date" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Record_Modified_Date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[Record_Modified_Date]"
+                      name="Record_Modified_Date" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\Merge Join"
+              componentClassID="Microsoft.MergeJoin"
+              contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combine two sorted data flows into one using the FULL, LEFT, or INNER join. We recommend this transformation when data flows can be sorted at their sources."
+              name="Merge Join"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of join to perform."
+                  name="JoinType"
+                  typeConverter="JoinType">2</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of columns in the ordering key."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the null values are treated as equal values."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates the requested maximum buffers per input before blocking."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Left Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Date_of_Birth]"
+                      cachedDataType="dbDate"
+                      cachedName="Date_of_Birth"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Date_of_Birth]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[surveyresponseid]"
+                      cachedDataType="i4"
+                      cachedName="surveyresponseid"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[surveyresponseid]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[client_id]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="client_id"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[client_id]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[programid]"
+                      cachedDataType="i2"
+                      cachedName="programid"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[programid]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Referral_Date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="Referral_Date"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Date]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Referral_Last_Name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Referral_Last_Name"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Last_Name]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Referral_First_Name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Referral_First_Name"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_First_Name]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Referral_Primary_Language]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Referral_Primary_Language"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Primary_Language]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Referral_Address1]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Referral_Address1"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Address1]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Referral_Address2]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Referral_Address2"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Address2]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Referral_City_State_Zipcode]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Referral_City_State_Zipcode"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_City_State_Zipcode]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Referral_Email]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="200"
+                      cachedName="Referral_Email"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Email]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Referral_Work_Phone]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Referral_Work_Phone"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Work_Phone]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Referral_Home_Phone]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Referral_Home_Phone"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Home_Phone]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Referral_Cell_Phone]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Referral_Cell_Phone"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Referral_Cell_Phone]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Primary_Source_Name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Primary_Source_Name"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Primary_Source_Name]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Primary_Source_Location]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Primary_Source_Location"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Primary_Source_Location]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Secondary_Source_Name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Secondary_Source_Name"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Secondary_Source_Name]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Secondary_Source_Location]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Secondary_Source_Location"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Secondary_Source_Location]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Record_Created_Date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="Record_Created_Date"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Record_Created_Date]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Record_Modified_Date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="Record_Modified_Date"
+                      lineageId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output].Columns[Record_Modified_Date]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Right Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Right Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Right Input].Columns[date_actual]"
+                      cachedDataType="dbDate"
+                      cachedName="date_actual"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\Data Flow Task\Dim_Date.Outputs[ADO NET Source Output].Columns[date_actual]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Right Input].Columns[referral_date_of_birth_key]"
+                      cachedDataType="i4"
+                      cachedName="referral_date_of_birth_key"
+                      lineageId="Package\Data Flow Task\Dim_Date.Outputs[ADO NET Source Output].Columns[referral_date_of_birth_key]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output]"
+                  isSorted="true"
+                  name="Merge Join Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[surveyresponseid]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[surveyresponseid]"
+                      name="surveyresponseid">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[surveyresponseid]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[client_id]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[client_id]"
+                      name="client_id">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[client_id]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[programid]"
+                      dataType="i2"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[programid]"
+                      name="programid">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[programid]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Date]"
+                      name="Referral_Date">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Referral_Date]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Last_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Last_Name]"
+                      name="Referral_Last_Name">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Referral_Last_Name]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_First_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_First_Name]"
+                      name="Referral_First_Name">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Referral_First_Name]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Date_of_Birth]"
+                      dataType="dbDate"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Date_of_Birth]"
+                      name="Date_of_Birth"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Date_of_Birth]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Primary_Language]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Primary_Language]"
+                      name="Referral_Primary_Language">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Referral_Primary_Language]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Address1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Address1]"
+                      name="Referral_Address1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Referral_Address1]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Address2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Address2]"
+                      name="Referral_Address2">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Referral_Address2]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_City_State_Zipcode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_City_State_Zipcode]"
+                      name="Referral_City_State_Zipcode">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Referral_City_State_Zipcode]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Email]"
+                      codePage="1252"
+                      dataType="str"
+                      length="200"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Email]"
+                      name="Referral_Email">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Referral_Email]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Work_Phone]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Work_Phone]"
+                      name="Referral_Work_Phone">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Referral_Work_Phone]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Home_Phone]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Home_Phone]"
+                      name="Referral_Home_Phone">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Referral_Home_Phone]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Cell_Phone]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Referral_Cell_Phone]"
+                      name="Referral_Cell_Phone">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Referral_Cell_Phone]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Primary_Source_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Primary_Source_Name]"
+                      name="Primary_Source_Name">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Primary_Source_Name]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Primary_Source_Location]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Primary_Source_Location]"
+                      name="Primary_Source_Location">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Primary_Source_Location]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Secondary_Source_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Secondary_Source_Name]"
+                      name="Secondary_Source_Name">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Secondary_Source_Name]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Secondary_Source_Location]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Secondary_Source_Location]"
+                      name="Secondary_Source_Location">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Secondary_Source_Location]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Record_Created_Date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Record_Created_Date]"
+                      name="Record_Created_Date">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Record_Created_Date]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Record_Modified_Date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[Record_Modified_Date]"
+                      name="Record_Modified_Date">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input].Columns[Record_Modified_Date]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[referral_date_of_birth_key]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[referral_date_of_birth_key]"
+                      name="referral_date_of_birth_key">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Right Input].Columns[referral_date_of_birth_key]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[date_actual]"
+                      dataType="dbDate"
+                      lineageId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output].Columns[date_actual]"
+                      name="date_actual">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Data Flow Task\Merge Join.Inputs[Merge Join Right Input].Columns[date_actual]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task.Paths[ADO NET Source Output]"
+              endId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Right Input]"
+              name="ADO NET Source Output"
+              startId="Package\Data Flow Task\Dim_Date.Outputs[ADO NET Source Output]" />
+            <path
+              refId="Package\Data Flow Task.Paths[Merge Join Output]"
+              endId="Package\Data Flow Task\Dim_Client_Referral.Inputs[ADO NET Destination Input]"
+              name="Merge Join Output"
+              startId="Package\Data Flow Task\Merge Join.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\Data Flow Task.Paths[OLE DB Source Output]"
+              endId="Package\Data Flow Task\Merge Join.Inputs[Merge Join Left Input]"
+              name="OLE DB Source Output"
+              startId="Package\Data Flow Task\ETO Data.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Envirmental Variables"
+      DTS:CreationName="Microsoft.ScriptTask"
+      DTS:Description="Script Task"
+      DTS:DTSID="{b1173dd5-724f-4231-bbd9-d124eb184405}"
+      DTS:ExecutableType="Microsoft.ScriptTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Envirmental Variables"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ScriptProject
+          Name="ST_b3ecffd3d9284f8bafa0ea12b7d0fb7c"
+          VSTAMajorVersion="15"
+          VSTAMinorVersion="0"
+          Language="CSharp"
+          ReadWriteVariables="User::AWS_ACCESS_KEY,User::AWS_CREDS,User::AWS_SECRET_KEY,User::ETO_CONNECTION_NAME,User::ETO_CONNECTION_TYPE,User::ETO_DATABASE_NAME,User::ETO_HOST_NAME,User::ETO_PASSWORD,User::ETO_PORT,User::ETO_USER_NAME,User::RS_CONNECTION_NAME,User::RS_CONNECTION_TYPE,User::RS_DATABASE_NAME,User::RS_HOST_NAME,User::RS_PASSWORD,User::RS_PORT,User::RS_USER_NAME">
+          <ProjectItem
+            Name="Properties\Resources.resx"
+            Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+</root>]]></ProjectItem>
+          <ProjectItem
+            Name="ST_b3ecffd3d9284f8bafa0ea12b7d0fb7c.csproj"
+            Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?><Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><ProjectTypeGuids>{30D016F9-3734-4E33-A861-5E7D899E18F3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids><Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration><Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform><ProductVersion>8.0.30703</ProductVersion><SchemaVersion>2.0</SchemaVersion><ProjectGuid>{d0073dc6-3948-49ee-a16b-9e495674b879}</ProjectGuid><OutputType>Library</OutputType><AppDesignerFolder>Properties</AppDesignerFolder><RootNamespace>ST_f25bc3d763a84571a677260b65c9e9f7</RootNamespace><AssemblyName>ST_b3ecffd3d9284f8bafa0ea12b7d0fb7c</AssemblyName><TargetFrameworkVersion>v4.5</TargetFrameworkVersion><FileAlignment>512</FileAlignment><ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch><TargetFrameworkProfile></TargetFrameworkProfile></PropertyGroup><PropertyGroup Condition=" '$(Configuration)' == 'Debug' "><DebugSymbols>true</DebugSymbols><DebugType>full</DebugType><Optimize>false</Optimize><OutputPath>.\bin\Debug\</OutputPath><EnableUnmanagedDebugging>false</EnableUnmanagedDebugging><DefineConstants>DEBUG;TRACE</DefineConstants><ErrorReport>prompt</ErrorReport><WarningLevel>4</WarningLevel></PropertyGroup><PropertyGroup Condition=" '$(Configuration)' == 'Release' "><DebugSymbols>false</DebugSymbols><Optimize>true</Optimize><OutputPath>.\bin\Release\</OutputPath><EnableUnmanagedDebugging>false</EnableUnmanagedDebugging><DefineConstants>TRACE</DefineConstants><ErrorReport>prompt</ErrorReport><WarningLevel>4</WarningLevel></PropertyGroup><ItemGroup><Reference Include="System" /><Reference Include="System.Data" /><Reference Include="System.Windows.Forms" /><Reference Include="System.Xml" /><Reference Include="Microsoft.SqlServer.ManagedDTS, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" /><Reference Include="Microsoft.SqlServer.ScriptTask, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" /></ItemGroup><ItemGroup><AppDesigner Include="Properties\" /><Compile Include="Properties\AssemblyInfo.cs"><SubType>Code</SubType></Compile><EmbeddedResource Include="Properties\Resources.resx"><Generator>ResXFileCodeGenerator</Generator><LastGenOutput>Resources.Designer.cs</LastGenOutput></EmbeddedResource><Compile Include="Properties\Resources.Designer.cs"><AutoGen>True</AutoGen><DependentUpon>Resources.resx</DependentUpon></Compile><None Include="Properties\Settings.settings"><Generator>SettingsSingleFileGenerator</Generator><LastGenOutput>Settings.Designer.cs</LastGenOutput></None><Compile Include="Properties\Settings.Designer.cs"><AutoGen>True</AutoGen><DependentUpon>Settings.settings</DependentUpon></Compile><Compile Include="ScriptMain.cs"><SubType>Code</SubType></Compile></ItemGroup><!-- Include the build rules for a C# project.--><Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" /><ProjectExtensions><VisualStudio><FlavorProperties GUID="{30D016F9-3734-4E33-A861-5E7D899E18F3}"><ProjectProperties HostName="ScriptTask" HostPackage="{B3A685AA-7EAF-4BC6-9940-57959FA5AC07}" ApplicationType="usd" Language="cs" TemplatesPath="" DebugInfoCommandLine="" DebugInfoWorkingDir="" IconImageList="" /><Host Name="ScriptTask" GeneratedNamespace="$safeprojectname" IconIndex=""></Host><ProjectClient><HostIdentifier>SSIS_ST130</HostIdentifier></ProjectClient></FlavorProperties></VisualStudio></ProjectExtensions></Project>]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\Settings.Designer.cs"
+            Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_f25bc3d763a84571a677260b65c9e9f7.Properties.Settings.get_Default():ST_f25bc3d763a84571a677260b65c9e9f7.Properties.Sett" +
+    "ings")]
+
+namespace ST_f25bc3d763a84571a677260b65c9e9f7.Properties {
+    
+    
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
+        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+        private static Settings defaultInstance = new Settings();
+        
+        public static Settings Default {
+            get {
+                return defaultInstance;
+            }
+        }
+    }
+}]]></ProjectItem>
+          <ProjectItem
+            Name="ScriptMain.cs"
+            Encoding="UTF8"><![CDATA[#region Help:  Introduction to the script task
+/* The Script Task allows you to perform virtually any operation that can be accomplished in
+ * a .Net application within the context of an Integration Services control flow. 
+ * 
+ * Expand the other regions which have "Help" prefixes for examples of specific ways to use
+ * Integration Services features within this script task. */
+#endregion
+
+
+#region Namespaces
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Runtime;
+using System.Windows.Forms;
+#endregion
+
+namespace ST_f25bc3d763a84571a677260b65c9e9f7
+{
+    /// <summary>
+    /// ScriptMain is the entry point class of the script.  Do not change the name, attributes,
+    /// or parent of this class.
+    /// </summary>
+	[Microsoft.SqlServer.Dts.Tasks.ScriptTask.SSISScriptTaskEntryPointAttribute]
+	public partial class ScriptMain : Microsoft.SqlServer.Dts.Tasks.ScriptTask.VSTARTScriptObjectModelBase
+	{
+        #region Help:  Using Integration Services variables and parameters in a script
+        /* To use a variable in this script, first ensure that the variable has been added to 
+         * either the list contained in the ReadOnlyVariables property or the list contained in 
+         * the ReadWriteVariables property of this script task, according to whether or not your
+         * code needs to write to the variable.  To add the variable, save this script, close this instance of
+         * Visual Studio, and update the ReadOnlyVariables and 
+         * ReadWriteVariables properties in the Script Transformation Editor window.
+         * To use a parameter in this script, follow the same steps. Parameters are always read-only.
+         * 
+         * Example of reading from a variable:
+         *  DateTime startTime = (DateTime) Dts.Variables["System::StartTime"].Value;
+         * 
+         * Example of writing to a variable:
+         *  Dts.Variables["User::myStringVariable"].Value = "new value";
+         * 
+         * Example of reading from a package parameter:
+         *  int batchId = (int) Dts.Variables["$Package::batchId"].Value;
+         *  
+         * Example of reading from a project parameter:
+         *  int batchId = (int) Dts.Variables["$Project::batchId"].Value;
+         * 
+         * Example of reading from a sensitive project parameter:
+         *  int batchId = (int) Dts.Variables["$Project::batchId"].GetSensitiveValue();
+         * */
+
+        #endregion
+
+        #region Help:  Firing Integration Services events from a script
+        /* This script task can fire events for logging purposes.
+         * 
+         * Example of firing an error event:
+         *  Dts.Events.FireError(18, "Process Values", "Bad value", "", 0);
+         * 
+         * Example of firing an information event:
+         *  Dts.Events.FireInformation(3, "Process Values", "Processing has started", "", 0, ref fireAgain)
+         * 
+         * Example of firing a warning event:
+         *  Dts.Events.FireWarning(14, "Process Values", "No values received for input", "", 0);
+         * */
+        #endregion
+
+        #region Help:  Using Integration Services connection managers in a script
+        /* Some types of connection managers can be used in this script task.  See the topic 
+         * "Working with Connection Managers Programatically" for details.
+         * 
+         * Example of using an ADO.Net connection manager:
+         *  object rawConnection = Dts.Connections["Sales DB"].AcquireConnection(Dts.Transaction);
+         *  SqlConnection myADONETConnection = (SqlConnection)rawConnection;
+         *  //Use the connection in some code here, then release the connection
+         *  Dts.Connections["Sales DB"].ReleaseConnection(rawConnection);
+         *
+         * Example of using a File connection manager
+         *  object rawConnection = Dts.Connections["Prices.zip"].AcquireConnection(Dts.Transaction);
+         *  string filePath = (string)rawConnection;
+         *  //Use the connection in some code here, then release the connection
+         *  Dts.Connections["Prices.zip"].ReleaseConnection(rawConnection);
+         * */
+        #endregion
+
+
+		/// <summary>
+        /// This method is called when this script task executes in the control flow.
+        /// Before returning from this method, set the value of Dts.TaskResult to indicate success or failure.
+        /// To open Help, press F1.
+        /// </summary>
+		public void Main()
+		{
+			// TODO: Add your code here
+
+			Dts.TaskResult = (int)ScriptResults.Success;
+
+            bool b = true;
+
+            //ComponentMetaData.FireInformation(0, "Render", "Loading Report Variables: " + string.Format("{0:MM/dd/yyyy hh:mm:ss tt}", DateTime.Now), "", 0, ref b);
+
+            /*
+              Add rows by calling the AddRow method on the member variable named "<Output Name>Buffer".
+              For example, call MyOutputBuffer.AddRow() if your output was named "MyOutput".
+            */
+
+
+
+            string RS_CONNECTION_NAME;
+            string RS_CONNECTION_TYPE;
+            string RS_HOST_NAME;
+            string RS_DATABASE_NAME;
+            string RS_PORT;
+            string RS_USER_NAME;
+            string RS_PASSWORD;
+            string ETO_CONNECTION_NAME;
+            string ETO_CONNECTION_TYPE;
+            string ETO_HOST_NAME;
+            string ETO_DATABASE_NAME;
+            string ETO_PORT;
+            string ETO_USER_NAME;
+            string ETO_PASSWORD;
+            string AWS_ACCESS_KEY;
+            string AWS_SECRET_KEY;
+            string AWS_CREDS;
+
+
+
+            // Check whether the environment variable exists.
+            RS_CONNECTION_NAME = Environment.GetEnvironmentVariable("RS_CONNECTION_NAME");
+            RS_CONNECTION_TYPE = Environment.GetEnvironmentVariable("RS_CONNECTION_TYPE");
+            RS_HOST_NAME = Environment.GetEnvironmentVariable("RS_HOST_NAME");
+            RS_DATABASE_NAME = Environment.GetEnvironmentVariable("RS_DATABASE_NAME");
+            RS_PORT = Environment.GetEnvironmentVariable("RS_PORT");
+            RS_USER_NAME = Environment.GetEnvironmentVariable("RS_USER_NAME");
+            RS_PASSWORD = Environment.GetEnvironmentVariable("RS_PASSWORD");
+            ETO_CONNECTION_NAME = Environment.GetEnvironmentVariable("ETO_CONNECTION_NAME");
+            ETO_CONNECTION_TYPE = Environment.GetEnvironmentVariable("ETO_CONNECTION_TYPE");
+            ETO_HOST_NAME = Environment.GetEnvironmentVariable("ETO_HOST_NAME");
+            ETO_DATABASE_NAME = Environment.GetEnvironmentVariable("ETO_DATABASE_NAME");
+            ETO_PORT = Environment.GetEnvironmentVariable("ETO_PORT");
+            ETO_USER_NAME = Environment.GetEnvironmentVariable("ETO_USER_NAME");
+            ETO_PASSWORD = Environment.GetEnvironmentVariable("ETO_PASSWORD");
+            AWS_ACCESS_KEY = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY");
+            AWS_SECRET_KEY = Environment.GetEnvironmentVariable("AWS_SECRET_KEY");
+            AWS_CREDS = Environment.GetEnvironmentVariable("AWS_CREDS");
+
+            this.Dts.Events.FireInformation(1, "EnvironmentalVar: RS_CONNECTION_NAME ", RS_CONNECTION_NAME, "", 0, ref b);
+            this.Dts.Events.FireInformation(1, "EnvironmentalVar: RS_CONNECTION_TYPE", RS_CONNECTION_TYPE, "", 0, ref b);
+            this.Dts.Events.FireInformation(1, "EnvironmentalVar: RS_HOST_NAME ", RS_HOST_NAME, "", 0, ref b);
+            this.Dts.Events.FireInformation(1, "EnvironmentalVar: RS_DATABASE_NAME ", RS_DATABASE_NAME, "", 0, ref b);
+            this.Dts.Events.FireInformation(1, "EnvironmentalVar: RS_PORT ", RS_PORT, "", 0, ref b);
+            this.Dts.Events.FireInformation(1, "EnvironmentalVar: RS_USER_NAME ", RS_USER_NAME, "", 0, ref b);
+            this.Dts.Events.FireInformation(1, "EnvironmentalVar: RS_PASSWORD ", RS_PASSWORD, "", 0, ref b);
+            this.Dts.Events.FireInformation(1, "EnvironmentalVar: ETO_CONNECTION_NAME ", ETO_CONNECTION_NAME, "", 0, ref b);
+            this.Dts.Events.FireInformation(1, "EnvironmentalVar: ETO_CONNECTION_TYPE ", ETO_CONNECTION_TYPE, "", 0, ref b);
+            this.Dts.Events.FireInformation(1, "EnvironmentalVar: ETO_HOST_NAME ", ETO_HOST_NAME, "", 0, ref b);
+            this.Dts.Events.FireInformation(1, "EnvironmentalVar: ETO_DATABASE_NAME ", ETO_DATABASE_NAME, "", 0, ref b);
+            this.Dts.Events.FireInformation(1, "EnvironmentalVar: ETO_PORT ", ETO_PORT, "", 0, ref b);
+            this.Dts.Events.FireInformation(1, "EnvironmentalVar: ETO_USER_NAME ", ETO_USER_NAME, "", 0, ref b);
+            this.Dts.Events.FireInformation(1, "EnvironmentalVar: ETO_PASSWORD ", ETO_PASSWORD, "", 0, ref b);
+            this.Dts.Events.FireInformation(1, "EnvironmentalVar: AWS_ACCESS_KEY ", AWS_ACCESS_KEY, "", 0, ref b);
+            this.Dts.Events.FireInformation(1, "EnvironmentalVar: AWS_SECRET_KEY ", AWS_SECRET_KEY, "", 0, ref b);
+            this.Dts.Events.FireInformation(1, "EnvironmentalVar: AWS_CREDS ", AWS_CREDS, "", 0, ref b);
+
+            //assign variable value
+            Dts.Variables["User::RS_CONNECTION_NAME"].Value = RS_CONNECTION_NAME;
+            Dts.Variables["User::RS_CONNECTION_TYPE"].Value = RS_CONNECTION_TYPE;
+            Dts.Variables["User::RS_HOST_NAME"].Value = RS_HOST_NAME;
+            Dts.Variables["User::RS_DATABASE_NAME"].Value = RS_DATABASE_NAME;
+            Dts.Variables["User::RS_PORT"].Value = RS_PORT;
+            Dts.Variables["User::RS_USER_NAME"].Value = RS_USER_NAME;
+            Dts.Variables["User::RS_PASSWORD"].Value = RS_PASSWORD;
+            Dts.Variables["User::ETO_CONNECTION_NAME"].Value = ETO_CONNECTION_NAME;
+            Dts.Variables["User::ETO_CONNECTION_TYPE"].Value = ETO_CONNECTION_TYPE;
+            Dts.Variables["User::ETO_HOST_NAME"].Value = ETO_HOST_NAME;
+            Dts.Variables["User::ETO_DATABASE_NAME"].Value = ETO_DATABASE_NAME;
+            Dts.Variables["User::ETO_PORT"].Value = ETO_PORT;
+            Dts.Variables["User::ETO_USER_NAME"].Value = ETO_USER_NAME;
+            Dts.Variables["User::ETO_PASSWORD"].Value = ETO_PASSWORD;
+            Dts.Variables["User::AWS_ACCESS_KEY"].Value = AWS_ACCESS_KEY;
+            Dts.Variables["User::AWS_SECRET_KEY"].Value = AWS_SECRET_KEY;
+            Dts.Variables["User::AWS_CREDS"].Value = AWS_CREDS;
+
+            this.Dts.Events.FireInformation(1, "Var: RS_CONNECTION_NAME ", Dts.Variables["User::RS_CONNECTION_NAME"].Value.ToString(), "", 0, ref b);
+            this.Dts.Events.FireInformation(1, "Var: RS_CONNECTION_TYPE ", Dts.Variables["User::RS_CONNECTION_TYPE"].Value.ToString(), "", 0, ref b);
+            this.Dts.Events.FireInformation(1, "Var: RS_HOST_NAME ", Dts.Variables["User::RS_HOST_NAME"].Value.ToString(), "", 0, ref b);
+            this.Dts.Events.FireInformation(1, "Var: RS_DATABASE_NAME ", Dts.Variables["User::RS_DATABASE_NAME"].Value.ToString(), "", 0, ref b);
+            this.Dts.Events.FireInformation(1, "Var: RS_USER_NAME ", Dts.Variables["User::RS_USER_NAME"].Value.ToString(), "", 0, ref b);
+            this.Dts.Events.FireInformation(1, "Var: RS_PASSWORD ", Dts.Variables["User::RS_PASSWORD"].Value.ToString(), "", 0, ref b);
+
+            //ComponentMetaData.FireInformation(0, "Render", "Loading Report Variables: " + RS_CONNECTION_NAME + " " + string.Format("{0:MM/dd/yyyy hh:mm:ss tt}", DateTime.Now), "", 0, ref b);
+            //ComponentMetaData.FireInformation(0, "Render", "Loading Report Variables: " + RS_CONNECTION_TYPE + " " + string.Format("{0:MM/dd/yyyy hh:mm:ss tt}", DateTime.Now), "", 0, ref b);
+            //ComponentMetaData.FireInformation(0, "Render", "Loading Report Variables: " + RS_HOST_NAME + " " + string.Format("{0:MM/dd/yyyy hh:mm:ss tt}", DateTime.Now), "", 0, ref b);
+            //ComponentMetaData.FireInformation(0, "Render", "Loading Report Variables: " + RS_DATABASE_NAME + " " + string.Format("{0:MM/dd/yyyy hh:mm:ss tt}", DateTime.Now), "", 0, ref b);
+            //ComponentMetaData.FireInformation(0, "Render", "Loading Report Variables: " + RS_PORT + " " + string.Format("{0:MM/dd/yyyy hh:mm:ss tt}", DateTime.Now), "", 0, ref b);
+            //ComponentMetaData.FireInformation(0, "Render", "Loading Report Variables: " + RS_USER_NAME + " " + string.Format("{0:MM/dd/yyyy hh:mm:ss tt}", DateTime.Now), "", 0, ref b);
+            //ComponentMetaData.FireInformation(0, "Render", "Loading Report Variables: " + RS_PASSWORD + " " + string.Format("{0:MM/dd/yyyy hh:mm:ss tt}", DateTime.Now), "", 0, ref b);
+            //ComponentMetaData.FireInformation(0, "Render", "Loading Report Variables: " + ETO_CONNECTION_NAME + " " + string.Format("{0:MM/dd/yyyy hh:mm:ss tt}", DateTime.Now), "", 0, ref b);
+            //ComponentMetaData.FireInformation(0, "Render", "Loading Report Variables: " + ETO_CONNECTION_TYPE + " " + string.Format("{0:MM/dd/yyyy hh:mm:ss tt}", DateTime.Now), "", 0, ref b);
+            //ComponentMetaData.FireInformation(0, "Render", "Loading Report Variables: " + ETO_HOST_NAM + " " + string.Format("{0:MM/dd/yyyy hh:mm:ss tt}", DateTime.Now), "", 0, ref b);
+            //ComponentMetaData.FireInformation(0, "Render", "Loading Report Variables: " + ETO_DATABASE_NAME + " " + string.Format("{0:MM/dd/yyyy hh:mm:ss tt}", DateTime.Now), "", 0, ref b);
+            //ComponentMetaData.FireInformation(0, "Render", "Loading Report Variables: " + ETO_PORT + " " + string.Format("{0:MM/dd/yyyy hh:mm:ss tt}", DateTime.Now), "", 0, ref b);
+            //ComponentMetaData.FireInformation(0, "Render", "Loading Report Variables: " + ETO_USER_NAME + " " + string.Format("{0:MM/dd/yyyy hh:mm:ss tt}", DateTime.Now), "", 0, ref b);
+            //ComponentMetaData.FireInformation(0, "Render", "Loading Report Variables: " + ETO_PASSWORD + " " + string.Format("{0:MM/dd/yyyy hh:mm:ss tt}", DateTime.Now), "", 0, ref b);
+            //ComponentMetaData.FireInformation(0, "Render", "Loading Report Variables: " + AWS_ACCESS_KEY + " " + string.Format("{0:MM/dd/yyyy hh:mm:ss tt}", DateTime.Now), "", 0, ref b);
+            //ComponentMetaData.FireInformation(0, "Render", "Loading Report Variables: " + AWS_SECRET_KEY + " " + string.Format("{0:MM/dd/yyyy hh:mm:ss tt}", DateTime.Now), "", 0, ref b);
+            //ComponentMetaData.FireInformation(0, "Render", "Loading Report Variables: " + AWS_CREDS + " " + string.Format("{0:MM/dd/yyyy hh:mm:ss tt}", DateTime.Now), "", 0, ref b);
+
+        }
+
+        #region ScriptResults declaration
+        /// <summary>
+        /// This enum provides a convenient shorthand within the scope of this class for setting the
+        /// result of the script.
+        /// 
+        /// This code was generated automatically.
+        /// </summary>
+        enum ScriptResults
+        {
+            Success = Microsoft.SqlServer.Dts.Runtime.DTSExecResult.Success,
+            Failure = Microsoft.SqlServer.Dts.Runtime.DTSExecResult.Failure
+        };
+        #endregion
+
+	}
+}]]></ProjectItem>
+          <ProjectItem
+            Name="Project"
+            Encoding="UTF16LE"><![CDATA[<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
+<c:Project xmlns:c="http://schemas.microsoft.com/codeprojectml/2010/08/main" xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003" runtimeVersion="4.0" schemaVersion="1.0">
+	<msb:PropertyGroup>
+		<msb:CodeName>ST_f25bc3d763a84571a677260b65c9e9f7</msb:CodeName>
+		<msb:Language>msBuild</msb:Language>
+		<msb:DisplayName>ST_f25bc3d763a84571a677260b65c9e9f7</msb:DisplayName>
+		<msb:ProjectId>{82FD7601-82AA-4A51-A5BA-FD0C19E827E2}</msb:ProjectId>
+	</msb:PropertyGroup>
+	<msb:ItemGroup>
+		<msb:Project Include="ST_b3ecffd3d9284f8bafa0ea12b7d0fb7c.csproj"/>
+		<msb:File Include="Properties\Settings.settings"/>
+		<msb:File Include="Properties\AssemblyInfo.cs"/>
+		<msb:File Include="Properties\Resources.resx"/>
+		<msb:File Include="Properties\Resources.Designer.cs"/>
+		<msb:File Include="Properties\Settings.Designer.cs"/>
+		<msb:File Include="ScriptMain.cs"/>
+	</msb:ItemGroup>
+</c:Project>]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\AssemblyInfo.cs"
+            Encoding="UTF8"><![CDATA[using System.Reflection;
+using System.Runtime.CompilerServices;
+
+//
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+//
+[assembly: AssemblyTitle("ST_f25bc3d763a84571a677260b65c9e9f7")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyProduct("ST_f25bc3d763a84571a677260b65c9e9f7")]
+[assembly: AssemblyCopyright("Copyright @ Microsoft 2017")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+//
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Revision and Build Numbers 
+// by using the '*' as shown below:
+
+[assembly: AssemblyVersion("1.0.*")]]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\Settings.settings"
+            Encoding="UTF8"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
+<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings />
+</SettingsFile>]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\Resources.Designer.cs"
+            Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_f25bc3d763a84571a677260b65c9e9f7.Properties.Resources.get_ResourceManager():System.Resources.Resou" +
+    "rceManager")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_f25bc3d763a84571a677260b65c9e9f7.Properties.Resources.get_Culture():System.Globalization.CultureIn" +
+    "fo")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_f25bc3d763a84571a677260b65c9e9f7.Properties.Resources.set_Culture(System.Globalization.CultureInfo" +
+    "):Void")]
+
+namespace ST_f25bc3d763a84571a677260b65c9e9f7.Properties {
+    
+    
+    /// <summary>
+    ///   A strongly-typed resource class, for looking up localized strings, etc.
+    /// </summary>
+    // This class was auto-generated by the StronglyTypedResourceBuilder
+    // class via a tool like ResGen or Visual Studio.
+    // To add or remove a member, edit your .ResX file then rerun ResGen
+    // with the /str option, or rebuild your VS project.
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    internal class Resources {
+        
+        private static global::System.Resources.ResourceManager resourceMan;
+        
+        private static global::System.Globalization.CultureInfo resourceCulture;
+        
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        internal Resources() {
+        }
+        
+        /// <summary>
+        ///   Returns the cached ResourceManager instance used by this class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if ((resourceMan == null)) {
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ST_f25bc3d763a84571a677260b65c9e9f7.Properties.Resources", typeof(Resources).Assembly);
+                    resourceMan = temp;
+                }
+                return resourceMan;
+            }
+        }
+        
+        /// <summary>
+        ///   Overrides the current thread's CurrentUICulture property for all
+        ///   resource lookups using this strongly typed resource class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
+                return resourceCulture;
+            }
+            set {
+                resourceCulture = value;
+            }
+        }
+    }
+}]]></ProjectItem>
+          <BinaryItem
+            Name="ST_f25bc3d763a84571a677260b65c9e9f7.dll">TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAgAAAAA4fug4AtAnNIbgBTM0hVGhpcyBwcm9ncmFtIGNhbm5vdCBiZSBydW4gaW4gRE9TIG1v
+ZGUuDQ0KJAAAAAAAAABQRQAATAEDACaH/1kAAAAAAAAAAOAAIiALATAAACAAAAAIAAAAAAAAlj8A
+AAAgAAAAQAAAAAAAEAAgAAAAAgAABAAAAAAAAAAGAAAAAAAAAACAAAAAAgAAAAAAAAMAYIUAABAA
+ABAAAAAAEAAAEAAAAAAAABAAAAAAAAAAAAAAAEQ/AABPAAAAAEAAAJwEAAAAAAAAAAAAAAAAAAAA
+AAAAAGAAAAwAAAAMPgAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAIAAACAAAAAAAAAAAAAAACCAAAEgAAAAAAAAAAAAAAC50ZXh0AAAAnB8AAAAgAAAAIAAAAAIA
+AAAAAAAAAAAAAAAAACAAAGAucnNyYwAAAJwEAAAAQAAAAAYAAAAiAAAAAAAAAAAAAAAAAABAAABA
+LnJlbG9jAAAMAAAAAGAAAAACAAAAKAAAAAAAAAAAAAAAAAAAQAAAQgAAAAAAAAAAAAAAAAAAAAB4
+PwAAAAAAAEgAAAACAAUAACcAAFQWAAABAAAAAAAAAFQ9AAC4AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAABMwBwA8BgAAAQAAEQIoEAAAChZvEQAAChcKcgEAAHAoEgAA
+CgtyJwAAcCgSAAAKDHJNAABwKBIAAAoNcmcAAHAoEgAAChMEcokAAHAoEgAAChMFcpkAAHAoEgAA
+ChMGcrMAAHAoEgAAChMHcssAAHAoEgAAChMIcvMAAHAoEgAAChMJchsBAHAoEgAAChMKcjcBAHAo
+EgAAChMLclsBAHAoEgAAChMMcm0BAHAoEgAAChMNcokBAHAoEgAAChMOcqMBAHAoEgAAChMPcsEB
+AHAoEgAAChMQct8BAHAoEgAAChMRAigQAAAKbxMAAAoXcvMBAHAHcj8CAHAWEgBvFAAACgIoEAAA
+Cm8TAAAKF3JBAgBwCHI/AgBwFhIAbxQAAAoCKBAAAApvEwAAChdyiwIAcAlyPwIAcBYSAG8UAAAK
+AigQAAAKbxMAAAoXcssCAHARBHI/AgBwFhIAbxQAAAoCKBAAAApvEwAAChdyEwMAcBEFcj8CAHAW
+EgBvFAAACgIoEAAACm8TAAAKF3JJAwBwEQZyPwIAcBYSAG8UAAAKAigQAAAKbxMAAAoXcokDAHAR
+B3I/AgBwFhIAbxQAAAoCKBAAAApvEwAAChdyxwMAcBEIcj8CAHAWEgBvFAAACgIoEAAACm8TAAAK
+F3IVBABwEQlyPwIAcBYSAG8UAAAKAigQAAAKbxMAAAoXcmMEAHARCnI/AgBwFhIAbxQAAAoCKBAA
+AApvEwAAChdypQQAcBELcj8CAHAWEgBvFAAACgIoEAAACm8TAAAKF3LvBABwEQxyPwIAcBYSAG8U
+AAAKAigQAAAKbxMAAAoXcicFAHARDXI/AgBwFhIAbxQAAAoCKBAAAApvEwAAChdyaQUAcBEOcj8C
+AHAWEgBvFAAACgIoEAAACm8TAAAKF3KpBQBwEQ9yPwIAcBYSAG8UAAAKAigQAAAKbxMAAAoXcu0F
+AHAREHI/AgBwFhIAbxQAAAoCKBAAAApvEwAAChdyMQYAcBERcj8CAHAWEgBvFAAACgIoEAAACm8V
+AAAKcmsGAHBvFgAACgdvFwAACgIoEAAACm8VAAAKcp0GAHBvFgAACghvFwAACgIoEAAACm8VAAAK
+cs8GAHBvFgAACglvFwAACgIoEAAACm8VAAAKcvUGAHBvFgAAChEEbxcAAAoCKBAAAApvFQAACnIj
+BwBwbxYAAAoRBW8XAAAKAigQAAAKbxUAAApyPwcAcG8WAAAKEQZvFwAACgIoEAAACm8VAAAKcmUH
+AHBvFgAAChEHbxcAAAoCKBAAAApvFQAACnKJBwBwbxYAAAoRCG8XAAAKAigQAAAKbxUAAApyvQcA
+cG8WAAAKEQlvFwAACgIoEAAACm8VAAAKcvEHAHBvFgAAChEKbxcAAAoCKBAAAApvFQAACnIZCABw
+bxYAAAoRC28XAAAKAigQAAAKbxUAAApySQgAcG8WAAAKEQxvFwAACgIoEAAACm8VAAAKcmcIAHBv
+FgAAChENbxcAAAoCKBAAAApvFQAACnKPCABwbxYAAAoRDm8XAAAKAigQAAAKbxUAAApytQgAcG8W
+AAAKEQ9vFwAACgIoEAAACm8VAAAKct8IAHBvFgAAChEQbxcAAAoCKBAAAApvFQAACnIJCQBwbxYA
+AAoREW8XAAAKAigQAAAKbxMAAAoXcikJAHACKBAAAApvFQAACnJrBgBwbxYAAApvGAAACm8ZAAAK
+cj8CAHAWEgBvFAAACgIoEAAACm8TAAAKF3JbCQBwAigQAAAKbxUAAApynQYAcG8WAAAKbxgAAApv
+GQAACnI/AgBwFhIAbxQAAAoCKBAAAApvEwAAChdyjQkAcAIoEAAACm8VAAAKcs8GAHBvFgAACm8Y
+AAAKbxkAAApyPwIAcBYSAG8UAAAKAigQAAAKbxMAAAoXcrMJAHACKBAAAApvFQAACnL1BgBwbxYA
+AApvGAAACm8ZAAAKcj8CAHAWEgBvFAAACgIoEAAACm8TAAAKF3LhCQBwAigQAAAKbxUAAApyPwcA
+cG8WAAAKbxgAAApvGQAACnI/AgBwFhIAbxQAAAoCKBAAAApvEwAAChdyBwoAcAIoEAAACm8VAAAK
+cmUHAHBvFgAACm8YAAAKbxkAAApyPwIAcBYSAG8UAAAKKh4CKBoAAAoqHgIoGwAACiqufgEAAAQt
+HnIrCgBw0AMAAAIoHAAACm8dAAAKcx4AAAqAAQAABH4BAAAEKhp+AgAABCoeAoACAAAEKhp+AwAA
+BCoeAigfAAAKKi5zCAAABoADAAAEKgAAQlNKQgEAAQAAAAAADAAAAHY0LjAuMzAzMTkAAAAABQBs
+AAAA4AMAACN+AABMBAAAsAUAACNTdHJpbmdzAAAAAPwJAACgCgAAI1VTAJwUAAAQAAAAI0dVSUQA
+AACsFAAAqAEAACNCbG9iAAAAAAAAAAIAAAFXHaIBCQMAAAD6ATMAFgAAAQAAAB8AAAAFAAAABgAA
+AAkAAAABAAAAHwAAAAIAAAAQAAAAAQAAAAIAAAADAAAABAAAAAEAAAAEAAAAAQAAAAEAAAAAAI0D
+AQAAAAAABgAzAoEEBgDCAoEEBgB/AW4EDwD1BAAABgCsARsEBgAWAhsEBgD3ARsEBgCpAhsEBgBT
+AhsEBgBsAhsEBgDDARsEBgDeAfoCCgCHAjwDCgD+ADwDBgDFA74DBgBiAW4EBgBzBb4DBgA9BKEE
+BgAtBAYEDgAyAXcDDgCTAXcDDgAaAfEDBgBHAYEECgBlAzwDBgCVBb4DCgBNBDwDEgA3BakAEgB8
+AKkABgDJAL4DBgCFAL4DBgClBRsEAAAAACUAAAAAAAEAAQABABAA1gMBADkAAQABAAAAEACoBAQF
+RQABAAMAAAEQAEEFBAVZAAMABwADAQAAWgUAAD0ABAAKABEAygORABEA7gCVABEAXgCZAAYGTQCd
+AFaASgWgAFaAzgCgAFAgAAAAAIYA3AMGAAEAmCYAAAAAhhhhBAYAAQCgJgAAAACDGGEEBgABAKgm
+AAAAAJMIOQSkAAEA1CYAAAAAkwjWAKkAAQDbJgAAAACTCOIArgABAOMmAAAAAJYIegW0AAIA6iYA
+AAAAhhhhBAYAAgDyJgAAAACRGGcEuQACAAAAAQD0AgkAYQQBABEAYQQGABkAYQQKACkAYQQQADEA
+YQQQADkAYQQQAEEAYQQQAEkAYQQQAFEAYQQQAFkAYQQQAGEAYQQQAGkAYQQGAIEAYQQGAKkAYQQV
+ALkAYQQGAHEAUgUwAMEAhgUBAMkAbgA1AMEAaAU6ANEA4QM/AMEAMwVKANkAtQNPAOEA6gJVAOEA
+4AJaAIkAFANeAHEAYQQGAIkAYQQGAOkAlwBiAOkAoQVpAJEAYQRuALEAYQQGAAgAFACHAAgAGACM
+ACkAcwD0AC4ACwDMAC4AEwDVAC4AGwD0AC4AIwD9AC4AKwAmAS4AMwAmAS4AOwAsAS4AQwD9AC4A
+SwA7AS4AUwAmAS4AWwBbAUMAYwCMAEkAcwD0AGEAewCMAGMAawCMABsAAwABAAQAAwAAAD0EvQAA
+APYAwgAAAH4FxwACAAQAAwACAAUABQABAAYABQACAAcABwAEgAAAAQAAAHYZG2gAAAAAAAABAAAA
+BAAAAAAAAAAAAAAAdQBVAAAAAAAOAAAAAAAAAAAAAAB+AB0DAAAAAAQAAAAAAAAAAAAAAHUAvgMA
+AAAADgAAAAAAAAAAAAAAfgAuAAAAAAAAAAAAAQAAALIEAAAFAAIAAAAAU1RfZjI1YmMzZDc2M2E4
+NDU3MWE2NzcyNjBiNjVjOWU5ZjcAPE1vZHVsZT4ATWljcm9zb2Z0LlNxbFNlcnZlci5NYW5hZ2Vk
+RFRTAHZhbHVlX18AbXNjb3JsaWIAZGVmYXVsdEluc3RhbmNlAEdldEVudmlyb25tZW50VmFyaWFi
+bGUAUnVudGltZVR5cGVIYW5kbGUAR2V0VHlwZUZyb21IYW5kbGUATWljcm9zb2Z0LlNxbFNlcnZl
+ci5EdHMuUnVudGltZQBUeXBlAEZhaWx1cmUAZ2V0X0N1bHR1cmUAc2V0X0N1bHR1cmUAcmVzb3Vy
+Y2VDdWx0dXJlAFZTVEFSVFNjcmlwdE9iamVjdE1vZGVsQmFzZQBBcHBsaWNhdGlvblNldHRpbmdz
+QmFzZQBFZGl0b3JCcm93c2FibGVTdGF0ZQBDb21waWxlckdlbmVyYXRlZEF0dHJpYnV0ZQBEZWJ1
+Z2dlck5vblVzZXJDb2RlQXR0cmlidXRlAERlYnVnZ2FibGVBdHRyaWJ1dGUARWRpdG9yQnJvd3Nh
+YmxlQXR0cmlidXRlAEFzc2VtYmx5VGl0bGVBdHRyaWJ1dGUAQXNzZW1ibHlUcmFkZW1hcmtBdHRy
+aWJ1dGUAVGFyZ2V0RnJhbWV3b3JrQXR0cmlidXRlAEFzc2VtYmx5Q29uZmlndXJhdGlvbkF0dHJp
+YnV0ZQBBc3NlbWJseURlc2NyaXB0aW9uQXR0cmlidXRlAENvbXBpbGF0aW9uUmVsYXhhdGlvbnNB
+dHRyaWJ1dGUAQXNzZW1ibHlQcm9kdWN0QXR0cmlidXRlAEFzc2VtYmx5Q29weXJpZ2h0QXR0cmli
+dXRlAFNTSVNTY3JpcHRUYXNrRW50cnlQb2ludEF0dHJpYnV0ZQBBc3NlbWJseUNvbXBhbnlBdHRy
+aWJ1dGUAUnVudGltZUNvbXBhdGliaWxpdHlBdHRyaWJ1dGUAZ2V0X1ZhbHVlAHNldF9WYWx1ZQB2
+YWx1ZQBTeXN0ZW0uUnVudGltZS5WZXJzaW9uaW5nAFRvU3RyaW5nAE1pY3Jvc29mdC5TcWxTZXJ2
+ZXIuU2NyaXB0VGFzawBNaWNyb3NvZnQuU3FsU2VydmVyLkR0cy5UYXNrcy5TY3JpcHRUYXNrAFNj
+cmlwdE9iamVjdE1vZGVsAFN5c3RlbS5Db21wb25lbnRNb2RlbABTVF9mMjViYzNkNzYzYTg0NTcx
+YTY3NzI2MGI2NWM5ZTlmNy5kbGwAZ2V0X0l0ZW0AU3lzdGVtAEVudW0AcmVzb3VyY2VNYW4AU2Ny
+aXB0TWFpbgBGaXJlSW5mb3JtYXRpb24AU3lzdGVtLkNvbmZpZ3VyYXRpb24AU3lzdGVtLkdsb2Jh
+bGl6YXRpb24AU3lzdGVtLlJlZmxlY3Rpb24AQ3VsdHVyZUluZm8AZ2V0X1Jlc291cmNlTWFuYWdl
+cgBFdmVudHNPYmplY3RXcmFwcGVyAC5jdG9yAC5jY3RvcgBTeXN0ZW0uRGlhZ25vc3RpY3MAU3lz
+dGVtLlJ1bnRpbWUuQ29tcGlsZXJTZXJ2aWNlcwBTeXN0ZW0uUmVzb3VyY2VzAFNUX2YyNWJjM2Q3
+NjNhODQ1NzFhNjc3MjYwYjY1YzllOWY3LlByb3BlcnRpZXMuUmVzb3VyY2VzLnJlc291cmNlcwBE
+ZWJ1Z2dpbmdNb2RlcwBTVF9mMjViYzNkNzYzYTg0NTcxYTY3NzI2MGI2NWM5ZTlmNy5Qcm9wZXJ0
+aWVzAGdldF9WYXJpYWJsZXMAU2V0dGluZ3MAU3VjY2VzcwBnZXRfRHRzAFNjcmlwdFJlc3VsdHMA
+Z2V0X0V2ZW50cwBPYmplY3QAZ2V0X0RlZmF1bHQAc2V0X1Rhc2tSZXN1bHQARW52aXJvbm1lbnQA
+Z2V0X0Fzc2VtYmx5AAAAACVSAFMAXwBDAE8ATgBOAEUAQwBUAEkATwBOAF8ATgBBAE0ARQAAJVIA
+UwBfAEMATwBOAE4ARQBDAFQASQBPAE4AXwBUAFkAUABFAAAZUgBTAF8ASABPAFMAVABfAE4AQQBN
+AEUAACFSAFMAXwBEAEEAVABBAEIAQQBTAEUAXwBOAEEATQBFAAAPUgBTAF8AUABPAFIAVAAAGVIA
+UwBfAFUAUwBFAFIAXwBOAEEATQBFAAAXUgBTAF8AUABBAFMAUwBXAE8AUgBEAAAnRQBUAE8AXwBD
+AE8ATgBOAEUAQwBUAEkATwBOAF8ATgBBAE0ARQAAJ0UAVABPAF8AQwBPAE4ATgBFAEMAVABJAE8A
+TgBfAFQAWQBQAEUAABtFAFQATwBfAEgATwBTAFQAXwBOAEEATQBFAAAjRQBUAE8AXwBEAEEAVABB
+AEIAQQBTAEUAXwBOAEEATQBFAAARRQBUAE8AXwBQAE8AUgBUAAAbRQBUAE8AXwBVAFMARQBSAF8A
+TgBBAE0ARQAAGUUAVABPAF8AUABBAFMAUwBXAE8AUgBEAAAdQQBXAFMAXwBBAEMAQwBFAFMAUwBf
+AEsARQBZAAAdQQBXAFMAXwBTAEUAQwBSAEUAVABfAEsARQBZAAATQQBXAFMAXwBDAFIARQBEAFMA
+AEtFAG4AdgBpAHIAbwBuAG0AZQBuAHQAYQBsAFYAYQByADoAIABSAFMAXwBDAE8ATgBOAEUAQwBU
+AEkATwBOAF8ATgBBAE0ARQAgAAABAElFAG4AdgBpAHIAbwBuAG0AZQBuAHQAYQBsAFYAYQByADoA
+IABSAFMAXwBDAE8ATgBOAEUAQwBUAEkATwBOAF8AVABZAFAARQAAP0UAbgB2AGkAcgBvAG4AbQBl
+AG4AdABhAGwAVgBhAHIAOgAgAFIAUwBfAEgATwBTAFQAXwBOAEEATQBFACAAAEdFAG4AdgBpAHIA
+bwBuAG0AZQBuAHQAYQBsAFYAYQByADoAIABSAFMAXwBEAEEAVABBAEIAQQBTAEUAXwBOAEEATQBF
+ACAAADVFAG4AdgBpAHIAbwBuAG0AZQBuAHQAYQBsAFYAYQByADoAIABSAFMAXwBQAE8AUgBUACAA
+AD9FAG4AdgBpAHIAbwBuAG0AZQBuAHQAYQBsAFYAYQByADoAIABSAFMAXwBVAFMARQBSAF8ATgBB
+AE0ARQAgAAA9RQBuAHYAaQByAG8AbgBtAGUAbgB0AGEAbABWAGEAcgA6ACAAUgBTAF8AUABBAFMA
+UwBXAE8AUgBEACAAAE1FAG4AdgBpAHIAbwBuAG0AZQBuAHQAYQBsAFYAYQByADoAIABFAFQATwBf
+AEMATwBOAE4ARQBDAFQASQBPAE4AXwBOAEEATQBFACAAAE1FAG4AdgBpAHIAbwBuAG0AZQBuAHQA
+YQBsAFYAYQByADoAIABFAFQATwBfAEMATwBOAE4ARQBDAFQASQBPAE4AXwBUAFkAUABFACAAAEFF
+AG4AdgBpAHIAbwBuAG0AZQBuAHQAYQBsAFYAYQByADoAIABFAFQATwBfAEgATwBTAFQAXwBOAEEA
+TQBFACAAAElFAG4AdgBpAHIAbwBuAG0AZQBuAHQAYQBsAFYAYQByADoAIABFAFQATwBfAEQAQQBU
+AEEAQgBBAFMARQBfAE4AQQBNAEUAIAAAN0UAbgB2AGkAcgBvAG4AbQBlAG4AdABhAGwAVgBhAHIA
+OgAgAEUAVABPAF8AUABPAFIAVAAgAABBRQBuAHYAaQByAG8AbgBtAGUAbgB0AGEAbABWAGEAcgA6
+ACAARQBUAE8AXwBVAFMARQBSAF8ATgBBAE0ARQAgAAA/RQBuAHYAaQByAG8AbgBtAGUAbgB0AGEA
+bABWAGEAcgA6ACAARQBUAE8AXwBQAEEAUwBTAFcATwBSAEQAIAAAQ0UAbgB2AGkAcgBvAG4AbQBl
+AG4AdABhAGwAVgBhAHIAOgAgAEEAVwBTAF8AQQBDAEMARQBTAFMAXwBLAEUAWQAgAABDRQBuAHYA
+aQByAG8AbgBtAGUAbgB0AGEAbABWAGEAcgA6ACAAQQBXAFMAXwBTAEUAQwBSAEUAVABfAEsARQBZ
+ACAAADlFAG4AdgBpAHIAbwBuAG0AZQBuAHQAYQBsAFYAYQByADoAIABBAFcAUwBfAEMAUgBFAEQA
+UwAgAAAxVQBzAGUAcgA6ADoAUgBTAF8AQwBPAE4ATgBFAEMAVABJAE8ATgBfAE4AQQBNAEUAADFV
+AHMAZQByADoAOgBSAFMAXwBDAE8ATgBOAEUAQwBUAEkATwBOAF8AVABZAFAARQAAJVUAcwBlAHIA
+OgA6AFIAUwBfAEgATwBTAFQAXwBOAEEATQBFAAAtVQBzAGUAcgA6ADoAUgBTAF8ARABBAFQAQQBC
+AEEAUwBFAF8ATgBBAE0ARQAAG1UAcwBlAHIAOgA6AFIAUwBfAFAATwBSAFQAACVVAHMAZQByADoA
+OgBSAFMAXwBVAFMARQBSAF8ATgBBAE0ARQAAI1UAcwBlAHIAOgA6AFIAUwBfAFAAQQBTAFMAVwBP
+AFIARAAAM1UAcwBlAHIAOgA6AEUAVABPAF8AQwBPAE4ATgBFAEMAVABJAE8ATgBfAE4AQQBNAEUA
+ADNVAHMAZQByADoAOgBFAFQATwBfAEMATwBOAE4ARQBDAFQASQBPAE4AXwBUAFkAUABFAAAnVQBz
+AGUAcgA6ADoARQBUAE8AXwBIAE8AUwBUAF8ATgBBAE0ARQAAL1UAcwBlAHIAOgA6AEUAVABPAF8A
+RABBAFQAQQBCAEEAUwBFAF8ATgBBAE0ARQAAHVUAcwBlAHIAOgA6AEUAVABPAF8AUABPAFIAVAAA
+J1UAcwBlAHIAOgA6AEUAVABPAF8AVQBTAEUAUgBfAE4AQQBNAEUAACVVAHMAZQByADoAOgBFAFQA
+TwBfAFAAQQBTAFMAVwBPAFIARAAAKVUAcwBlAHIAOgA6AEEAVwBTAF8AQQBDAEMARQBTAFMAXwBL
+AEUAWQAAKVUAcwBlAHIAOgA6AEEAVwBTAF8AUwBFAEMAUgBFAFQAXwBLAEUAWQAAH1UAcwBlAHIA
+OgA6AEEAVwBTAF8AQwBSAEUARABTAAAxVgBhAHIAOgAgAFIAUwBfAEMATwBOAE4ARQBDAFQASQBP
+AE4AXwBOAEEATQBFACAAADFWAGEAcgA6ACAAUgBTAF8AQwBPAE4ATgBFAEMAVABJAE8ATgBfAFQA
+WQBQAEUAIAAAJVYAYQByADoAIABSAFMAXwBIAE8AUwBUAF8ATgBBAE0ARQAgAAAtVgBhAHIAOgAg
+AFIAUwBfAEQAQQBUAEEAQgBBAFMARQBfAE4AQQBNAEUAIAAAJVYAYQByADoAIABSAFMAXwBVAFMA
+RQBSAF8ATgBBAE0ARQAgAAAjVgBhAHIAOgAgAFIAUwBfAFAAQQBTAFMAVwBPAFIARAAgAABxUwBU
+AF8AZgAyADUAYgBjADMAZAA3ADYAMwBhADgANAA1ADcAMQBhADYANwA3ADIANgAwAGIANgA1AGMA
+OQBlADkAZgA3AC4AUAByAG8AcABlAHIAdABpAGUAcwAuAFIAZQBzAG8AdQByAGMAZQBzAAAAAABX
+BTU3PO/5SbubYocF1WnzAAQgAQEIAyAAAQUgAQEREQQgAQEOBSABARFRFAcSAg4ODg4ODg4ODg4O
+Dg4ODg4OBCAAEmEEAAEODgQgABJpCiAGAQgODg4IEAIEIAASbQUgARJxHAQgAQEcAyAAHAMgAA4G
+AAESdRF5BCAAEn0GIAIBDhJ9CLd6XFYZNOCJCImEXc2AgMyRBAAAAAAEAQAAAAMGEkkDBhJNAwYS
+EAIGCAMGERQEAAASSQQAABJNBQABARJNBAAAEhADAAABBAgAEkkECAASTQQIABIQCAEACAAAAAAA
+HgEAAQBUAhZXcmFwTm9uRXhjZXB0aW9uVGhyb3dzAQgBAAIAAAAAACgBACNTVF9mMjViYzNkNzYz
+YTg0NTcxYTY3NzI2MGI2NWM5ZTlmNwAABQEAAAAADgEACU1pY3Jvc29mdAAAHwEAGkNvcHlyaWdo
+dCBAIE1pY3Jvc29mdCAyMDE3AABJAQAaLk5FVEZyYW1ld29yayxWZXJzaW9uPXY0LjUBAFQOFEZy
+YW1ld29ya0Rpc3BsYXlOYW1lEi5ORVQgRnJhbWV3b3JrIDQuNQAAALQAAADOyu++AQAAAJEAAABs
+U3lzdGVtLlJlc291cmNlcy5SZXNvdXJjZVJlYWRlciwgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAu
+MCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5I1N5c3Rl
+bS5SZXNvdXJjZXMuUnVudGltZVJlc291cmNlU2V0AgAAAAAAAAAAAAAAUEFEUEFEULQAAAAAAAAA
+AAAAAAAAAAACAAAAHAEAACg+AAAoIAAAUlNEUwAAAAAAAAAAAAAAAAAAAAABAAAAQzpcVXNlcnNc
+bW9zYm9yblxBcHBEYXRhXExvY2FsXFRlbXBcdnN0YVw5MzdlMmI4OTVjMTA0NDY1OTM3ODBhYzRm
+NDFkNzk5M1xvYmpcUmVsZWFzZVxTVF9mMjViYzNkNzYzYTg0NTcxYTY3NzI2MGI2NWM5ZTlmNy5w
+ZGIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABsPwAAAAAAAAAAAACGPwAAACAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAeD8AAAAAAAAAAAAAAABfQ29yRGxsTWFpbgBtc2NvcmVlLmRsbAAAAAAA/yUAIAAQAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAQ
+AAAAGAAAgAAAAAAAAAAAAAAAAAAAAQABAAAAMAAAgAAAAAAAAAAAAAAAAAAAAQAAAAAASAAAAFhA
+AAA+BAAAAAAAAAAAAAA+BDQAAABWAFMAXwBWAEUAUgBTAEkATwBOAF8ASQBOAEYATwAAAAAAvQTv
+/gAAAQAAAAEAG2h2GQAAAQAbaHYZPwAAAAAAAAAEAAAAAgAAAAAAAAAAAAAAAAAAAEQAAAABAFYA
+YQByAEYAaQBsAGUASQBuAGYAbwAAAAAAJAAEAAAAVAByAGEAbgBzAGwAYQB0AGkAbwBuAAAAAAAA
+ALAEngMAAAEAUwB0AHIAaQBuAGcARgBpAGwAZQBJAG4AZgBvAAAAegMAAAEAMAAwADAAMAAwADQA
+YgAwAAAAGgABAAEAQwBvAG0AbQBlAG4AdABzAAAAAAAAADQACgABAEMAbwBtAHAAYQBuAHkATgBh
+AG0AZQAAAAAATQBpAGMAcgBvAHMAbwBmAHQAAABwACQAAQBGAGkAbABlAEQAZQBzAGMAcgBpAHAA
+dABpAG8AbgAAAAAAUwBUAF8AZgAyADUAYgBjADMAZAA3ADYAMwBhADgANAA1ADcAMQBhADYANwA3
+ADIANgAwAGIANgA1AGMAOQBlADkAZgA3AAAAPgAPAAEARgBpAGwAZQBWAGUAcgBzAGkAbwBuAAAA
+AAAxAC4AMAAuADYANQAxADgALgAyADYANgA1ADEAAAAAAHAAKAABAEkAbgB0AGUAcgBuAGEAbABO
+AGEAbQBlAAAAUwBUAF8AZgAyADUAYgBjADMAZAA3ADYAMwBhADgANAA1ADcAMQBhADYANwA3ADIA
+NgAwAGIANgA1AGMAOQBlADkAZgA3AC4AZABsAGwAAABaABsAAQBMAGUAZwBhAGwAQwBvAHAAeQBy
+AGkAZwBoAHQAAABDAG8AcAB5AHIAaQBnAGgAdAAgAEAAIABNAGkAYwByAG8AcwBvAGYAdAAgADIA
+MAAxADcAAAAAACoAAQABAEwAZQBnAGEAbABUAHIAYQBkAGUAbQBhAHIAawBzAAAAAAAAAAAAeAAo
+AAEATwByAGkAZwBpAG4AYQBsAEYAaQBsAGUAbgBhAG0AZQAAAFMAVABfAGYAMgA1AGIAYwAzAGQA
+NwA2ADMAYQA4ADQANQA3ADEAYQA2ADcANwAyADYAMABiADYANQBjADkAZQA5AGYANwAuAGQAbABs
+AAAAaAAkAAEAUAByAG8AZAB1AGMAdABOAGEAbQBlAAAAAABTAFQAXwBmADIANQBiAGMAMwBkADcA
+NgAzAGEAOAA0ADUANwAxAGEANgA3ADcAMgA2ADAAYgA2ADUAYwA5AGUAOQBmADcAAABCAA8AAQBQ
+AHIAbwBkAHUAYwB0AFYAZQByAHMAaQBvAG4AAAAxAC4AMAAuADYANQAxADgALgAyADYANgA1ADEA
+AAAAAEYADwABAEEAcwBzAGUAbQBiAGwAeQAgAFYAZQByAHMAaQBvAG4AAAAxAC4AMAAuADYANQAx
+ADgALgAyADYANgA1ADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAMAAAAmD8AAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
+        </ScriptProject>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{25EF9526-970A-4C1D-ACCF-8AFEA862EADD}"
+      DTS:From="Package\Envirmental Variables"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Data Flow Task" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="180,41.6"
+          Id="Package\Envirmental Variables"
+          TopLeft="49.142857979755,44.0470594412728" />
+        <NodeLayout
+          Size="150.4,41.6"
+          Id="Package\Data Flow Task"
+          TopLeft="290.285719229251,45.8823535846592" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="229.142857979755,65.764706512966">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="61.1428612494956,0"
+              Start="0,0"
+              End="53.6428612494956,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="53.6428612494956,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="124.8,41.6"
+          Id="Package\Data Flow Task\Dim_Date"
+          TopLeft="98.28571595951,169.458825906008" />
+        <NodeLayout
+          Size="123.2,41.6"
+          Id="Package\Data Flow Task\ETO Data"
+          TopLeft="101.71428744647,61.1764714462122" />
+        <NodeLayout
+          Size="129.6,41.6"
+          Id="Package\Data Flow Task\Merge Join"
+          TopLeft="270.857147469813,122.964707606887" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[OLE DB Source Output]"
+          TopLeft="224.91428744647,81.9764714462122">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="45.942860023343,61.7882361606743"
+              Start="0,0"
+              End="38.442860023343,61.7882361606743">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="18.9714300116715,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="18.9714300116715,0"
+                    Point2="22.9714300116715,0"
+                    Point3="22.9714300116715,4" />
+                  <mssgle:LineSegment
+                    End="22.9714300116715,57.7882361606743" />
+                  <mssgle:CubicBezierSegment
+                    Point1="22.9714300116715,57.7882361606743"
+                    Point2="22.9714300116715,61.7882361606743"
+                    Point3="26.9714300116715,61.7882361606743" />
+                  <mssgle:LineSegment
+                    End="38.442860023343,61.7882361606743" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[ADO NET Source Output]"
+          TopLeft="223.08571595951,190.258825906008">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="47.7714315103026,-40.8941182991213"
+              Start="0,0"
+              End="40.2714315103026,-40.8941182991213">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="23.6012715392859,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="23.6012715392859,0"
+                    Point2="27.6012715392859,0"
+                    Point3="27.6012715392859,-4" />
+                  <mssgle:LineSegment
+                    End="27.6012715392859,-36.8941182991213" />
+                  <mssgle:CubicBezierSegment
+                    Point1="27.6012715392859,-36.8941182991213"
+                    Point2="27.6012715392859,-40.8941182991213"
+                    Point3="31.6012715392859,-40.8941182991213" />
+                  <mssgle:LineSegment
+                    End="40.2714315103026,-40.8941182991213" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="172,41.6"
+          Id="Package\Data Flow Task\Dim_Client_Referral"
+          TopLeft="450.857150535194,121.1294134635" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Merge Join Output]"
+          TopLeft="400.457147469813,142.847060535193">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="50.4000030653818,0"
+              Start="0,0"
+              End="42.9000030653818,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="42.9000030653818,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\Dim_Date">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\ETO Data">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\Dim_Client_Referral">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

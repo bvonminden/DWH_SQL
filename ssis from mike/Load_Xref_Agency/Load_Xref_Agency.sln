@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2006
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "Load_Xref_Agency", "Load_Xref_Agency\Load_Xref_Agency.dtproj", "{576E30E8-5A21-4E0B-BFE4-BCEDB5B12A36}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{576E30E8-5A21-4E0B-BFE4-BCEDB5B12A36}.Development|Default.ActiveCfg = Development
+		{576E30E8-5A21-4E0B-BFE4-BCEDB5B12A36}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {361FB298-FAB1-466D-8EDC-01FB26F34EEE}
+	EndGlobalSection
+EndGlobal
