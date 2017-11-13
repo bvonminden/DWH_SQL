@@ -2,13 +2,13 @@
 <BuildLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ProjectInfo>
     <Name>is_client_extracts</Name>
-    <LastWriteTime>2017-11-08T16:28:45.3404334Z</LastWriteTime>
+    <LastWriteTime>2017-11-13T16:40:53.3615959Z</LastWriteTime>
     <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
   </ProjectInfo>
   <LastBuildInfos>
     <ProjectBuildItemInfo>
-      <Name>Package.dtsx</Name>
-      <LastWriteTime>2017-11-08T16:28:45.3091823Z</LastWriteTime>
+      <Name>PFSDataExtractsHIPAA_v2.dtsx</Name>
+      <LastWriteTime>2017-11-13T16:47:43.0287238Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
   </LastBuildInfos>
