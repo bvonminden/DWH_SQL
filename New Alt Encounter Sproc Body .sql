@@ -43,7 +43,7 @@ select
 	max(case sq.pseudonym when 'NURSE_PERSONAL_0_NAME ' then secured_value else null end) as NURSE_PERSONAL_0_NAME
 
 
-   from survey_views.udf_secure_fact_survey_response('Alternative Encounter','DUA') fr  
+   from survey_views.udf_secure_fact_survey_response('Alternative Encounter','SA') fr  
    
     inner join dim_survey_question      sq on fr.survey_question_key          = sq.survey_question_key
     inner join  dim_date                dk on fr.survey_date_key              = dk.date_key
