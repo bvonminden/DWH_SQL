@@ -1,0 +1,73 @@
+create procedure [survey_views].usp_etl_select_ Staff_Update  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.Entity_ID_Mapped,
+vbase.NURSE_STATUS_0_CHANGE_START_DATE,
+vbase.NURSE_STATUS_0_CHANGE_LEAVE_START,
+vbase.NURSE_STATUS_0_CHANGE_LEAVE_END,
+vbase.NURSE_STATUS_0_CHANGE_TERMINATE_DATE,
+vbase.NURSE_PROFESSIONAL_1_NEW_ROLE,
+vbase.NURSE_PROFESSIONAL_1_HOME_VISITOR_FTE,
+vbase.NURSE_PROFESSIONAL_1_SUPERVISOR_FTE,
+vbase.NURSE_PROFESSIONAL_1_ADMIN_ASST_FTE,
+vbase.NURSE_STATUS_0_CHANGE_SPECIFIC,
+vbase.NURSE_EDUCATION_0_NURSING_DEGREES,
+vbase.NURSE_EDUCATION_1_OTHER_DEGREES,
+vbase.DISPOSITION_CODE_0,
+vbase.ETO_LOGIN_DISABLED,
+vbase.ETO_LOGIN_DISABLED_BY,
+vbase.ETO_UPDATED,
+vbase.ETO_UPDATED_BY,
+vbase.CMS_UPDATED,
+vbase.CMS_UPDATED_BY,
+vbase.GEN_COMMENTS_0,
+vbase.NURSE_PROFESSIONAL_1_OTHER_FTE,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.NURSE_PROFESSIONAL_1_TOTAL_FTE,
+vbase.NURSE_STATUS_0_CHANGE_TRANSFER,
+vbase.Master_SurveyID,
+vbase.NURSE_STATUS_TERM_REASON,
+vbase.NURSE_PRIMARY_ROLE,
+vbase.NURSE_SECONDARY_ROLE,
+vbase.NURSE_STATUS_TERM_REASON_OTHER,
+vbase.NURSE_PRIMARY_ROLE_FTE,
+vbase.NURSE_SECONDARY_ROLE_FTE,
+vbase.NURSE_TEAM_START_DATE,
+vbase.NURSE_TEAM_NAME,
+
+from survey_views.f_select_ Staff_Update (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+

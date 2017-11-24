@@ -1,0 +1,187 @@
+create procedure [survey_views].usp_etl_select_ Staff  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. Entity_Id,
+vbase.Site_ID,
+vbase.Full_Name,
+vbase.Last_Name,
+vbase.First_Name,
+vbase.Middle_Name,
+vbase.Prefix,
+vbase.Suffix,
+vbase.Entity_Type_ID,
+vbase.Entity_Type,
+vbase.Entity_Subtype,
+vbase.Entity_Subtype_ID,
+vbase.Program_ID,
+vbase.Address1,
+vbase.Address2,
+vbase.City,
+vbase.State,
+vbase.ZipCode,
+vbase.county,
+vbase.Email,
+vbase.Phone1,
+vbase.Date_Created,
+vbase.Audit_Date,
+vbase.Contacts_Audit_Date,
+vbase.Audit_Staff_ID,
+vbase.Disabled,
+vbase.CRM_ContactId,
+vbase.LMS_StudentID,
+vbase.Supervised_By_ID,
+vbase.Termination_Date,
+vbase.Last_CRM_Update,
+vbase.Last_LMS_Update,
+vbase.flag_update_LMS,
+vbase.flag_update_crm,
+vbase.NHV_ID,
+vbase.NURSE_0_PROGRAM_POSITION,
+vbase.NURSE_0_ETHNICITY,
+vbase.NURSE_1_RACE,
+vbase.NURSE_1_RACE_0,
+vbase.NURSE_1_RACE_1,
+vbase.NURSE_1_RACE_2,
+vbase.NURSE_1_RACE_3,
+vbase.NURSE_1_RACE_4,
+vbase.NURSE_1_RACE_5,
+vbase.NURSE_0_GENDER,
+vbase.NURSE_0_YEAR_COMMHEALTH_EXPERIENCE,
+vbase.NURSE_0_YEAR_NURSING_EXPERIENCE,
+vbase.NURSE_0_YEAR_MATERNAL_EXPERIENCE,
+vbase.NURSE_0_FIRST_HOME_VISIT_DATE,
+vbase.NURSE_0_LANGUAGE,
+vbase.START_DATE,
+vbase.NURSE_0_YEAR_SUPERVISOR_EXPERIENCE,
+vbase.NURSE_PERSONAL_0_ER_CONTACT,
+vbase.NURSE_0_BIRTH_YEAR,
+vbase.NURSE_0_ID_AGENCY,
+vbase.Last_Attribute_Update,
+vbase.flag_disregard_disabled,
+vbase.NURSE_0_PROGRAM_POSITION1,
+vbase.NURSE_0_PROGRAM_POSITION2,
+vbase.NURSE_PROFESSIONAL_1_REASON_HIRE,
+vbase.flag_dont_push_to_CRM,
+vbase.DataSource,
+vbase.ETO_LoginID,
+vbase.ORIGINAL_START_DATE,
+vbase.ETO_IntegrationID,
+vbase.DW_Contact_ID,
+
+from survey_views.f_select_ Staff (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+ALTER PROCEDURE [dbo].[SSIS_IAStaff] 
+	-- Add the parameters for the stored procedure here
+	@ProfileID INT
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+--DECLARE @ProfileID INT --Testing
+--SET @ProfileID = 27    --Testing
+
+--SELECT *
+--  FROM [DataWarehouse].[dbo].[IA_Staff]
+--  WHERE 
+--	   Entity_Subtype like '%nur%' 
+--       AND Site_ID IN(SELECT SiteID FROM [DataWarehouse].dbo.ExportEntities WHERE ExportProfileID = @ProfileID AND ExcludeTribal = 0)
+
+SELECT DISTINCT i.[Entity_Id]
+      ,i.[Site_ID]
+      ,i.[Full_Name]
+      ,i.[Last_Name]
+      ,i.[First_Name]
+      ,i.[Middle_Name]
+      ,i.[Prefix]
+      ,i.[Suffix]
+      ,i.[Entity_Type_ID]
+      ,i.[Entity_Type]
+      ,i.[Entity_Subtype]
+      ,i.[Entity_Subtype_ID]
+      ,i.[Program_ID]
+      ,i.[Address1]
+      ,i.[Address2]
+      ,i.[City]
+      ,i.[State]
+      ,i.[ZipCode]
+      ,i.[county]
+      ,i.[Email]
+      ,i.[Phone1]
+      ,i.[Date_Created]
+      ,i.[Audit_Date]
+      ,i.[Contacts_Audit_Date]
+      ,i.[Audit_Staff_ID]
+      ,i.[Disabled]
+      ,i.[CRM_ContactId]
+      ,i.[LMS_StudentID]
+      ,i.[Supervised_By_ID]
+      ,i.[Termination_Date]
+      ,i.[Last_CRM_Update]
+      ,i.[Last_LMS_Update]
+      ,i.[flag_update_LMS]
+      ,i.[flag_update_crm]
+      ,i.[NHV_ID]
+      ,i.[NURSE_0_PROGRAM_POSITION]
+      ,i.[NURSE_0_ETHNICITY]
+      ,i.[NURSE_1_RACE]
+      ,i.[NURSE_1_RACE_0]
+      ,i.[NURSE_1_RACE_1]
+      ,i.[NURSE_1_RACE_2]
+      ,i.[NURSE_1_RACE_3]
+      ,i.[NURSE_1_RACE_4]
+      ,i.[NURSE_1_RACE_5]
+      ,i.[NURSE_0_GENDER]
+      ,i.[NURSE_0_YEAR_COMMHEALTH_EXPERIENCE]
+      ,i.[NURSE_0_YEAR_NURSING_EXPERIENCE]
+      ,i.[NURSE_0_YEAR_MATERNAL_EXPERIENCE]
+      ,i.[NURSE_0_FIRST_HOME_VISIT_DATE]
+      ,i.[NURSE_0_LANGUAGE]
+      ,i.[START_DATE]
+      ,i.[NURSE_0_YEAR_SUPERVISOR_EXPERIENCE]
+      ,i.[NURSE_PERSONAL_0_ER_CONTACT]
+      ,i.[NURSE_0_BIRTH_YEAR]
+      ,i.[NURSE_0_ID_AGENCY]
+      ,i.[Last_Attribute_Update]
+      ,i.[flag_disregard_disabled]
+      ,i.[NURSE_0_PROGRAM_POSITION1]
+      ,i.[NURSE_0_PROGRAM_POSITION2]
+      ,i.[NURSE_PROFESSIONAL_1_REASON_HIRE]
+      ,i.[flag_dont_push_to_CRM]
+      ,i.[DataSource]
+      ,i.[ETO_LoginID]
+      ,i.[ORIGINAL_START_DATE]
+      ,i.[ETO_IntegrationID]
+      ,i.[DW_Contact_ID]
+FROM IA_Staff i
+LEFT OUTER JOIN StaffXProgram p
+ON i.Entity_Id = p.StaffID
+WHERE Entity_Subtype like '%nur%' 
+AND i.Site_ID IN(SELECT SiteID FROM [DataWarehouse].dbo.ExportEntities WHERE ExportProfileID = @ProfileID AND ExcludeTribal = 0 AND ISNULL(ExportDisabled,0) != 1)
+AND (p.ProgramID not in (select ProgramID from dbo.Export_Program_Exclusions where ExportProfileID = @ProfileID)
+  OR p.ProgramID is null)
+ 
+END

@@ -1,0 +1,147 @@
+create procedure [survey_views].usp_etl_select_ Participants_and_Referrals  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. Client_Id,
+vbase.Site_ID,
+vbase.Last_Name,
+vbase.First_Name,
+vbase.Middle_Name,
+vbase.Prefix,
+vbase.Suffix,
+vbase.DOB,
+vbase.Gender,
+vbase.Marital_Status,
+vbase.Address1,
+vbase.Address2,
+vbase.City,
+vbase.State,
+vbase.ZipCode,
+vbase.county,
+vbase.Email,
+vbase.Home_Phone,
+vbase.Cell_Phone,
+vbase.Work_Phone,
+vbase.Work_Phone_Extension,
+vbase.Pager,
+vbase.Date_Created,
+vbase.Audit_Date,
+vbase.Audit_Staff_ID,
+vbase.Disabled,
+vbase.Funding_Entity_ID,
+vbase.Referral_Entity_ID,
+vbase.Assigned_Staff_ID,
+vbase.CRM_Client_ID,
+vbase.Last_CRM_Update,
+vbase.flag_update_crm,
+vbase.DEMO_CLIENT_INTAKE_0_ETHNICITY,
+vbase.DEMO_CLIENT_INTAKE_0_RACE,
+vbase.DEMO_CLIENT_INTAKE_0_RACE_10,
+vbase.DEMO_CLIENT_INTAKE_0_LANGUAGE,
+vbase.CaseNumber,
+vbase.Last_Demog_Update,
+vbase.CLIENT_PERSONAL_LANGUAGE_1_DESC,
+vbase.DataSource,
+vbase.ReasonForReferral,
+vbase.DEMO_CLIENT_INTAKE_0_ANCESTRY,
+vbase.DW_AuditDate,
+vbase.SSN,
+vbase.CLIENT_MEDICAID_NUMBER,
+vbase.CHILD_MEDICAID_NUMBER,
+vbase.INFANT_BIRTH_0_DOB,
+vbase.LastModified,
+vbase.PFS_STUDY_VULNERABLE_POP,
+vbase.DECLINED_CELL,
+vbase.ETO_ARCHIVED,
+
+from survey_views.f_select_ Participants_and_Referrals (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+ALTER PROCEDURE [dbo].[SSIS_Clients]
+	@ProfileID int
+AS
+BEGIN
+	
+	SET NOCOUNT ON;
+
+	SELECT DISTINCT c.[Client_Id]
+		  ,c.[Site_ID]
+		  ,c.[Last_Name]
+		  ,c.[First_Name]
+		  ,c.[Middle_Name]
+		  ,c.[Prefix]
+		  ,c.[Suffix]
+		  ,c.[DOB]
+		  ,c.[Gender]
+		  ,c.[Marital_Status]
+		  ,c.[Address1]
+		  ,c.[Address2]
+		  ,c.[City]
+		  ,c.[State]
+		  ,c.[ZipCode]
+		  ,c.[county]
+		  ,c.[Email]
+		  ,c.[Home_Phone]
+		  ,c.[Cell_Phone]
+		  ,c.[Work_Phone]
+		  ,c.[Work_Phone_Extension]
+		  ,c.[Pager]
+		  ,c.[Date_Created]
+		  ,c.[Audit_Date]
+		  ,c.[Audit_Staff_ID]
+		  ,c.[Disabled]
+		  ,c.[Funding_Entity_ID]
+		  ,c.[Referral_Entity_ID]
+		  ,c.[Assigned_Staff_ID]
+		  ,c.[CRM_Client_ID]
+		  ,c.[Last_CRM_Update]
+		  ,c.[flag_update_crm]
+		  ,c.[DEMO_CLIENT_INTAKE_0_ETHNICITY]
+		  ,c.[DEMO_CLIENT_INTAKE_0_RACE]
+		  ,c.[DEMO_CLIENT_INTAKE_0_RACE_10]
+		  ,c.[DEMO_CLIENT_INTAKE_0_LANGUAGE]
+		  ,c.[CaseNumber]
+		  ,c.[Last_Demog_Update]
+		  ,c.[CLIENT_PERSONAL_LANGUAGE_1_DESC]
+		  ,c.[DataSource]
+		  ,c.[ReasonForReferral]
+		  ,c.[DEMO_CLIENT_INTAKE_0_ANCESTRY]
+		  ,c.[DW_AuditDate]
+		  ,c.[SSN]
+		  ,c.[CLIENT_MEDICAID_NUMBER]
+		  ,c.[CHILD_MEDICAID_NUMBER]
+		  ,c.[INFANT_BIRTH_0_DOB]
+		  ,c.[LastModified]				/***new column added on 12/8/2016 according to Ticket#33134****/
+          ,c.[PFS_STUDY_VULNERABLE_POP] /***new column added on 12/8/2016 according to Ticket#33134****/
+          ,c.[DECLINED_CELL]			/***new column added on 12/8/2016 according to Ticket#33134****/
+          ,c.[ETO_ARCHIVED]				/***new column added on 12/8/2016 according to Ticket#33134****/
+	 FROM dbo.Clients c
+	INNER JOIN dbo.EnrollmentAndDismissal ead
+	   ON ead.CLID = c.Client_Id 
+	WHERE c.Site_ID IN (SELECT SiteID FROM [DataWarehouse].dbo.ExportEntities 
+						 WHERE ExportProfileID = @ProfileID AND ExcludeTribal = 0 AND ISNULL(ExportDisabled,0) != 1)
+	  AND ead.ProgramID NOT IN (select ProgramID from dbo.Export_Program_Exclusions where ExportProfileID = @ProfileID)
+	  AND c.Client_Id NOT IN (select ISNULL(ClientID,'') from dbo.ExportExcludeClients where SiteID = c.Site_ID)
+
+END
+
+
+

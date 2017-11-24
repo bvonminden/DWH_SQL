@@ -1,0 +1,78 @@
+create procedure [survey_views].usp_etl_select_ TX_SupMiechv2mo  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.Master_SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.MIECHV_READ_12MO_PP_1,
+vbase.MIECHV_READ_12MO_PP_2,
+vbase.MIECHV_READ_12MO_PP_3,
+vbase.MIECHV_READ_2MO_PP_1,
+vbase.MIECHV_READ_2MO_PP_2,
+vbase.MIECHV_READ_2MO_PP_3,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.MIECHV_READ_IID_12MO_PP_1,
+vbase.MIECHV_READ_IID_12MO_PP_2,
+vbase.MIECHV_READ_IID_12MO_PP_3,
+vbase.MIECHV_READ_IID_2MO_PP_1,
+vbase.MIECHV_READ_IID_2MO_PP_2,
+vbase.MIECHV_READ_IID_2MO_PP_3,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.MIECHV_PFS_CHILD_DEV_12_12MO_PP,
+vbase.MIECHV_PFS_CHILD_DEV_12_2MO_PP,
+vbase.MIECHV_PFS_CHILD_DEV_13_12MO_PP,
+vbase.MIECHV_PFS_CHILD_DEV_13_2MO_PP,
+vbase.MIECHV_PFS_CHILD_DEV_14_12MO_PP,
+vbase.MIECHV_PFS_CHILD_DEV_14_2MO_PP,
+vbase.MIECHV_PFS_CHILD_DEV_15_12MO_PP,
+vbase.MIECHV_PFS_CHILD_DEV_15_2MO_PP,
+vbase.MIECHV_PFS_CHILD_DEV_16_12MO_PP,
+vbase.MIECHV_PFS_CHILD_DEV_16_2MO_PP,
+vbase.MIECHV_PFS_CONCRETE_12MO_PP,
+vbase.MIECHV_PFS_FAMILY_12MO_PP,
+vbase.MIECHV_PFS_NURTURE_12MO_PP,
+vbase.MIECHV_PFS_NURTURE_2MO_PP,
+vbase.MIECHV_PFS_SOCIAL_12MO_PP,
+vbase.MIECHV_SUPPORTED_BY_INCOME_12MO_PP,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.TX_FUNDING_SOURCE_2MO_PP,
+vbase.Archive_Record,
+
+from survey_views.f_select_ TX_SupMiechv2mo (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+

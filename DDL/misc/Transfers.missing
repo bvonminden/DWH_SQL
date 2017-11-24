@@ -1,0 +1,50 @@
+create procedure [survey_views].usp_etl_select_ Transfers  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. TransferID,
+vbase.Datasource,
+vbase.CLReferralID,
+vbase.CLID,
+vbase.ProgramID_From,
+vbase.ReferredTo,
+vbase.EntityID,
+vbase.TargetSiteID,
+vbase.TargetProgramID,
+vbase.ReferralDate,
+vbase.DateReferralClosed,
+vbase.ReasonForDismissal,
+vbase.ReasonForReferral,
+vbase.CLReferralHxID,
+vbase.ReferralStatus,
+vbase.Notes,
+vbase.TimeSpentonReferral,
+vbase.AuditStaffID,
+vbase.AuditDate,
+vbase.DW_TableName,
+vbase.DW_AuditDate,
+vbase.Datasource_ID,
+
+from survey_views.f_select_ Transfers (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+

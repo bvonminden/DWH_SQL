@@ -1,0 +1,91 @@
+create procedure [survey_views].usp_etl_select_ Referrals_To_Services  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.SERVICE_REFER_0_TANF,
+vbase.SERVICE_REFER_0_FOODSTAMP,
+vbase.SERVICE_REFER_0_SOCIAL_SECURITY,
+vbase.SERVICE_REFER_0_UNEMPLOYMENT,
+vbase.SERVICE_REFER_0_SUBSID_CHILD_CARE,
+vbase.SERVICE_REFER_0_IPV,
+vbase.SERVICE_REFER_0_CPS,
+vbase.SERVICE_REFER_0_MENTAL,
+vbase.SERVICE_REFER_0_RELATIONSHIP_COUNSELING,
+vbase.SERVICE_REFER_0_SMOKE,
+vbase.SERVICE_REFER_0_ALCOHOL_ABUSE,
+vbase.SERVICE_REFER_0_MEDICAID,
+vbase.SERVICE_REFER_0_SCHIP,
+vbase.SERVICE_REFER_0_PRIVATE_INSURANCE,
+vbase.SERVICE_REFER_0_SPECIAL_NEEDS,
+vbase.SERVICE_REFER_0_PCP,
+vbase.SERVICE_REFER_0_DEVELOPMENTAL_DISABILITY,
+vbase.SERVICE_REFER_0_WIC_CLIENT,
+vbase.SERVICE_REFER_0_CHILD_CARE,
+vbase.SERVICE_REFER_0_JOB_TRAINING,
+vbase.SERVICE_REFER_0_HOUSING,
+vbase.SERVICE_REFER_0_TRANSPORTATION,
+vbase.SERVICE_REFER_0_PREVENT_INJURY,
+vbase.SERVICE_REFER_0_BIRTH_EDUC_CLASS,
+vbase.SERVICE_REFER_0_LACTATION,
+vbase.SERVICE_REFER_0_GED,
+vbase.SERVICE_REFER_0_HIGHER_EDUC,
+vbase.SERVICE_REFER_0_CHARITY,
+vbase.SERVICE_REFER_0_LEGAL_CLIENT,
+vbase.SERVICE_REFER_0_PATERNITY,
+vbase.SERVICE_REFER_0_CHILD_SUPPORT,
+vbase.SERVICE_REFER_0_ADOPTION,
+vbase.SERIVCE_REFER_0_OTHER1_DESC,
+vbase.SERIVCE_REFER_0_OTHER2_DESC,
+vbase.SERIVCE_REFER_0_OTHER3_DESC,
+vbase.SERVICE_REFER_0_DRUG_ABUSE,
+vbase.SERVICE_REFER_0_OTHER,
+vbase.REFERRALS_TO_0_FORM_TYPE,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.SERVICE_REFER_0_DENTAL,
+vbase.SERVICE_REFER_0_INTERVENTION,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.SERVICE_REFER_0_PCP_R2,
+vbase.SERVICE_REFER_INDIAN_HEALTH,
+vbase.SERVICE_REFER_MILITARY_INS,
+vbase.Master_SurveyID,
+
+from survey_views.f_select_ Referrals_To_Services (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
