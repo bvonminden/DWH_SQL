@@ -1,0 +1,10 @@
+C:\Users\bvonminden\source\repos\capp_create_sprocs\capp_create_sprocs\bin\Debug\capp_create_sprocs.exe.config
+C:\Users\bvonminden\source\repos\capp_create_sprocs\capp_create_sprocs\bin\Debug\capp_create_sprocs.exe
+C:\Users\bvonminden\source\repos\capp_create_sprocs\capp_create_sprocs\bin\Debug\capp_create_sprocs.pdb
+C:\Users\bvonminden\source\repos\capp_create_sprocs\capp_create_sprocs\obj\Debug\capp_create_sprocs.csprojResolveAssemblyReference.cache
+C:\Users\bvonminden\source\repos\capp_create_sprocs\capp_create_sprocs\obj\Debug\capp_create_sprocs.csproj.CoreCompileInputs.cache
+C:\Users\bvonminden\source\repos\capp_create_sprocs\capp_create_sprocs\obj\Debug\capp_create_sprocs.exe
+C:\Users\bvonminden\source\repos\capp_create_sprocs\capp_create_sprocs\obj\Debug\capp_create_sprocs.pdb
+C:\Users\bvonminden\source\repos\capp_create_sprocs\capp_create_sprocs\bin\Debug\footer_body.txt
+C:\Users\bvonminden\source\repos\capp_create_sprocs\capp_create_sprocs\bin\Debug\header_body.txt
+C:\Users\bvonminden\source\repos\capp_create_sprocs\capp_create_sprocs\bin\Debug\sproc_work.txt

@@ -1,0 +1,3772 @@
+create procedure [survey_views].usp_etl_select_ Agency_Profile  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.Entity_ID_Mapped,
+vbase.AGENCY_INFO_1_FUNDED_CAPACITY_FTE,
+vbase.AGENCY_FUNDING01_0_FUNDER_NAME,
+vbase.AGENCY_FUNDING01_1_START_DATE,
+vbase.AGENCY_FUNDING01_1_END_DATE,
+vbase.AGENCY_FUNDING01_1_AMOUNT,
+vbase.AGENCY_FUNDING02_0_FUNDER_NAME,
+vbase.AGENCY_FUNDING02_1_START_DATE,
+vbase.AGENCY_FUNDING02_1_END_DATE,
+vbase.AGENCY_FUNDING02_1_AMOUNT,
+vbase.AGENCY_RESEARCH_0_INVOLVEMENT,
+vbase.AGENCY_RESEARCH01_1_PI1,
+vbase.AGENCY_RESEARCH01_0_PROJECT_NAME,
+vbase.AGENCY_RESEARCH01_1_PROJECT_DESCRIPTION,
+vbase.AGENCY_RESEARCH01_1_START_DATE,
+vbase.AGENCY_RESEARCH01_1_END_DATE,
+vbase.AGENCY_RESEARCH01_1_APPROVAL,
+vbase.AGENCY_INFO_1_CONTRACT_CAPACITY_FTE,
+vbase.AGENCY_INFO_BOARD_0_MEETING_DATE01,
+vbase.AGENCY_INFO_BOARD_0_MEETING_DATE02,
+vbase.AGENCY_INFO_BOARD_0_MEETING_DATE03,
+vbase.AGENCY_INFO_BOARD_0_MEETING_DATE04,
+vbase.AGENCY_FUNDING01_1_FUNDER_TYPE,
+vbase.AGENCY_FUNDING02_1_FUNDER_TYPE,
+vbase.AGENCY_FUNDING02_1_DF_GRANT_TYPE,
+vbase.AGENCY_FUNDING03_0_FUNDER_NAME,
+vbase.AGENCY_FUNDING04_0_FUNDER_NAME,
+vbase.AGENCY_FUNDING05_0_FUNDER_NAME,
+vbase.AGENCY_FUNDING06_0_FUNDER_NAME,
+vbase.AGENCY_FUNDING07_0_FUNDER_NAME,
+vbase.AGENCY_FUNDING08_0_FUNDER_NAME,
+vbase.AGENCY_FUNDING10_0_FUNDER_NAME,
+vbase.AGENCY_FUNDING11_0_FUNDER_NAME,
+vbase.AGENCY_FUNDING12_0_FUNDER_NAME,
+vbase.AGENCY_FUNDING13_0_FUNDER_NAME,
+vbase.AGENCY_FUNDING14_0_FUNDER_NAME,
+vbase.AGENCY_FUNDING15_0_FUNDER_NAME,
+vbase.AGENCY_FUNDING16_0_FUNDER_NAME,
+vbase.AGENCY_FUNDING17_0_FUNDER_NAME,
+vbase.AGENCY_FUNDING09_0_FUNDER_NAME,
+vbase.AGENCY_FUNDING18_0_FUNDER_NAME,
+vbase.AGENCY_FUNDING19_0_FUNDER_NAME,
+vbase.AGENCY_FUNDING20_0_FUNDER_NAME,
+vbase.AGENCY_FUNDING03_1_START_DATE,
+vbase.AGENCY_FUNDING04_1_START_DATE,
+vbase.AGENCY_FUNDING05_1_START_DATE,
+vbase.AGENCY_FUNDING06_1_START_DATE,
+vbase.AGENCY_FUNDING07_1_START_DATE,
+vbase.AGENCY_FUNDING08_1_START_DATE,
+vbase.AGENCY_FUNDING09_1_START_DATE,
+vbase.AGENCY_FUNDING10_1_START_DATE,
+vbase.AGENCY_FUNDING11_1_START_DATE,
+vbase.AGENCY_FUNDING12_1_START_DATE,
+vbase.AGENCY_FUNDING13_1_START_DATE,
+vbase.AGENCY_FUNDING14_1_START_DATE,
+vbase.AGENCY_FUNDING15_1_START_DATE,
+vbase.AGENCY_FUNDING16_1_START_DATE,
+vbase.AGENCY_FUNDING17_1_START_DATE,
+vbase.AGENCY_FUNDING18_1_START_DATE,
+vbase.AGENCY_FUNDING19_1_START_DATE,
+vbase.AGENCY_FUNDING20_1_START_DATE,
+vbase.AGENCY_FUNDING03_1_END_DATE,
+vbase.AGENCY_FUNDING04_1_END_DATE,
+vbase.AGENCY_FUNDING05_1_END_DATE,
+vbase.AGENCY_FUNDING06_1_END_DATE,
+vbase.AGENCY_FUNDING07_1_END_DATE,
+vbase.AGENCY_FUNDING08_1_END_DATE,
+vbase.AGENCY_FUNDING09_1_END_DATE,
+vbase.AGENCY_FUNDING10_1_END_DATE,
+vbase.AGENCY_FUNDING11_1_END_DATE,
+vbase.AGENCY_FUNDING12_1_END_DATE,
+vbase.AGENCY_FUNDING13_1_END_DATE,
+vbase.AGENCY_FUNDING14_1_END_DATE,
+vbase.AGENCY_FUNDING15_1_END_DATE,
+vbase.AGENCY_FUNDING16_1_END_DATE,
+vbase.AGENCY_FUNDING17_1_END_DATE,
+vbase.AGENCY_FUNDING18_1_END_DATE,
+vbase.AGENCY_FUNDING19_1_END_DATE,
+vbase.AGENCY_FUNDING20_1_END_DATE,
+vbase.AGENCY_FUNDING03_1_FUNDER_TYPE,
+vbase.AGENCY_FUNDING04_1_FUNDER_TYPE,
+vbase.AGENCY_FUNDING05_1_FUNDER_TYPE,
+vbase.AGENCY_FUNDING06_1_FUNDER_TYPE,
+vbase.AGENCY_FUNDING07_1_FUNDER_TYPE,
+vbase.AGENCY_FUNDING08_1_FUNDER_TYPE,
+vbase.AGENCY_FUNDING09_1_FUNDER_TYPE,
+vbase.AGENCY_FUNDING10_1_FUNDER_TYPE,
+vbase.AGENCY_FUNDING11_1_FUNDER_TYPE,
+vbase.AGENCY_FUNDING12_1_FUNDER_TYPE,
+vbase.AGENCY_FUNDING13_1_FUNDER_TYPE,
+vbase.AGENCY_FUNDING14_1_FUNDER_TYPE,
+vbase.AGENCY_FUNDING15_1_FUNDER_TYPE,
+vbase.AGENCY_FUNDING16_1_FUNDER_TYPE,
+vbase.AGENCY_FUNDING17_1_FUNDER_TYPE,
+vbase.AGENCY_FUNDING18_1_FUNDER_TYPE,
+vbase.AGENCY_FUNDING19_1_FUNDER_TYPE,
+vbase.AGENCY_FUNDING20_1_FUNDER_TYPE,
+vbase.AGENCY_FUNDING03_1_DF_GRANT_TYPE,
+vbase.AGENCY_FUNDING04_1_DF_GRANT_TYPE,
+vbase.AGENCY_FUNDING05_1_DF_GRANT_TYPE,
+vbase.AGENCY_FUNDING06_1_DF_GRANT_TYPE,
+vbase.AGENCY_FUNDING07_1_DF_GRANT_TYPE,
+vbase.AGENCY_FUNDING08_1_DF_GRANT_TYPE,
+vbase.AGENCY_FUNDING09_1_DF_GRANT_TYPE,
+vbase.AGENCY_FUNDING10_1_DF_GRANT_TYPE,
+vbase.AGENCY_FUNDING11_1_DF_GRANT_TYPE,
+vbase.AGENCY_FUNDING12_1_DF_GRANT_TYPE,
+vbase.AGENCY_FUNDING13_1_DF_GRANT_TYPE,
+vbase.AGENCY_FUNDING14_1_DF_GRANT_TYPE,
+vbase.AGENCY_FUNDING15_1_DF_GRANT_TYPE,
+vbase.AGENCY_FUNDING16_1_DF_GRANT_TYPE,
+vbase.AGENCY_FUNDING17_1_DF_GRANT_TYPE,
+vbase.AGENCY_FUNDING18_1_DF_GRANT_TYPE,
+vbase.AGENCY_FUNDING19_1_DF_GRANT_TYPE,
+vbase.AGENCY_FUNDING20_1_DF_GRANT_TYPE,
+vbase.AGENCY_FUNDING03_1_AMOUNT,
+vbase.AGENCY_FUNDING04_1_AMOUNT,
+vbase.AGENCY_FUNDING05_1_AMOUNT,
+vbase.AGENCY_FUNDING06_1_AMOUNT,
+vbase.AGENCY_FUNDING07_1_AMOUNT,
+vbase.AGENCY_FUNDING08_1_AMOUNT,
+vbase.AGENCY_FUNDING09_1_AMOUNT,
+vbase.AGENCY_FUNDING10_1_AMOUNT,
+vbase.AGENCY_FUNDING11_1_AMOUNT,
+vbase.AGENCY_FUNDING12_1_AMOUNT,
+vbase.AGENCY_FUNDING13_1_AMOUNT,
+vbase.AGENCY_FUNDING14_1_AMOUNT,
+vbase.AGENCY_FUNDING15_1_AMOUNT,
+vbase.AGENCY_FUNDING16_1_AMOUNT,
+vbase.AGENCY_FUNDING17_1_AMOUNT,
+vbase.AGENCY_FUNDING18_1_AMOUNT,
+vbase.AGENCY_FUNDING19_1_AMOUNT,
+vbase.AGENCY_FUNDING20_1_AMOUNT,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.AGENCY_FUNDING01_1_DF_GRANT_TYPE,
+vbase.Master_SurveyID,
+vbase.AGENCY_FUNDING01_MEDICAID_TYPE,
+vbase.AGENCY_FUNDING02_MEDICAID_TYPE,
+vbase.AGENCY_FUNDING03_MEDICAID_TYPE,
+vbase.AGENCY_FUNDING04_MEDICAID_TYPE,
+vbase.AGENCY_FUNDING05_MEDICAID_TYPE,
+vbase.AGENCY_FUNDING06_MEDICAID_TYPE,
+vbase.AGENCY_FUNDING07_MEDICAID_TYPE,
+vbase.AGENCY_FUNDING08_MEDICAID_TYPE,
+vbase.AGENCY_FUNDING09_MEDICAID_TYPE,
+vbase.AGENCY_FUNDING10_MEDICAID_TYPE,
+vbase.AGENCY_FUNDING11_MEDICAID_TYPE,
+vbase.AGENCY_FUNDING12_MEDICAID_TYPE,
+vbase.AGENCY_FUNDING13_MEDICAID_TYPE,
+vbase.AGENCY_FUNDING14_MEDICAID_TYPE,
+vbase.AGENCY_FUNDING15_MEDICAID_TYPE,
+vbase.AGENCY_FUNDING16_MEDICAID_TYPE,
+vbase.AGENCY_FUNDING17_MEDICAID_TYPE,
+vbase.AGENCY_FUNDING18_MEDICAID_TYPE,
+vbase.AGENCY_FUNDING19_MEDICAID_TYPE,
+vbase.AGENCY_FUNDING20_MEDICAID_TYPE,
+
+from survey_views.f_select_ Agency_Profile (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Alternative_Encounter  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.CLIENT_TIME_0_START_ALT,
+vbase.CLIENT_TIME_1_END_ALT,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.CLIENT_TALKED_0_WITH_ALT,
+vbase.CLIENT_TALKED_1_WITH_OTHER_ALT,
+vbase.CLIENT_ALTERNATIVE_ENCOUNTER_0_TYPE_ALT,
+vbase.CLIENT_ALTERNATIVE_ENCOUNTER_1_TYPE_OTHER_ALT,
+vbase.CLIENT_DOMAIN_0_PERSONAL_HLTH_ALT,
+vbase.CLIENT_DOMAIN_0_ENVIRONHLTH_ALT,
+vbase.CLIENT_DOMAIN_0_LIFECOURSE_ALT,
+vbase.CLIENT_DOMAIN_0_MATERNAL_ALT,
+vbase.CLIENT_DOMAIN_0_FRNDFAM_ALT,
+vbase.CLIENT_DOMAIN_0_TOTAL_ALT,
+vbase.CLIENT_ALT_0_COMMENTS_ALT,
+vbase.CLIENT_TIME_1_DURATION_ALT,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.CLIENT_NO_REFERRAL,
+vbase.CLIENT_SCREENED_SRVCS,
+vbase.CLIENT_VISIT_SCHEDULE,
+vbase.Master_SurveyID,
+vbase.CLIENT_TIME_FROM_AMPM_ALT,
+vbase.CLIENT_TIME_FROM_HR_ALT,
+vbase.CLIENT_TIME_FROM_MIN_ALT,
+vbase.CLIENT_TIME_TO_AMPM_ALT,
+vbase.CLIENT_TIME_TO_HR_ALT,
+vbase.CLIENT_TIME_TO_MIN_ALT,
+
+from survey_views.f_select_ Alternative_Encounter (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ ASQ3  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.INFANT_HEALTH_NO_ASQ_COMM,
+vbase.INFANT_HEALTH_NO_ASQ_FINE,
+vbase.INFANT_HEALTH_NO_ASQ_GROSS,
+vbase.INFANT_HEALTH_NO_ASQ_PERSONAL,
+vbase.INFANT_HEALTH_NO_ASQ_PROBLEM,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.INFANT_0_ID_NSO,
+vbase.INFANT_PERSONAL_0_NAME_FIRST,
+vbase.INFANT_PERSONAL_0_NAME_LAST,
+vbase.INFANT_AGES_STAGES_1_COMM,
+vbase.INFANT_AGES_STAGES_1_FMOTOR,
+vbase.INFANT_AGES_STAGES_1_GMOTOR,
+vbase.INFANT_AGES_STAGES_1_PSOCIAL,
+vbase.INFANT_AGES_STAGES_1_PSOLVE,
+vbase.INFANT_BIRTH_0_DOB,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.Master_SurveyID,
+
+from survey_views.f_select_ ASQ3 (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ CaseLoad  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. EntityID,
+vbase.CLID,
+vbase.ProgramID,
+vbase.StaffxClientID,
+vbase.StartDate,
+vbase.EndDate,
+vbase.AuditDate,
+
+from survey_views.f_select_ CaseLoad (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Client_Discharge  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.CLIENT_DISCHARGE_1_DATE,
+vbase.CLIENT_DISCHARGE_0_REASON,
+vbase.CLIENT_DISCHARGE_1_MISCARRIED_DATE,
+vbase.CLIENT_DISCHARGE_1_LOST_CUSTODY,
+vbase.CLIENT_DISCHARGE_1_MATERNAL_DEATH_DATE,
+vbase.CLIENT_DISCHARGE_1_INCARCERATION_DATE,
+vbase.CLIENT_DISCHARGE_1_UNABLE_REASON,
+vbase.NONE,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.CLIENT_DISCHARGE_1_LOST_CUSTODY_DATE,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.CLIENT_DISCHARGE_1_INFANTDEATH_DATE,
+vbase.CLIENT_DISCHARGE_1_MISCARRIED_DATE2,
+vbase.Master_SurveyID,
+vbase.CLIENT_DISCHARGE_1_INFANTDEATH_REASON,
+vbase.CLIENT_DISCHARGE_1_MATERNAL_DEATH_REASON,
+
+from survey_views.f_select_ Client_Discharge (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Client_Funding  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.CLIENT_FUNDING_0_SOURCE_MIECHVP_COM,
+vbase.CLIENT_FUNDING_0_SOURCE_MIECHVP_FORM,
+vbase.CLIENT_FUNDING_0_SOURCE_OTHER,
+vbase.CLIENT_FUNDING_0_SOURCE_OTHER_TXT,
+vbase.CLIENT_FUNDING_1_END_MIECHVP_COM,
+vbase.CLIENT_FUNDING_1_END_MIECHVP_FORM,
+vbase.CLIENT_FUNDING_1_END_OTHER,
+vbase.CLIENT_FUNDING_1_START_MIECHVP_COM,
+vbase.CLIENT_FUNDING_1_START_MIECHVP_FORM,
+vbase.CLIENT_FUNDING_1_START_OTHER,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.CLIENT_FUNDING_0_SOURCE_MIECHVP_TRIBAL,
+vbase.CLIENT_FUNDING_1_END_MIECHVP_TRIBAL,
+vbase.CLIENT_FUNDING_1_START_MIECHVP_TRIBAL,
+vbase.CLIENT_FUNDING_0_SOURCE_OTHER1,
+vbase.CLIENT_FUNDING_0_SOURCE_OTHER2,
+vbase.CLIENT_FUNDING_0_SOURCE_OTHER3,
+vbase.CLIENT_FUNDING_1_END_OTHER1,
+vbase.CLIENT_FUNDING_1_END_OTHER2,
+vbase.CLIENT_FUNDING_1_END_OTHER3,
+vbase.CLIENT_FUNDING_1_START_OTHER1,
+vbase.CLIENT_FUNDING_1_START_OTHER2,
+vbase.CLIENT_FUNDING_1_START_OTHER3,
+vbase.Master_SurveyID,
+vbase.CLIENT_FUNDING_0_SOURCE_PFS,
+vbase.CLIENT_FUNDING_1_END_PFS,
+vbase.CLIENT_FUNDING_1_START_PFS,
+vbase.Archive_Record,
+vbase.CLIENT_FUNDING_0_SOURCE_OTHER4,
+vbase.CLIENT_FUNDING_0_SOURCE_OTHER5,
+vbase.CLIENT_FUNDING_0_SOURCE_OTHER6,
+vbase.CLIENT_FUNDING_1_END_OTHER4,
+vbase.CLIENT_FUNDING_1_END_OTHER5,
+vbase.CLIENT_FUNDING_1_END_OTHER6,
+vbase.CLIENT_FUNDING_1_START_OTHER4,
+vbase.CLIENT_FUNDING_1_START_OTHER5,
+vbase.CLIENT_FUNDING_1_START_OTHER6,
+
+from survey_views.f_select_ Client_Funding (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Clinical_IPV  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.Master_SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.Archive_Record,
+vbase.IPV_AFRAID,
+vbase.IPV_CHILD_SAFETY,
+vbase.IPV_CONTROLING,
+vbase.IPV_FORCED_SEX,
+vbase.IPV_INDICATED,
+vbase.IPV_INSULTED,
+vbase.IPV_PHYSICALLY_HURT,
+vbase.IPV_PRN_REASON,
+vbase.IPV_Q5_8_ANY_YES,
+vbase.IPV_SCREAMED,
+vbase.IPV_THREATENED,
+vbase.IPV_TOOL_USED,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST ,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.IPV_Q1_4_SCORE,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.NURSE_PERSONAL_0_NAME,
+
+from survey_views.f_select_ Clinical_IPV (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Course_Completion  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.Entity_ID_Mapped,
+vbase.COURSE_COMPLETION_0_NAME111,
+vbase.COURSE_COMPLETION_0_DATE111,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.Master_SurveyID,
+
+from survey_views.f_select_ Course_Completion (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Dance  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.Master_SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.CLIENT_CAC_NA,
+vbase.CLIENT_CI_NA,
+vbase.CLIENT_EPA_NA,
+vbase.CLIENT_NCCO_NA,
+vbase.CLIENT_NI_NA,
+vbase.CLIENT_NT_NA,
+vbase.CLIENT_NVC_NA,
+vbase.CLIENT_PC_NA,
+vbase.CLIENT_PO_NA,
+vbase.CLIENT_PRA_NA,
+vbase.CLIENT_RP_NA,
+vbase.CLIENT_SCA_NA,
+vbase.CLIENT_SE_NA,
+vbase.CLIENT_VE_NA,
+vbase.CLIENT_VEC_NA,
+vbase.CLIENT_VISIT_VARIABLES,
+vbase.CLIENT_LS_NA,
+vbase.CLIENT_RD_NA,
+vbase.CLIENT_VQ_NA,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.CLIENT_CAC_COMMENTS,
+vbase.CLIENT_CI_COMMENTS,
+vbase.CLIENT_EPA_COMMENTS,
+vbase.CLIENT_LS_COMMENTS,
+vbase.CLIENT_NCCO_COMMENTS,
+vbase.CLIENT_NI_COMMENTS,
+vbase.CLIENT_NT_COMMENTS,
+vbase.CLIENT_NVC_COMMENTS,
+vbase.CLIENT_PC_COMMENTS,
+vbase.CLIENT_PO_COMMENTS,
+vbase.CLIENT_PRA_COMMENTS,
+vbase.CLIENT_RD_COMMENTS,
+vbase.CLIENT_RP_COMMENTS,
+vbase.CLIENT_SCA_COMMENTS,
+vbase.CLIENT_SE_COMMENTS,
+vbase.CLIENT_VE_COMMENTS,
+vbase.CLIENT_VEC_COMMENTS,
+vbase.CLIENT_VQ_COMMENTS,
+vbase.CLIENT_ACTIVITY_DURATION,
+vbase.CLIENT_CAC_PER,
+vbase.CLIENT_CHILD_AGE,
+vbase.CLIENT_CHILD_DURATION,
+vbase.CLIENT_CI_PER,
+vbase.CLIENT_EPA_PER,
+vbase.CLIENT_LS_PER,
+vbase.CLIENT_NCCO_PER,
+vbase.CLIENT_NI_PER,
+vbase.CLIENT_NT_PER,
+vbase.CLIENT_NVC_PER,
+vbase.CLIENT_PC_PER,
+vbase.CLIENT_PO_PER,
+vbase.CLIENT_PRA_PER,
+vbase.CLIENT_RD_PER,
+vbase.CLIENT_RP_PER,
+vbase.CLIENT_SCA_PER,
+vbase.CLIENT_SE_PER,
+vbase.CLIENT_VE_PER,
+vbase.CLIENT_VEC_PER,
+vbase.CLIENT_VQ_PER,
+vbase.NURSE_PERSONAL_0_NAME,
+
+from survey_views.f_select_ Dance (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Demographics  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.CLIENT_PERSONAL_0_VOLUNTARILY_INVOLVED,
+vbase.CLIENT_MARITAL_0_STATUS,
+vbase.CLIENT_BIO_DAD_0_CONTACT_WITH,
+vbase.CLIENT_LIVING_0_WITH,
+vbase.CLIENT_LIVING_1_WITH_OTHERS,
+vbase.CLIENT_EDUCATION_0_HS_GED,
+vbase.CLIENT_EDUCATION_1_HS_GED_LAST_GRADE,
+vbase.CLIENT_EDUCATION_1_HIGHER_EDUC_COMP,
+vbase.CLIENT_EDUCATION_1_ENROLLED_CURRENT,
+vbase.CLIENT_EDUCATION_1_ENROLLED_TYPE,
+vbase.CLIENT_EDUCATION_1_ENROLLED_PLAN,
+vbase.CLIENT_WORKING_0_CURRENTLY_WORKING,
+vbase.CLIENT_INCOME_0_HH_INCOME,
+vbase.CLIENT_INCOME_1_LOW_INCOME_QUALIFY,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.CLIENT_PERSONAL_0_ETHNICITY_INTAKE,
+vbase.CLIENT_PERSONAL_0_RACE,
+vbase.CLIENT_PERSONAL_LANGUAGE_0_INTAKE,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.CLIENT_WORKING_1_WORKED_SINCE_BIRTH,
+vbase.CLIENT_WORKING_1_WORKED_SINCE_BIRTH_MONTHS,
+vbase.CLIENT_BC_0_USED_6MONTHS,
+vbase.CLIENT_BC_1_NOT_USED_REASON,
+vbase.CLIENT_BC_1_FREQUENCY,
+vbase.CLIENT_BC_1_TYPES,
+vbase.CLIENT_SUBPREG_0_BEEN_PREGNANT,
+vbase.CLIENT_SUBPREG_1_BEGIN_MONTH,
+vbase.CLIENT_SUBPREG_1_BEGIN_YEAR,
+vbase.CLIENT_SUBPREG_1_PLANNED,
+vbase.CLIENT_SUBPREG_1_OUTCOME,
+vbase.CLIENT_SECOND_0_CHILD_DOB,
+vbase.CLIENT_SECOND_1_CHILD_GENDER,
+vbase.CLIENT_SECOND_1_CHILD_BW_POUNDS,
+vbase.CLIENT_SECOND_1_CHILD_BW_OZ,
+vbase.CLIENT_SECOND_1_CHILD_NICU,
+vbase.CLIENT_SECOND_1_CHILD_NICU_DAYS,
+vbase.CLIENT_BIO_DAD_1_TIME_WITH,
+vbase.ADULTS_1_ENROLL_NO,
+vbase.ADULTS_1_ENROLL_PT,
+vbase.ADULTS_1_CARE_10,
+vbase.ADULTS_1_CARE_20,
+vbase.ADULTS_1_CARE_30,
+vbase.ADULTS_1_CARE_40,
+vbase.ADULTS_1_CARE_LESS10,
+vbase.ADULTS_1_COMPLETE_GED,
+vbase.ADULTS_1_COMPLETE_HS,
+vbase.ADULTS_1_COMPLETE_HS_NO,
+vbase.ADULTS_1_ED_TECH,
+vbase.ADULTS_1_ED_ASSOCIATE,
+vbase.ADULTS_1_ED_BACHELOR,
+vbase.ADULTS_1_ED_MASTER,
+vbase.ADULTS_1_ED_NONE,
+vbase.ADULTS_1_ED_POSTGRAD,
+vbase.ADULTS_1_ED_SOME_COLLEGE,
+vbase.ADULTS_1_ED_UNKNOWN,
+vbase.ADULTS_1_ENROLL_FT,
+vbase.ADULTS_1_INS_NO,
+vbase.ADULTS_1_INS_PRIVATE,
+vbase.ADULTS_1_INS_PUBLIC,
+vbase.ADULTS_1_WORK_10,
+vbase.ADULTS_1_WORK_20,
+vbase.ADULTS_1_WORK_37,
+vbase.ADULTS_1_WORK_LESS10,
+vbase.ADULTS_1_WORK_UNEMPLOY,
+vbase.CLIENT_CARE_0_ER_HOSP,
+vbase.CLIENT_EDUCATION_1_ENROLLED_FTPT,
+vbase.CLIENT_INCOME_1_HH_SOURCES,
+vbase.CLIENT_WORKING_1_CURRENTLY_WORKING_HRS,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.CLIENT_EDUCATION_1_ENROLLED_PT_HRS,
+vbase.CLIENT_SCHOOL_MIDDLE_HS,
+vbase.CLIENT_ED_PROG_TYPE,
+vbase.CLIENT_PROVIDE_CHILDCARE,
+vbase.CLIENT_WORKING_2_CURRENTLY_WORKING_NO,
+vbase.CLIENT_CARE_0_ER,
+vbase.CLIENT_CARE_0_URGENT,
+vbase.CLIENT_CARE_0_ER_TIMES,
+vbase.CLIENT_CARE_0_URGENT_TIMES,
+vbase.CLIENT_INCOME_IN_KIND,
+vbase.CLIENT_INCOME_SOURCES,
+vbase.CLIENT_MILITARY,
+vbase.DELETE ME,
+vbase.CLIENT_INCOME_AMOUNT,
+vbase.CLIENT_WORKING_1_CURRENTLY_WORKING_NO,
+vbase.CLIENT_INCOME_INKIND_OTHER,
+vbase.CLIENT_INCOME_OTHER_SOURCES,
+vbase.CLIENT_BC_1_TYPES_NEXT6,
+vbase.CLIENT_SUBPREG_1_EDD,
+vbase.CLIENT_CARE_0_ER_PURPOSE,
+vbase.CLIENT_CARE_0_URGENT_PURPOSE,
+vbase.CLIENT_CARE_0_ URGENT_OTHER,
+vbase.CLIENT_CARE_0_ER_OTHER,
+vbase.CLIENT_CARE_0_ER_FEVER_TIMES,
+vbase.CLIENT_CARE_0_ER_INFECTION_TIMES,
+vbase.CLIENT_CARE_0_ER_INGESTION_TIMES,
+vbase.CLIENT_CARE_0_ER_INJURY_TIMES,
+vbase.CLIENT_CARE_0_ER_OTHER_TIMES,
+vbase.CLIENT_CARE_0_URGENT_FEVER_TIMES,
+vbase.CLIENT_CARE_0_URGENT_INFECTION_TIMES,
+vbase.CLIENT_CARE_0_URGENT_INGESTION_TIMES,
+vbase.CLIENT_CARE_0_URGENT_INJURY_TIMES,
+vbase.CLIENT_CARE_0_URGENT_OTHER_TIMES,
+vbase.CLIENT_SECOND_1_CHILD_BW_MEASURE,
+vbase.CLIENT_CARE_0_URGENT_OTHER,
+vbase.CLIENT_SECOND_1_CHILD_BW_CONVERT_GRAMS,
+vbase.CLIENT_SECOND_1_CHILD_BW_GRAMS,
+vbase.CLIENT_SUBPREG_1_GEST_AGE,
+vbase.Master_SurveyID,
+vbase.CLIENT_CARE_0_ER_PURPOSE_R6,
+vbase.CLIENT_CARE_0_URGENT_PURPOSE_R6,
+vbase.CLIENT_SUBPREG,
+vbase.CLIENT_CARE_0_ER_INGESTION_ACCIDENT_TIMES,
+vbase.CLIENT_CARE_0_ER_INGESTION_DECLINE_TIMES,
+vbase.CLIENT_CARE_0_ER_INGESTION_INTENT_OTHER_TIMES,
+vbase.CLIENT_CARE_0_ER_INGESTION_SELF_TIMES,
+vbase.CLIENT_CARE_0_ER_INJURY_ACCIDENT_TIMES,
+vbase.CLIENT_CARE_0_ER_INJURY_DECLINE_TIMES,
+vbase.CLIENT_CARE_0_ER_INJURY_INTENT_OTHER_TIMES,
+vbase.CLIENT_CARE_0_ER_INJURY_SELF_TIMES,
+vbase.CLIENT_CARE_0_URGENT_INGESTION_ACCIDENT_TIMES,
+vbase.CLIENT_CARE_0_URGENT_INGESTION_DECLINE_TIMES,
+vbase.CLIENT_CARE_0_URGENT_INGESTION_INTENT_OTHER_TIMES,
+vbase.CLIENT_CARE_0_URGENT_INGESTION_SELF_TIMES,
+vbase.CLIENT_CARE_0_URGENT_INJURY_ACCIDENT_TIMES,
+vbase.CLIENT_CARE_0_URGENT_INJURY_DECLINE_TIMES,
+vbase.CLIENT_CARE_0_URGENT_INJURY_INTENT_OTHER_TIMES,
+vbase.CLIENT_CARE_0_URGENT_INJURY_SELF_TIMES,
+vbase.Archive_Record,
+vbase.CLIENT_INSURANCE_TYPE,
+vbase.CLIENT_INSURANCE,
+vbase.CLIENT_LIVING_HOMELESS,
+vbase.CLIENT_LIVING_WHERE,
+vbase.CLIENT_INSURANCE_OTHER,
+
+from survey_views.f_select_ Demographics (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Edinburgh  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.CLIENT_EPDS_1_ABLE_TO_LAUGH,
+vbase.CLIENT_EPDS_1_ENJOY_THINGS,
+vbase.CLIENT_EPDS_1_BLAME_SELF,
+vbase.CLIENT_EPDS_1_ANXIOUS_WORRIED,
+vbase.CLIENT_EPDS_1_SCARED_PANICKY,
+vbase.CLIENT_EPDS_1_THINGS_GETTING_ON_TOP,
+vbase.CLIENT_EPDS_1_DIFFICULTY_SLEEPING,
+vbase.CLIENT_EPDS_1_SAD_MISERABLE,
+vbase.CLIENT_EPDS_1_BEEN_CRYING,
+vbase.CLIENT_EPDS_1_HARMING_SELF,
+vbase.CLIENT_0_ID_NSO,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.LA_CTY_OQ10_EDPS,
+vbase.LA_CTY_PHQ9_SCORE_EDPS,
+vbase.LA_CTY_STRESS_INDEX_EDPS,
+vbase.CLIENT_EPS_TOTAL_SCORE,
+vbase.Master_SurveyID,
+
+from survey_views.f_select_ Edinburgh (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Education_Registration  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.Validation_Ind,
+vbase.Validation_Comment,
+vbase.Entity_ID_Mapped,
+vbase.EDUC_REGISTER_0_REASON,
+vbase.First_Confirmation_Sent,
+vbase.First_Confirmation_Sent_By,
+vbase.Second_Confirmation_Sent,
+vbase.Second_Confirmation_Sent_By,
+vbase.Third_Confirmation_Sent,
+vbase.Third_Confirmation_Sent_By,
+vbase.Materials_Shipped,
+vbase.Materials_Shipped_By,
+vbase.Disposition,
+vbase.Disposition_Text,
+vbase.Comments,
+vbase.ClassName,
+vbase.LMS_ClassID,
+vbase.LMS_CourseID,
+vbase.ClassName_Changed_To,
+vbase.Invoice_Nbr,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.Master_SurveyID,
+
+from survey_views.f_select_ Education_Registration (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ EnrollmentsAndDismissals  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. RecID,
+vbase.CLID,
+vbase.SourceTable,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.ProgramStartDate,
+vbase.EndDate,
+vbase.TerminationReasonID,
+vbase.ReasonForDismissalID,
+vbase.ReasonForDismissal,
+vbase.Disabled,
+vbase.AuditStaffID,
+vbase.AuditDate,
+vbase.ProgramSpecific,
+vbase.EmploymentSpecific,
+vbase.EducationSpecific,
+vbase.RejectionSpecific,
+vbase.MatchSpecific,
+vbase.SequenceOrder,
+vbase.ReasonForDismissalID_Source,
+vbase.SourceReasonForDismissalID,
+vbase.CaseNumber,
+vbase.DataSource,
+vbase.SourceTableID,
+
+from survey_views.f_select_ EnrollmentsAndDismissals (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ ExportDetail  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. ExportProfileID,
+vbase.ProfileName,
+vbase.SiteID,
+vbase.AgencyName,
+vbase.FileName,
+vbase.SurveyTable,
+vbase.RecordCount,
+vbase.ExportDT,
+
+from survey_views.f_select_ ExportDetail (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ ExportSummary  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. ProfileID,
+vbase.ProfileName,
+vbase.RecordCount,
+vbase.TotalSites,
+vbase.SitesSearched,
+vbase.SitesExcluded,
+vbase.SitesFound,
+vbase.ExportDT,
+vbase.FileName,
+
+from survey_views.f_select_ ExportSummary (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Gad7  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.Master_SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.CLIENT_GAD7_AFRAID,
+vbase.CLIENT_GAD7_CTRL_WORRY,
+vbase.CLIENT_GAD7_IRRITABLE,
+vbase.CLIENT_GAD7_NERVOUS,
+vbase.CLIENT_GAD7_PROBS_DIFFICULT,
+vbase.CLIENT_GAD7_RESTLESS,
+vbase.CLIENT_GAD7_TRBL_RELAX,
+vbase.CLIENT_GAD7_WORRY,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.CLIENT_GAD7_TOTAL,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.NURSE_PERSONAL_0_NAME,
+
+from survey_views.f_select_ Gad7 (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Govt_Comm_Srvcs  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.SERVICE_USE_0_TANF_CLIENT,
+vbase.SERVICE_USE_0_FOODSTAMP_CLIENT,
+vbase.SERVICE_USE_0_SOCIAL_SECURITY_CLIENT,
+vbase.SERVICE_USE_0_UNEMPLOYMENT_CLIENT,
+vbase.SERVICE_USE_0_SUBSID_CHILD_CARE_CLIENT,
+vbase.SERVICE_USE_0_IPV_CLIENT,
+vbase.SERVICE_USE_0_CPS_CLIENT,
+vbase.SERVICE_USE_0_CPS_CHILD,
+vbase.SERVICE_USE_0_MENTAL_CLIENT,
+vbase.SERVICE_USE_0_RELATIONSHIP_COUNSELING_CLIENT,
+vbase.SERVICE_USE_0_SMOKE_CLIENT,
+vbase.SERVICE_USE_0_ALCOHOL_ABUSE_CLIENT,
+vbase.SERVICE_USE_0_DRUG_ABUSE_CLIENT,
+vbase.SERVICE_USE_0_MEDICAID_CLIENT,
+vbase.SERVICE_USE_0_MEDICAID_CHILD,
+vbase.SERVICE_USE_0_SCHIP_CLIENT,
+vbase.SERVICE_USE_0_SCHIP_CHILD,
+vbase.SERVICE_USE_0_SPECIAL_NEEDS_CLIENT,
+vbase.SERVICE_USE_0_SPECIAL_NEEDS_CHILD,
+vbase.SERVICE_USE_0_PCP_CLIENT,
+vbase.SERVICE_USE_0_PCP_SICK_CHILD,
+vbase.SERVICE_USE_0_PCP_WELL_CHILD,
+vbase.SERVICE_USE_0_DEVELOPMENTAL_DISABILITY_CLIENT,
+vbase.SERVICE_USE_0_WIC_CLIENT,
+vbase.SERVICE_USE_0_CHILD_CARE_CLIENT,
+vbase.SERVICE_USE_0_JOB_TRAINING_CLIENT,
+vbase.SERVICE_USE_0_HOUSING_CLIENT,
+vbase.SERVICE_USE_0_TRANSPORTATION_CLIENT,
+vbase.SERVICE_USE_0_PREVENT_INJURY_CLIENT,
+vbase.SERVICE_USE_0_BIRTH_EDUC_CLASS_CLIENT,
+vbase.SERVICE_USE_0_LACTATION_CLIENT,
+vbase.SERVICE_USE_0_GED_CLIENT,
+vbase.SERVICE_USE_0_HIGHER_EDUC_CLIENT,
+vbase.SERVICE_USE_0_CHARITY_CLIENT,
+vbase.SERVICE_USE_0_LEGAL_CLIENT,
+vbase.SERVICE_USE_0_PATERNITY_CLIENT,
+vbase.SERVICE_USE_0_CHILD_SUPPORT_CLIENT,
+vbase.SERVICE_USE_0_ADOPTION_CLIENT,
+vbase.SERVICE_USE_0_OTHER1_DESC,
+vbase.SERVICE_USE_0_OTHER1,
+vbase.SERVICE_USE_0_CHILD_OTHER1,
+vbase.SERVICE_USE_0_OTHER2_DESC,
+vbase.SERVICE_USE_0_OTHER3_DESC,
+vbase.SERVICE_USE_0_OTHER2,
+vbase.SERVICE_USE_0_CHILD_OTHER2,
+vbase.SERVICE_USE_0_OTHER3,
+vbase.SERVICE_USE_0_CHILD_OTHER3,
+vbase.SERVICE_USE_0_PRIVATE_INSURANCE_CLIENT,
+vbase.SERVICE_USE_0_PRIVATE_INSURANCE_CHILD,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.SERVICE_USE_0_DENTAL_CLIENT,
+vbase.SERVICE_USE_0_INTERVENTION,
+vbase.SERVICE_USE_0_PCP_WELL_CLIENT,
+vbase.SERVICE_USE_0_DENTAL_CHILD,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.JP error  if no data associated delete element,
+vbase.SERVICE_USE_INDIAN_HEALTH_CHILD,
+vbase.SERVICE_USE_INDIAN_HEALTH_CLIENT,
+vbase.SERVICE_USE_MILITARY_INS_CHILD,
+vbase.SERVICE_USE_MILITARY_INS_CLIENT ,
+vbase.SERVICE_USE_PCP_CLIENT_POSTPARTUM,
+vbase.SERVICE_USE_PCP_CLIENT_PRENATAL,
+vbase.SERVICE_USE_PCP_CLIENT_WELLWOMAN,
+vbase.Master_SurveyID,
+vbase.Archive_Record,
+vbase.SERVICE_USE_0_INTERVENTION_45DAYS,
+
+from survey_views.f_select_ Govt_Comm_Srvcs (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Health_Habits  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.CLIENT_SUBSTANCE_CIG_1_PRE_PREG,
+vbase.CLIENT_SUBSTANCE_CIG_0_DURING_PREG,
+vbase.CLIENT_SUBSTANCE_CIG_1_LAST_48,
+vbase.CLIENT_SUBSTANCE_ALCOHOL_0_14DAY,
+vbase.CLIENT_SUBSTANCE_ALCOHOL_1_14DAY_DRINKS,
+vbase.CLIENT_SUBSTANCE_POT_0_14DAYS,
+vbase.CLIENT_SUBSTANCE_POT_1_14DAYS_JOINTS,
+vbase.CLIENT_SUBSTANCE_COCAINE_0_14DAY,
+vbase.CLIENT_SUBSTANCE_COCAINE_1_14DAY_TIMES,
+vbase.CLIENT_SUBSTANCE_OTHER_0_14DAY,
+vbase.CLIENT_SUBSTANCE_OTHER_1_14DAY_TIMES,
+vbase.NURSE_PERSONAL_0_NAME_LAST,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.CLIENT_SUBSTANCE_NICOTINE_0_OTHER_TYPES,
+vbase.CLIENT_SUBSTANCE_NICOTINE_0_OTHER,
+vbase.Master_SurveyID,
+
+from survey_views.f_select_ Health_Habits (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Home_Visit_Encounter  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.CLIENT_TIME_0_START_VISIT,
+vbase.CLIENT_TIME_1_END_VISIT,
+vbase.NURSE_MILEAGE_0_VIS,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.CLIENT_COMPLETE_0_VISIT,
+vbase.CLIENT_LOCATION_0_VISIT,
+vbase.CLIENT_ATTENDEES_0_AT_VISIT,
+vbase.CLIENT_INVOLVE_0_CLIENT_VISIT,
+vbase.CLIENT_INVOLVE_1_GRNDMTHR_VISIT,
+vbase.CLIENT_INVOLVE_1_PARTNER_VISIT,
+vbase.CLIENT_CONFLICT_0_CLIENT_VISIT,
+vbase.CLIENT_CONFLICT_1_GRNDMTHR_VISIT,
+vbase.CLIENT_CONFLICT_1_PARTNER_VISIT,
+vbase.CLIENT_UNDERSTAND_0_CLIENT_VISIT,
+vbase.CLIENT_UNDERSTAND_1_GRNDMTHR_VISIT,
+vbase.CLIENT_UNDERSTAND_1_PARTNER_VISIT,
+vbase.CLIENT_DOMAIN_0_PERSHLTH_VISIT,
+vbase.CLIENT_DOMAIN_0_ENVIRONHLTH_VISIT,
+vbase.CLIENT_DOMAIN_0_LIFECOURSE_VISIT,
+vbase.CLIENT_DOMAIN_0_MATERNAL_VISIT,
+vbase.CLIENT_DOMAIN_0_FRNDFAM_VISIT,
+vbase.CLIENT_DOMAIN_0_TOTAL_VISIT,
+vbase.CLIENT_CONTENT_0_PERCENT_VISIT,
+vbase.CLIENT_ATTENDEES_0_OTHER_VISIT_DESC,
+vbase.CLIENT_TIME_1_DURATION_VISIT,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.CLIENT_CHILD_INJURY_0_PREVENTION,
+vbase.CLIENT_IPV_0_SAFETY_PLAN,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.CLIENT_PRENATAL_VISITS_WEEKS,
+vbase.CLIENT_NO_REFERRAL,
+vbase.CLIENT_PRENATAL_VISITS,
+vbase.CLIENT_SCREENED_SRVCS,
+vbase.CLIENT_VISIT_SCHEDULE,
+vbase.Master_SurveyID,
+vbase.CLIENT_PLANNED_VISIT_SCH,
+vbase.CLIENT_TIME_FROM_AMPM,
+vbase.CLIENT_TIME_FROM_HR,
+vbase.CLIENT_TIME_FROM_MIN,
+vbase.CLIENT_TIME_TO_AMPM,
+vbase.CLIENT_TIME_TO_HR,
+vbase.CLIENT_TIME_TO_MIN,
+vbase.temp_time_start,
+vbase.temp_time_end,
+vbase.Old_CLIENT_TIME_0_START_Visit,
+vbase.Old_CLIENT_TIME_1_END_Visit,
+vbase.old_CLIENT_TIME_1_DURATION_VISIT,
+vbase.temp_DURATION,
+vbase.LastModified,
+vbase.Archive_Record,
+vbase.INFANT_HEALTH_ER_1_TYPE,
+vbase.INFANT_HEALTH_HOSP_1_TYPE,
+vbase.INFANT_HEALTH_PROVIDER_0_APPT_DETAILSR2,
+vbase.CLIENT_CHILD_DEVELOPMENT_CONCERN,
+vbase.CLIENT_CONT_HLTH_INS,
+vbase.INFANT_HEALTH_ER_0_HAD_VISIT,
+vbase.INFANT_HEALTH_ER_1_INGEST_ERvsUC1,
+vbase.INFANT_HEALTH_ER_1_INGEST_ERvsUC2,
+vbase.INFANT_HEALTH_ER_1_INGEST_ERvsUC3,
+vbase.INFANT_HEALTH_ER_1_INGEST_TREAT1,
+vbase.INFANT_HEALTH_ER_1_INGEST_TREAT2,
+vbase.INFANT_HEALTH_ER_1_INGEST_TREAT3,
+vbase.INFANT_HEALTH_ER_1_INJ_ERvsUC1,
+vbase.INFANT_HEALTH_ER_1_INJ_ERvsUC2,
+vbase.INFANT_HEALTH_ER_1_INJ_ERvsUC3,
+vbase.INFANT_HEALTH_ER_1_INJ_TREAT1,
+vbase.INFANT_HEALTH_ER_1_INJ_TREAT2,
+vbase.INFANT_HEALTH_ER_1_INJ_TREAT3,
+vbase.INFANT_HEALTH_ER_1_OTHER,
+vbase.INFANT_HEALTH_ER_1_OTHER_ERvsUC1,
+vbase.INFANT_HEALTH_ER_1_OTHER_ERvsUC2,
+vbase.INFANT_HEALTH_ER_1_OTHER_ERvsUC3,
+vbase.INFANT_HEALTH_HOSP_0_HAD_VISIT,
+vbase.INFANT_HEALTH_PROVIDER_0_APPT_R2,
+vbase.INFANT_HEALTH_ER_1_OTHER_REASON1,
+vbase.INFANT_HEALTH_ER_1_OTHER_REASON2,
+vbase.INFANT_HEALTH_ER_1_OTHER_REASON3,
+vbase.INFANT_HEALTH_ER_1_INGEST_DAYS1,
+vbase.INFANT_HEALTH_ER_1_INGEST_DAYS2,
+vbase.INFANT_HEALTH_ER_1_INGEST_DAYS3,
+vbase.INFANT_HEALTH_ER_1_INJ_DAYS1,
+vbase.INFANT_HEALTH_ER_1_INJ_DAYS2,
+vbase.INFANT_HEALTH_ER_1_INJ_DAYS3,
+vbase.INFANT_HEALTH_ER_1_INGEST_DATE1,
+vbase.INFANT_HEALTH_ER_1_INGEST_DATE2,
+vbase.INFANT_HEALTH_ER_1_INGEST_DATE3,
+vbase.INFANT_HEALTH_ER_1_INJ_DATE1,
+vbase.INFANT_HEALTH_ER_1_INJ_DATE2,
+vbase.INFANT_HEALTH_ER_1_INJ_DATE3,
+vbase.INFANT_HEALTH_ER_1_OTHERDT1,
+vbase.INFANT_HEALTH_ER_1_OTHERDT2,
+vbase.INFANT_HEALTH_ER_1_OTHERDT3,
+vbase.INFANT_HEALTH_HOSP_1_INGEST_DATE1,
+vbase.INFANT_HEALTH_HOSP_1_INGEST_DATE2,
+vbase.INFANT_HEALTH_HOSP_1_INGEST_DATE3,
+vbase.INFANT_HEALTH_HOSP_1_INJ_DATE1,
+vbase.INFANT_HEALTH_HOSP_1_INJ_DATE2,
+vbase.INFANT_HEALTH_HOSP_1_INJ_DATE3,
+
+from survey_views.f_select_ Home_Visit_Encounter (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Infant_Birth  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.INFANT_0_ID_NSO,
+vbase.INFANT_PERSONAL_0_FIRST NAME,
+vbase.INFANT_BIRTH_0_DOB,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.INFANT_BIRTH_1_MULTIPLE_BIRTHS,
+vbase.INFANT_PERSONAL_0_ETHNICITY,
+vbase.INFANT_PERSONAL_0_RACE,
+vbase.INFANT_PERSONAL_0_GENDER,
+vbase.INFANT_BIRTH_1_WEIGHT_GRAMS,
+vbase.INFANT_BIRTH_1_WEIGHT_POUNDS,
+vbase.INFANT_BIRTH_1_GEST_AGE,
+vbase.INFANT_BIRTH_1_NICU,
+vbase.INFANT_BIRTH_1_NICU_DAYS,
+vbase.CLIENT_WEIGHT_0_PREG_GAIN,
+vbase.INFANT_BREASTMILK_0_EVER_BIRTH,
+vbase.INFANT_0_ID_NSO2,
+vbase.INFANT_PERSONAL_0_FIRST NAME2,
+vbase.INFANT_BIRTH_0_DOB2,
+vbase.INFANT_PERSONAL_0_ETHNICITY2,
+vbase.INFANT_PERSONAL_0_ETHNICITY3,
+vbase.INFANT_PERSONAL_0_RACE2,
+vbase.INFANT_PERSONAL_0_RACE3,
+vbase.INFANT_PERSONAL_0_GENDER2,
+vbase.INFANT_BIRTH_1_WEIGHT_GRAMS2,
+vbase.INFANT_BIRTH_1_GEST_AGE2,
+vbase.INFANT_BIRTH_1_NICU2,
+vbase.INFANT_BIRTH_1_NICU_DAYS2,
+vbase.INFANT_0_ID_NSO3,
+vbase.INFANT_BIRTH_0_DOB3,
+vbase.INFANT_PERSONAL_0_GENDER3,
+vbase.INFANT_BIRTH_1_WEIGHT_GRAMS3,
+vbase.INFANT_BIRTH_1_WEIGHT_POUNDS3,
+vbase.INFANT_BIRTH_1_GEST_AGE3,
+vbase.INFANT_BIRTH_1_NICU3,
+vbase.INFANT_BIRTH_1_NICU_DAYS3,
+vbase.INFANT_BREASTMILK_0_EVER_BIRTH2,
+vbase.INFANT_BREASTMILK_0_EVER_BIRTH3,
+vbase.INFANT_BIRTH_1_WEIGHT_MEASURE,
+vbase.INFANT_BIRTH_1_WEIGHT_OUNCES,
+vbase.INFANT_BIRTH_1_WEIGHT_CONVERT_GRAMS,
+vbase.INFANT_BIRTH_1_WEIGHT_MEASURE2,
+vbase.INFANT_BIRTH_1_WEIGHT_MEASURE3,
+vbase.INFANT_BIRTH_1_WEIGHT_OUNCES3,
+vbase.INFANT_BIRTH_1_WEIGHT_POUNDS2,
+vbase.INFANT_BIRTH_1_WEIGHT_OUNCES2,
+vbase.INFANT_PERSONAL_0_FIRST NAME3,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.INFANT_PERSONAL_0_LAST NAME,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.INFANT_BIRTH_0_CLIENT_ER,
+vbase.INFANT_BIRTH_0_CLIENT_URGENT CARE,
+vbase.INFANT_BIRTH_1_NICU_R2,
+vbase.INFANT_BIRTH_1_NICU_R2_2,
+vbase.INFANT_BIRTH_1_NICU_R2_3,
+vbase.INFANT_BIRTH_1_NURSERY_R2,
+vbase.INFANT_BIRTH_1_NURSERY_R2_2,
+vbase.INFANT_BIRTH_1_NURSERY_R2_3,
+vbase.INFANT_BIRTH_0_CLIENT_ER_TIMES,
+vbase.INFANT_BIRTH_0_CLIENT_URGENT CARE_TIMES,
+vbase.INFANT_BIRTH_1_NICU_DAYS_R2,
+vbase.INFANT_BIRTH_1_NICU_DAYS_R2_2,
+vbase.INFANT_BIRTH_1_NICU_DAYS_R2_3,
+vbase.INFANT_BIRTH_1_NURSERY_DAYS_R2,
+vbase.INFANT_BIRTH_1_NURSERY_DAYS_R2_2,
+vbase.INFANT_BIRTH_1_NURSERY_DAYS_R2_3,
+vbase.INFANT_BIRTH_1_NICU_NURSERY_PURPOSE,
+vbase.INFANT_BIRTH_1_NICU_NURSERY_PURPOSE2,
+vbase.INFANT_BIRTH_1_NICU_NURSERY_PURPOSE3,
+vbase.INFANT_BIRTH_1_DELIVERY,
+vbase.INFANT_BIRTH_1_HEARING_SCREEN,
+vbase.INFANT_BIRTH_1_HEARING_SCREEN2,
+vbase.INFANT_BIRTH_1_HEARING_SCREEN3,
+vbase.INFANT_BIRTH_1_LABOR,
+vbase.INFANT_BIRTH_1_NEWBORN_SCREEN,
+vbase.INFANT_BIRTH_1_NEWBORN_SCREEN2,
+vbase.INFANT_BIRTH_1_NEWBORN_SCREEN3,
+vbase.INFANT_BIRTH_1_NICU_NURSERY_PURPOSE_OTHER,
+vbase.INFANT_BIRTH_1_NICU_NURSERY_PURPOSE_OTHER2,
+vbase.INFANT_BIRTH_1_NICU_NURSERY_PURPOSE_OTHER3,
+vbase.Master_SurveyID,
+vbase.INFANT_BIRTH_1_WEIGHT_CONVERT_GRAMS2,
+vbase.INFANT_BIRTH_1_WEIGHT_CONVERT_GRAMS3,
+vbase.LastModified,
+vbase.Archive_Record,
+vbase.INFANT_INSURANCE_TYPE,
+vbase.INFANT_INSURANCE_TYPE2,
+vbase.INFANT_INSURANCE_TYPE3,
+vbase.INFANT_BIRTH_COSLEEP,
+vbase.INFANT_BIRTH_COSLEEP2,
+vbase.INFANT_BIRTH_COSLEEP3,
+vbase.INFANT_BIRTH_READ,
+vbase.INFANT_BIRTH_READ2,
+vbase.INFANT_BIRTH_READ3,
+vbase.INFANT_BIRTH_SLEEP_BACK,
+vbase.INFANT_BIRTH_SLEEP_BACK2,
+vbase.INFANT_BIRTH_SLEEP_BACK3,
+vbase.INFANT_BIRTH_SLEEP_BEDDING,
+vbase.INFANT_BIRTH_SLEEP_BEDDING2,
+vbase.INFANT_BIRTH_SLEEP_BEDDING3,
+vbase.INFANT_INSURANCE,
+vbase.INFANT_INSURANCE2,
+vbase.INFANT_INSURANCE3,
+vbase.INFANT_INSURANCE_OTHER,
+vbase.INFANT_INSURANCE_OTHER2,
+vbase.INFANT_INSURANCE_OTHER3,
+
+from survey_views.f_select_ Infant_Birth (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Infant_Health  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.INFANT_0_ID_NSO,
+vbase.INFANT_PERSONAL_0_NAME_FIRST,
+vbase.INFANT_BIRTH_0_DOB,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.INFANT_HEALTH_PROVIDER_0_PRIMARY,
+vbase.INFANT_HEALTH_IMMUNIZ_0_UPDATE,
+vbase.INFANT_HEALTH_IMMUNIZ_1_RECORD,
+vbase.INFANT_HEALTH_LEAD_0_TEST,
+vbase.INFANT_HEALTH_HEIGHT_0_INCHES,
+vbase.INFANT_HEALTH_HEIGHT_1_PERCENT,
+vbase.INFANT_HEALTH_HEAD_0_CIRC_INCHES,
+vbase.INFANT_HEALTH_ER_0_HAD_VISIT,
+vbase.INFANT_HEALTH_ER_1_TYPE,
+vbase.INFANT_HEALTH_ER_1_INJ_DATE1,
+vbase.INFANT_HEALTH_ER_1_INJ_DATE2,
+vbase.INFANT_HEALTH_ER_1_INJ_DATE3,
+vbase.INFANT_HEALTH_ER_1_INGEST_DATE1,
+vbase.INFANT_HEALTH_ER_1_INGEST_DATE2,
+vbase.INFANT_HEALTH_ER_1_INGEST_DATE3,
+vbase.INFANT_HEALTH_HOSP_0_HAD_VISIT,
+vbase.INFANT_BREASTMILK_0_EVER_IHC,
+vbase.INFANT_BREASTMILK_1_CONT,
+vbase.INFANT_HEALTH_HOSP_1_INJ_DATE1,
+vbase.INFANT_HEALTH_HOSP_1_INJ_DATE2,
+vbase.INFANT_HEALTH_HOSP_1_INJ_DATE3,
+vbase.INFANT_HEALTH_HOSP_1_INGEST_DATE1,
+vbase.INFANT_HEALTH_HOSP_1_INGEST_DATE2,
+vbase.INFANT_HEALTH_HOSP_1_INGEST_DATE3,
+vbase.INFANT_HEALTH_HOSP_1_TYPE,
+vbase.INFANT_BREASTMILK_1_AGE_STOP,
+vbase.INFANT_BREASTMILK_1_WEEK_STOP,
+vbase.INFANT_BREASTMILK_1_EXCLUSIVE_WKS,
+vbase.INFANT_SOCIAL_SERVICES_0_REFERRAL,
+vbase.INFANT_SOCIAL_SERVICES_1_REFDATE1,
+vbase.INFANT_SOCIAL_SERVICES_1_REFDATE2,
+vbase.INFANT_SOCIAL_SERVICES_1_REFDATE3,
+vbase.INFANT_SOCIAL_SERVICES_1_NHV_REFERRAL,
+vbase.INFANT_SOCIAL_SERVICES_1_NHV_REFDATE1,
+vbase.INFANT_SOCIAL_SERVICES_1_NHV_REFDATE2,
+vbase.INFANT_SOCIAL_SERVICES_1_NHV_REFDATE3,
+vbase.INFANT_HEALTH_WEIGHT_0_POUNDS,
+vbase.INFANT_HEALTH_WEIGHT_1_OUNCES,
+vbase.INFANT_HEALTH_WEIGHT_1_OZ,
+vbase.INFANT_HEALTH_WEIGHT_1_PERCENT,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.INFANT_AGES_STAGES_1_COMM,
+vbase.INFANT_AGES_STAGES_0_VERSION,
+vbase.INFANT_AGES_STAGES_1_GMOTOR,
+vbase.INFANT_AGES_STAGES_1_FMOTOR,
+vbase.INFANT_AGES_STAGES_1_PSOLVE,
+vbase.INFANT_AGES_STAGES_1_PSOCIAL,
+vbase.INFANT_AGES_STAGES_SE_0_EMOTIONAL,
+vbase.INFANT_PERSONAL_0_NAME_LAST,
+vbase.INFANT_HEALTH_HEAD_1_REPORT,
+vbase.INFANT_HEALTH_HEIGHT_1_REPORT,
+vbase.INFANT_HEALTH_PROVIDER_0_APPT,
+vbase.INFANT_HEALTH_WEIGHT_1_REPORT,
+vbase.INFANT_HEALTH_ER_1_OTHERDT1,
+vbase.INFANT_HEALTH_ER_1_INGEST_TREAT1,
+vbase.INFANT_HEALTH_ER_1_INGEST_TREAT2,
+vbase.INFANT_HEALTH_ER_1_INGEST_TREAT3,
+vbase.INFANT_HEALTH_ER_1_INJ_TREAT1,
+vbase.INFANT_HEALTH_ER_1_INJ_TREAT2,
+vbase.INFANT_HEALTH_ER_1_OTHER,
+vbase.INFANT_HEALTH_ER_1_OTHER_REASON1,
+vbase.INFANT_HEALTH_ER_1_OTHER_REASON2,
+vbase.INFANT_HEALTH_ER_1_OTHER_REASON3,
+vbase.INFANT_HEALTH_ER_1_OTHERDT2,
+vbase.INFANT_HEALTH_ER_1_OTHERDT3,
+vbase.INFANT_HOME_0_TOTAL,
+vbase.INFANT_HOME_1_ACCEPTANCE,
+vbase.INFANT_HOME_1_EXPERIENCE,
+vbase.INFANT_HOME_1_INVOLVEMENT,
+vbase.INFANT_HOME_1_LEARNING,
+vbase.INFANT_HOME_1_ORGANIZATION,
+vbase.INFANT_HOME_1_RESPONSIVITY,
+vbase.INFANT_SOCIAL_SERVICES_1_NHV_REASON1,
+vbase.INFANT_SOCIAL_SERVICES_1_NHV_REASON2,
+vbase.INFANT_SOCIAL_SERVICES_1_NHV_REASON3,
+vbase.INFANT_SOCIAL_SERVICES_1_REASON1,
+vbase.INFANT_SOCIAL_SERVICES_1_REASON2,
+vbase.INFANT_SOCIAL_SERVICES_1_REASON3,
+vbase.NFANT_HEALTH_ER_1_INJ_TREAT3,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.INFANT_HEALTH_ER_1_INJ_ERvsUC1,
+vbase.INFANT_HEALTH_PROVIDER_0_APPT_R2,
+vbase.INFANT_HEALTH_PROVIDER_0_APPT_DETAILSR2,
+vbase.INFANT_HEALTH_ER_1_INGEST_ERvsUC1,
+vbase.INFANT_HEALTH_ER_1_INGEST_ERvsUC2,
+vbase.INFANT_HEALTH_ER_1_INGEST_ERvsUC3,
+vbase.INFANT_HEALTH_ER_1_INJ_ERvsUC2,
+vbase.INFANT_HEALTH_ER_1_OTHER_ERvsUC1,
+vbase.INFANT_HEALTH_ER_1_OTHER_ERvsUC2,
+vbase.INFANT_HEALTH_NO_ASQ_COMM,
+vbase.INFANT_HEALTH_NO_ASQ_FINE,
+vbase.INFANT_HEALTH_NO_ASQ_GROSS,
+vbase.INFANT_HEALTH_NO_ASQ_PERSONAL,
+vbase.INFANT_HEALTH_NO_ASQ_PROBLEM,
+vbase.INFANT_HEALTH_NO_ASQ_TOTAL,
+vbase.INFANT_HEALTH_ER_1_INJ_ERvsUC3,
+vbase.INFANT_HEALTH_ER_1_OTHER_ERvsUC3,
+vbase.INFANT_HEALTH_ER_1_INJ_TREAT3,
+vbase.INFANT_PERSONAL_0_SSN,
+vbase.INFANT_HEALTH_ER_1_INGEST_DAYS1,
+vbase.INFANT_HEALTH_ER_1_INGEST_DAYS2,
+vbase.INFANT_HEALTH_ER_1_INGEST_DAYS3,
+vbase.INFANT_HEALTH_ER_1_INJ_DAYS1,
+vbase.INFANT_HEALTH_ER_1_INJ_DAYS2,
+vbase.INFANT_HEALTH_ER_1_INJ_DAYS3,
+vbase.Master_SurveyID,
+vbase.INFANT_HEALTH_IMMUNIZ_UPDATE_NO,
+vbase.INFANT_HEALTH_IMMUNIZ_UPDATE_YES,
+vbase.INFANT_HEALTH_DENTIST,
+vbase.INFANT_HEALTH_DENTIST_STILL_EBF,
+vbase.INFANT_SOCIAL_SERVICES_1_NHV_REASON1_OTHER,
+vbase.INFANT_SOCIAL_SERVICES_1_NHV_REASON2_OTHER,
+vbase.INFANT_SOCIAL_SERVICES_1_NHV_REASON3_OTHER,
+vbase.INFANT_SOCIAL_SERVICES_1_REASON1_OTHER,
+vbase.INFANT_SOCIAL_SERVICES_1_REASON2_OTHER,
+vbase.INFANT_SOCIAL_SERVICES_1_REASON3_OTHER,
+vbase.Archive_Record,
+vbase.INFANT_INSURANCE_TYPE,
+vbase.INFANT_AGES_STAGES_SE_VERSION,
+vbase.INFANT_BIRTH_COSLEEP,
+vbase.INFANT_BIRTH_READ,
+vbase.INFANT_BIRTH_SLEEP_BACK,
+vbase.INFANT_BIRTH_SLEEP_BEDDING,
+vbase.INFANT_HEALTH_DENTAL_SOURCE,
+vbase.INFANT_INSURANCE,
+vbase.INFANT_INSURANCE_OTHER,
+
+from survey_views.f_select_ Infant_Health (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Maternal_Health  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.CLIENT_HEALTH_PREGNANCY_0_LIVE_BIRTHS,
+vbase.CLIENT_HEALTH_PREGNANCY_0_DOCTOR_VISIT,
+vbase.CLIENT_HEALTH_PREGNANCY_0_WKS_PRENATAL_CARE,
+vbase.CLIENT_HEALTH_PREGNANCY_0_EDD,
+vbase.CLIENT_HEALTH_GENERAL_0_CONCERNS,
+vbase.CLIENT_HEALTH_GENERAL_WEIGHT_0_POUNDS,
+vbase.CLIENT_HEALTH_BELIEF_0_LITTLE_CONTROL,
+vbase.CLIENT_HEALTH_BELIEF_0_CANT_SOLVE,
+vbase.CLIENT_HEALTH_BELIEF_0_LITTLE_CAN_DO,
+vbase.CLIENT_HEALTH_BELIEF_0_FEEL_HELPLESS,
+vbase.CLIENT_HEALTH_BELIEF_0_FEEL_PUSHED_AROUND,
+vbase.CLIENT_HEALTH_BELIEF_0_FUTURE_CONTROL,
+vbase.CLIENT_HEALTH_BELIEF_ 0_DO_ANYTHING,
+vbase.CLIENT_HEALTH_GENERAL_0_OTHER,
+vbase.CLIENT_HEALTH_GENERAL_HEIGHT_0_FEET,
+vbase.CLIENT_HEALTH_GENERAL_HEIGHT_1_INCHES,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.LA_CTY_MENTAL_MAT_HEALTH,
+vbase.LA_CTY_PHYSICAL_MAT_HEALTH,
+vbase.LA_CTY_DX_OTHER_MAT_HEALTH,
+vbase.LA_CTY_DSM_DX_MAT_HEALTH,
+vbase.CLIENT_HEALTH_GENERAL_0_PRE_GEST_BP,
+vbase.CLIENT_HEALTH_GENERAL_0_PRE_GEST_DIABETES,
+vbase.CLIENT_HEALTH_GENERAL_0_PRE_GEST_HEART,
+vbase.CLIENT_HEALTH_GENERAL_0_PRE_GEST_KIDNEYS,
+vbase.CLIENT_HEALTH_GENERAL_0_PRE_GEST_STI,
+vbase.CLIENT_HEALTH_GENERAL_0_PRE_GEST_UTI,
+vbase.CLIENT_HEALTH_GENERAL_0_PRE_GEST_VI,
+vbase.CLIENT_HEALTH_GENERAL_CURRENT_WEIGHT_0_POUNDS,
+vbase.Master_SurveyID,
+vbase.CLIENT_HEALTH_GENERAL_0_CONCERNS2,
+vbase.CLIENT_HEALTH_GENERAL_0_ADDICTION,
+vbase.CLIENT_HEALTH_GENERAL_0_MENTAL_HEALTH,
+
+from survey_views.f_select_ Maternal_Health (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ MN12MosInfant  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.Master_SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.MN_CLIENT_INSURANCE_RESOURCE,
+vbase.MN_INFANT_INSURANCE_RESOURCE,
+vbase.MN_ASQ3_12MOS,
+vbase.MN_ASQ3_4MOS,
+vbase.MN_ASQ3_REFERRAL,
+vbase.MN_ASQ3_REFERRAL_12MOS,
+vbase.MN_ASQSE_12MOS,
+vbase.MN_ASQSE_REFERRAL,
+vbase.MN_CLIENT_INSURANCE,
+vbase.MN_COMPLETED_EDUCATION_PROGRAMS,
+vbase.MN_CPA_FILE,
+vbase.MN_CPA_FIRST_TIME,
+vbase.MN_CPA_SUBSTANTIATED,
+vbase.MN_FURTHER_SCREEN,
+vbase.MN_FURTHER_SCREEN_12MOS,
+vbase.MN_FURTHER_SCREEN_ASQ3,
+vbase.MN_FURTHER_SCREEN_ASQSE,
+vbase.MN_INFANT_INSURANCE,
+vbase.MN_SITE,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.INFANT_0_ID_NSO,
+vbase.INFANT_PERSONAL_0_NAME_FIRST,
+vbase.INFANT_PERSONAL_0_NAME_LAST,
+vbase.MN_CLIENT_INSURANCE_RESOURCE_OTHER,
+vbase.MN_COMPLETED_EDUCATION_PROGRAMS_YES,
+vbase.MN_INFANT_0_ID_2,
+vbase.MN_INFANT_INSURANCE_RESOURCE_OTHER,
+vbase.MN_TEAM_NAME,
+vbase.MN_NCAST_CAREGIVER,
+vbase.MN_NCAST_CLARITY_CUES,
+vbase.MN_NCAST_COGN_GROWTH,
+vbase.MN_NCAST_DISTRESS,
+vbase.MN_NCAST_SE_GROWTH,
+vbase.MN_NCAST_SENS_CUES,
+vbase.MN_TOTAL_HV,
+vbase.MN_DATA_STAFF_PERSONAL_0_NAME,
+vbase.NURSE_PERSONAL_0_NAME,
+
+from survey_views.f_select_ MN12MosInfant (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ MN18MosToddler  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.Master_SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.MN_CLIENT_INSURANCE_RESOURCE,
+vbase.MN_INFANT_INSURANCE_RESOURCE,
+vbase.MN_CLIENT_INSURANCE,
+vbase.MN_COMPLETED_EDUCATION_PROGRAMS,
+vbase.MN_INFANT_INSURANCE,
+vbase.MN_SITE,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.INFANT_0_ID_NSO,
+vbase.INFANT_PERSONAL_0_NAME_FIRST,
+vbase.INFANT_PERSONAL_0_NAME_LAST,
+vbase.MN_CLIENT_INSURANCE_RESOURCE_OTHER,
+vbase.MN_COMPLETED_EDUCATION_PROGRAMS_YES,
+vbase.MN_INFANT_0_ID_2,
+vbase.MN_INFANT_INSURANCE_RESOURCE_OTHER,
+vbase.MN_TEAM_NAME,
+vbase.MN_TOTAL_HV,
+vbase.MN_DATA_STAFF_PERSONAL_0_NAME,
+vbase.NURSE_PERSONAL_0_NAME,
+
+from survey_views.f_select_ MN18MosToddler (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ MN24MosToddler  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.Master_SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.MN_CLIENT_INSURANCE_RESOURCE,
+vbase.MN_INFANT_INSURANCE_RESOURCE,
+vbase.MN_CLIENT_INSURANCE,
+vbase.MN_COMPLETED_EDUCATION_PROGRAMS,
+vbase.MN_INFANT_INSURANCE,
+vbase.MN_SITE,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.INFANT_0_ID_NSO,
+vbase.INFANT_PERSONAL_0_NAME_FIRST,
+vbase.INFANT_PERSONAL_0_NAME_LAST,
+vbase.MN_CLIENT_INSURANCE_RESOURCE_OTHER,
+vbase.MN_COMPLETED_EDUCATION_PROGRAMS_YES,
+vbase.MN_INFANT_0_ID_2,
+vbase.MN_INFANT_INSURANCE_RESOURCE_OTHER,
+vbase.MN_TEAM_NAME,
+vbase.MN_TOTAL_HV,
+vbase.MN_DATA_STAFF_PERSONAL_0_NAME,
+vbase.NURSE_PERSONAL_0_NAME,
+
+from survey_views.f_select_ MN24MosToddler (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ MN6MosInfant  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.Master_SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.MN_CLIENT_INSURANCE_RESOURCE,
+vbase.MN_INFANT_INSURANCE_RESOURCE,
+vbase.MN_ASQ3_4MOS,
+vbase.MN_ASQ3_REFERRAL,
+vbase.MN_CLIENT_INSURANCE,
+vbase.MN_COMPLETED_EDUCATION_PROGRAMS,
+vbase.MN_CPA_FILE,
+vbase.MN_CPA_FIRST_TIME,
+vbase.MN_CPA_SUBSTANTIATED,
+vbase.MN_FOLIC_ACID,
+vbase.MN_FURTHER_SCREEN,
+vbase.MN_FURTHER_SCREEN_ASQ3,
+vbase.MN_INFANT_INSURANCE,
+vbase.MN_SITE,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.INFANT_0_ID_NSO,
+vbase.INFANT_PERSONAL_0_NAME_FIRST,
+vbase.INFANT_PERSONAL_0_NAME_LAST,
+vbase.MN_CLIENT_INSURANCE_RESOURCE_OTHER,
+vbase.MN_COMPLETED_EDUCATION_PROGRAMS_YES,
+vbase.MN_INFANT_0_ID_2,
+vbase.MN_INFANT_INSURANCE_RESOURCE_OTHER,
+vbase.MN_TEAM_NAME,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.MN_NCAST_CAREGIVER,
+vbase.MN_NCAST_CLARITY_CUES,
+vbase.MN_NCAST_COGN_GROWTH,
+vbase.MN_NCAST_DISTRESS,
+vbase.MN_NCAST_SE_GROWTH,
+vbase.MN_NCAST_SENS_CUES,
+vbase.MN_TOTAL_HV,
+vbase.MN_DATA_STAFF_PERSONAL_0_NAME,
+vbase.NURSE_PERSONAL_0_NAME,
+
+from survey_views.f_select_ MN6MosInfant (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ MNChildIntake  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.Master_SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.MN_CLIENT_INSURANCE_RESOURCE,
+vbase.MN_INFANT_INSURANCE_RESOURCE,
+vbase.MN_CLIENT_INSURANCE,
+vbase.MN_COMPLETED_EDUCATION_PROGRAMS_ENROLLMENT,
+vbase.MN_INFANT_INSURANCE,
+vbase.MN_SITE,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.INFANT_0_ID_NSO,
+vbase.INFANT_PERSONAL_0_NAME_FIRST,
+vbase.INFANT_PERSONAL_0_NAME_LAST,
+vbase.MN_CLIENT_INSURANCE_RESOURCE_OTHER,
+vbase.MN_COMPLETED_EDUCATION_PROGRAMS_ENROLLMENT_YES,
+vbase.MN_INFANT_0_ID_2,
+vbase.MN_INFANT_INSURANCE_RESOURCE_OTHER,
+vbase.MN_TOTAL_HV,
+vbase.MN_DATA_STAFF_PERSONAL_0_NAME,
+vbase.NURSE_PERSONAL_0_NAME,
+
+from survey_views.f_select_ MNChildIntake (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ MNPrimaryCaregiverClosure  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.Master_SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.MN_CPA_FILE,
+vbase.MN_CPA_FIRST_TIME,
+vbase.MN_CPA_SUBSTANTIATED,
+vbase.MN_SITE,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.INFANT_0_ID_NSO,
+vbase.INFANT_PERSONAL_0_NAME_FIRST,
+vbase.MN_INFANT_0_ID_2,
+vbase.MN_TEAM_NAME,
+vbase.MN_DATA_STAFF_PERSONAL_0_NAME,
+vbase.NURSE_PERSONAL_0_NAME,
+
+from survey_views.f_select_ MNPrimaryCaregiverClosure (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ MNPrimaryCaregiverIntake  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.Master_SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.MN_CLIENT_INSURANCE_RESOURCE,
+vbase.MN_CLIENT_INSURANCE,
+vbase.MN_COMPLETED_EDUCATION_PROGRAMS,
+vbase.MN_SITE,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.MN_CLIENT_INSURANCE_RESOURCE_OTHER,
+vbase.MN_COMPLETED_EDUCATION_PROGRAMS_YES,
+vbase.MN_TEAM_NAME,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.MN_HOUSEHOLD_SIZE,
+vbase.MN_WKS_PREGNANT,
+vbase.MN_DATA_STAFF_PERSONAL_0_NAME,
+vbase.NURSE_PERSONAL_0_NAME,
+
+from survey_views.f_select_ MNPrimaryCaregiverIntake (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ New_Hire  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.Validation_Ind,
+vbase.Validation_Comment,
+vbase.Entity_ID_Mapped,
+vbase.NEW_HIRE_0_HIRE_DATE,
+vbase.NEW_HIRE_1_NAME_FIRST,
+vbase.NEW_HIRE_0_NAME_LAST,
+vbase.NEW_HIRE_1_ROLE,
+vbase.NEW_HIRE_ADDRESS_1_STREET,
+vbase.NEW_HIRE_ADDRESS_1_CITY,
+vbase.NEW_HIRE_ADDRESS_1_STATE,
+vbase.NEW_HIRE_ADDRESS_0_ZIP,
+vbase.NEW_HIRE_0_PHONE,
+vbase.NEW_HIRE_0_EMAIL,
+vbase.NEW_HIRE_SUP_0_PHONE,
+vbase.NEW_HIRE_SUP_0_EMAIL,
+vbase.NEW_HIRE_0_REASON_FOR_HIRE,
+vbase.NEW_HIRE_0_REASON_FOR_HIRE_REPLACE,
+vbase.NEW_HIRE_0_FTE,
+vbase.NEW_HIRE_0_PREVIOUS_NFP_WORK,
+vbase.NEW_HIRE_0_REASON_NFP_WORK_DESC,
+vbase.NEW_HIRE_0_EDUC_COMPLETED,
+vbase.NEW_HIRE_0_START_DATE,
+vbase.NEW_HIRE_SUP_0_NAME,
+vbase.NEW_HIRE_0_TEAM_NAME,
+vbase.NEW_HIRE_0_ACCESS_LEVEL,
+vbase.DISP_CODE,
+vbase.REVIEWED_BY,
+vbase.REVIEWED_DATE,
+vbase.ADDED_TO_ETO,
+vbase.ADDED_TO_ETO_BY,
+vbase.ETO_LOGIN_EMAILED,
+vbase.ETO_LOGIN_EMAILED_BY,
+vbase.ADDED_TO_CMS,
+vbase.ADDED_TO_CMS_BY,
+vbase.GEN_COMMENTS,
+vbase.CHANGE_STATUS_COMPLETED,
+vbase.NEW_HIRE_1_DOB,
+vbase.NEW_HIRE_1_PREVIOUS_WORK_AGENCY,
+vbase.NEW_HIRE_1_PREVIOUS_WORK_CITY,
+vbase.NEW_HIRE_1_PREVIOUS_WORK_DATE1,
+vbase.NEW_HIRE_1_PREVIOUS_WORK_DATE2,
+vbase.NEW_HIRE_1_PREVIOUS_WORK_NAME,
+vbase.NEW_HIRE_1_PREVIOUS_WORK_STATE,
+vbase.NEW_HIRE_1_REPLACE_STAFF_TERM,
+vbase.NEW_HIRE_ER_0_LNAME,
+vbase.NEW_HIRE_ER_1_FNAME,
+vbase.NEW_HIRE_ER_1_PHONE,
+vbase.NEW_HIRE_ADDRESS_1_STATE_OTHR,
+vbase.NEW_HIRE_SUP_0_NAME_OTHR,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.NEW_HIRE_ADDITIONAL_INFO,
+vbase.Master_SurveyID,
+
+from survey_views.f_select_ New_Hire (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Participants_and_Referrals  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. Client_Id,
+vbase.Site_ID,
+vbase.Last_Name,
+vbase.First_Name,
+vbase.Middle_Name,
+vbase.Prefix,
+vbase.Suffix,
+vbase.DOB,
+vbase.Gender,
+vbase.Marital_Status,
+vbase.Address1,
+vbase.Address2,
+vbase.City,
+vbase.State,
+vbase.ZipCode,
+vbase.county,
+vbase.Email,
+vbase.Home_Phone,
+vbase.Cell_Phone,
+vbase.Work_Phone,
+vbase.Work_Phone_Extension,
+vbase.Pager,
+vbase.Date_Created,
+vbase.Audit_Date,
+vbase.Audit_Staff_ID,
+vbase.Disabled,
+vbase.Funding_Entity_ID,
+vbase.Referral_Entity_ID,
+vbase.Assigned_Staff_ID,
+vbase.CRM_Client_ID,
+vbase.Last_CRM_Update,
+vbase.flag_update_crm,
+vbase.DEMO_CLIENT_INTAKE_0_ETHNICITY,
+vbase.DEMO_CLIENT_INTAKE_0_RACE,
+vbase.DEMO_CLIENT_INTAKE_0_RACE_10,
+vbase.DEMO_CLIENT_INTAKE_0_LANGUAGE,
+vbase.CaseNumber,
+vbase.Last_Demog_Update,
+vbase.CLIENT_PERSONAL_LANGUAGE_1_DESC,
+vbase.DataSource,
+vbase.ReasonForReferral,
+vbase.DEMO_CLIENT_INTAKE_0_ANCESTRY,
+vbase.DW_AuditDate,
+vbase.SSN,
+vbase.CLIENT_MEDICAID_NUMBER,
+vbase.CHILD_MEDICAID_NUMBER,
+vbase.INFANT_BIRTH_0_DOB,
+vbase.LastModified,
+vbase.PFS_STUDY_VULNERABLE_POP,
+vbase.DECLINED_CELL,
+vbase.ETO_ARCHIVED,
+
+from survey_views.f_select_ Participants_and_Referrals (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ PHQ-9  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.Need from Kim,
+vbase.NeedFromKim,
+vbase.CLIENT_PHQ9_0_TOTAL_SCORE,
+vbase.CLIENT_PHQ9_1_CONCENTRATION,
+vbase.CLIENT_PHQ9_1_DIFFICULTY,
+vbase.CLIENT_PHQ9_1_FEEL_BAD,
+vbase.CLIENT_PHQ9_1_FEEL_DEPRESSED,
+vbase.CLIENT_PHQ9_1_FEEL_TIRED,
+vbase.CLIENT_PHQ9_1_HURT_SELF,
+vbase.CLIENT_PHQ9_1_LITTLE_INTEREST,
+vbase.CLIENT_PHQ9_1_MOVE_SPEAK,
+vbase.CLIENT_PHQ9_1_TROUBLE_EAT,
+vbase.CLIENT_PHQ9_1_TROUBLE_SLEEP,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.Master_SurveyID,
+
+from survey_views.f_select_ PHQ-9 (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ ProgramsAndSites  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. ProgramID,
+vbase.ProgramName,
+vbase.SiteID,
+vbase.Site,
+vbase.ExportID,
+
+from survey_views.f_select_ ProgramsAndSites (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Referrals_To_NFP  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.REFERRAL_PROSPECT_0_SOURCE_CODE,
+vbase.REFERRAL_SOURCE_PRIMARY_0_NAME,
+vbase.REFERRAL_SOURCE_PRIMARY_1_LOCATION,
+vbase.REFERRAL_SOURCE_SECONDARY_0_NAME,
+vbase.REFERRAL_SOURCE_SECONDARY_1_LOCATION,
+vbase.REFERRAL_PROSPECT_0_NOTES,
+vbase.REFERRAL_PROSPECT_DEMO_1_PLANG,
+vbase.REFERRAL_PROSPECT_DEMO_1_NAME_FIRST,
+vbase.REFERRAL_PROSPECT_DEMO_0_NAME_LAST,
+vbase.REFERRAL_PROSPECT_DEMO_1_DOB,
+vbase.REFERRAL_PROSPECT_DEMO_1_STREET,
+vbase.REFERRAL_PROSPECT_DEMO_1_STREET2,
+vbase.REFERRAL_PROSPECT_DEMO_1_ZIP,
+vbase.REFERRAL_PROSPECT_DEMO_1_WORK,
+vbase.REFERRAL_PROSPECT_DEMO_1_PHONE_HOME,
+vbase.REFERRAL_PROSPECT_DEMO_1_CELL,
+vbase.REFERRAL_PROSPECT_DEMO_1_EMAIL,
+vbase.REFERRAL_PROSPECT_DEMO_1_EDD,
+vbase.REFERRAL_PROSPECT_0_WAIT_LIST,
+vbase.REFERRAL_PROSPECT_0_FOLLOWUP_NURSE,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.LA_CTY_REFERRAL_SCHOOL,
+vbase.LA_CTY_REFERRAL_SOURCE_OTH,
+vbase.CLIENT_0_ID_NSO,
+vbase.Master_SurveyID,
+
+from survey_views.f_select_ Referrals_To_NFP (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Referrals_To_Services  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.SERVICE_REFER_0_TANF,
+vbase.SERVICE_REFER_0_FOODSTAMP,
+vbase.SERVICE_REFER_0_SOCIAL_SECURITY,
+vbase.SERVICE_REFER_0_UNEMPLOYMENT,
+vbase.SERVICE_REFER_0_SUBSID_CHILD_CARE,
+vbase.SERVICE_REFER_0_IPV,
+vbase.SERVICE_REFER_0_CPS,
+vbase.SERVICE_REFER_0_MENTAL,
+vbase.SERVICE_REFER_0_RELATIONSHIP_COUNSELING,
+vbase.SERVICE_REFER_0_SMOKE,
+vbase.SERVICE_REFER_0_ALCOHOL_ABUSE,
+vbase.SERVICE_REFER_0_MEDICAID,
+vbase.SERVICE_REFER_0_SCHIP,
+vbase.SERVICE_REFER_0_PRIVATE_INSURANCE,
+vbase.SERVICE_REFER_0_SPECIAL_NEEDS,
+vbase.SERVICE_REFER_0_PCP,
+vbase.SERVICE_REFER_0_DEVELOPMENTAL_DISABILITY,
+vbase.SERVICE_REFER_0_WIC_CLIENT,
+vbase.SERVICE_REFER_0_CHILD_CARE,
+vbase.SERVICE_REFER_0_JOB_TRAINING,
+vbase.SERVICE_REFER_0_HOUSING,
+vbase.SERVICE_REFER_0_TRANSPORTATION,
+vbase.SERVICE_REFER_0_PREVENT_INJURY,
+vbase.SERVICE_REFER_0_BIRTH_EDUC_CLASS,
+vbase.SERVICE_REFER_0_LACTATION,
+vbase.SERVICE_REFER_0_GED,
+vbase.SERVICE_REFER_0_HIGHER_EDUC,
+vbase.SERVICE_REFER_0_CHARITY,
+vbase.SERVICE_REFER_0_LEGAL_CLIENT,
+vbase.SERVICE_REFER_0_PATERNITY,
+vbase.SERVICE_REFER_0_CHILD_SUPPORT,
+vbase.SERVICE_REFER_0_ADOPTION,
+vbase.SERIVCE_REFER_0_OTHER1_DESC,
+vbase.SERIVCE_REFER_0_OTHER2_DESC,
+vbase.SERIVCE_REFER_0_OTHER3_DESC,
+vbase.SERVICE_REFER_0_DRUG_ABUSE,
+vbase.SERVICE_REFER_0_OTHER,
+vbase.REFERRALS_TO_0_FORM_TYPE,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.SERVICE_REFER_0_DENTAL,
+vbase.SERVICE_REFER_0_INTERVENTION,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.SERVICE_REFER_0_PCP_R2,
+vbase.SERVICE_REFER_INDIAN_HEALTH,
+vbase.SERVICE_REFER_MILITARY_INS,
+vbase.Master_SurveyID,
+
+from survey_views.f_select_ Referrals_To_Services (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Relationships  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.CLIENT_ABUSE_EMOTION_0_PHYSICAL_PARTNER,
+vbase.CLIENT_ABUSE_HIT_0_SLAP_PARTNER,
+vbase.CLIENT_ABUSE_TIMES_0_HURT_LAST_YR,
+vbase.CLIENT_ABUSE_TIMES_0_SLAP_PUSH_PARTNER,
+vbase.CLIENT_ABUSE_TIMES_0_PUNCH_KICK_PARTNER,
+vbase.CLIENT_ABUSE_TIMES_0_BURN_BRUISE_PARTNER,
+vbase.CLIENT_ABUSE_TIMES_0_HEAD_PERM_INJURY_PARTNER,
+vbase.CLIENT_ABUSE_TIMES_0_ABUSE_WEAPON_PARTNER,
+vbase.CLIENT_ABUSE_FORCED_0_SEX,
+vbase.CLIENT_ABUSE_FORCED_1_SEX_LAST_YR,
+vbase.CLIENT_ABUSE_HIT_0_SLAP_LAST_TIME,
+vbase.CLIENT_ABUSE_TIMES_0_HURT_SINCE_LAST_TIME,
+vbase.CLIENT_ABUSE_AFRAID_0_PARTNER,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.ABUSE_EMOTION_0_PHYSICAL_PARTNER,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.Master_SurveyID,
+
+from survey_views.f_select_ Relationships (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Staff  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. Entity_Id,
+vbase.Site_ID,
+vbase.Full_Name,
+vbase.Last_Name,
+vbase.First_Name,
+vbase.Middle_Name,
+vbase.Prefix,
+vbase.Suffix,
+vbase.Entity_Type_ID,
+vbase.Entity_Type,
+vbase.Entity_Subtype,
+vbase.Entity_Subtype_ID,
+vbase.Program_ID,
+vbase.Address1,
+vbase.Address2,
+vbase.City,
+vbase.State,
+vbase.ZipCode,
+vbase.county,
+vbase.Email,
+vbase.Phone1,
+vbase.Date_Created,
+vbase.Audit_Date,
+vbase.Contacts_Audit_Date,
+vbase.Audit_Staff_ID,
+vbase.Disabled,
+vbase.CRM_ContactId,
+vbase.LMS_StudentID,
+vbase.Supervised_By_ID,
+vbase.Termination_Date,
+vbase.Last_CRM_Update,
+vbase.Last_LMS_Update,
+vbase.flag_update_LMS,
+vbase.flag_update_crm,
+vbase.NHV_ID,
+vbase.NURSE_0_PROGRAM_POSITION,
+vbase.NURSE_0_ETHNICITY,
+vbase.NURSE_1_RACE,
+vbase.NURSE_1_RACE_0,
+vbase.NURSE_1_RACE_1,
+vbase.NURSE_1_RACE_2,
+vbase.NURSE_1_RACE_3,
+vbase.NURSE_1_RACE_4,
+vbase.NURSE_1_RACE_5,
+vbase.NURSE_0_GENDER,
+vbase.NURSE_0_YEAR_COMMHEALTH_EXPERIENCE,
+vbase.NURSE_0_YEAR_NURSING_EXPERIENCE,
+vbase.NURSE_0_YEAR_MATERNAL_EXPERIENCE,
+vbase.NURSE_0_FIRST_HOME_VISIT_DATE,
+vbase.NURSE_0_LANGUAGE,
+vbase.START_DATE,
+vbase.NURSE_0_YEAR_SUPERVISOR_EXPERIENCE,
+vbase.NURSE_PERSONAL_0_ER_CONTACT,
+vbase.NURSE_0_BIRTH_YEAR,
+vbase.NURSE_0_ID_AGENCY,
+vbase.Last_Attribute_Update,
+vbase.flag_disregard_disabled,
+vbase.NURSE_0_PROGRAM_POSITION1,
+vbase.NURSE_0_PROGRAM_POSITION2,
+vbase.NURSE_PROFESSIONAL_1_REASON_HIRE,
+vbase.flag_dont_push_to_CRM,
+vbase.DataSource,
+vbase.ETO_LoginID,
+vbase.ORIGINAL_START_DATE,
+vbase.ETO_IntegrationID,
+vbase.DW_Contact_ID,
+
+from survey_views.f_select_ Staff (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Staff_Update  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.Entity_ID_Mapped,
+vbase.NURSE_STATUS_0_CHANGE_START_DATE,
+vbase.NURSE_STATUS_0_CHANGE_LEAVE_START,
+vbase.NURSE_STATUS_0_CHANGE_LEAVE_END,
+vbase.NURSE_STATUS_0_CHANGE_TERMINATE_DATE,
+vbase.NURSE_PROFESSIONAL_1_NEW_ROLE,
+vbase.NURSE_PROFESSIONAL_1_HOME_VISITOR_FTE,
+vbase.NURSE_PROFESSIONAL_1_SUPERVISOR_FTE,
+vbase.NURSE_PROFESSIONAL_1_ADMIN_ASST_FTE,
+vbase.NURSE_STATUS_0_CHANGE_SPECIFIC,
+vbase.NURSE_EDUCATION_0_NURSING_DEGREES,
+vbase.NURSE_EDUCATION_1_OTHER_DEGREES,
+vbase.DISPOSITION_CODE_0,
+vbase.ETO_LOGIN_DISABLED,
+vbase.ETO_LOGIN_DISABLED_BY,
+vbase.ETO_UPDATED,
+vbase.ETO_UPDATED_BY,
+vbase.CMS_UPDATED,
+vbase.CMS_UPDATED_BY,
+vbase.GEN_COMMENTS_0,
+vbase.NURSE_PROFESSIONAL_1_OTHER_FTE,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.NURSE_PROFESSIONAL_1_TOTAL_FTE,
+vbase.NURSE_STATUS_0_CHANGE_TRANSFER,
+vbase.Master_SurveyID,
+vbase.NURSE_STATUS_TERM_REASON,
+vbase.NURSE_PRIMARY_ROLE,
+vbase.NURSE_SECONDARY_ROLE,
+vbase.NURSE_STATUS_TERM_REASON_OTHER,
+vbase.NURSE_PRIMARY_ROLE_FTE,
+vbase.NURSE_SECONDARY_ROLE_FTE,
+vbase.NURSE_TEAM_START_DATE,
+vbase.NURSE_TEAM_NAME,
+
+from survey_views.f_select_ Staff_Update (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Star  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.Master_SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.CLIENT_GLOBAL_FACTORS,
+vbase.CLIENT_CAREGIVING_FRIENDS_FAM,
+vbase.CLIENT_CAREGIVING_RISK_LEVEL,
+vbase.CLIENT_CAREGIVING_SERVICES_GOALS,
+vbase.CLIENT_CAREGIVING_STAGE_CHANGE,
+vbase.CLIENT_CAREGIVING_UNDERSTANDS_RISK,
+vbase.CLIENT_CHLD_CARE_FRIENDS_FAM,
+vbase.CLIENT_CHLD_CARE_RISK_LEVEL,
+vbase.CLIENT_CHLD_CARE_SERVICES_GOALS,
+vbase.CLIENT_CHLD_CARE_STAGE_CHANGE,
+vbase.CLIENT_CHLD_CARE_UNDERSTANDS_RISK,
+vbase.CLIENT_CHLD_HEALTH_FRIENDS_FAM,
+vbase.CLIENT_CHLD_HEALTH_RISK_LEVEL,
+vbase.CLIENT_CHLD_HEALTH_SERVICES_GOALS,
+vbase.CLIENT_CHLD_HEALTH_STAGE_CHANGE,
+vbase.CLIENT_CHLD_HEALTH_UNDERSTANDS_RISK,
+vbase.CLIENT_CHLD_WELL_FRIENDS_FAM,
+vbase.CLIENT_CHLD_WELL_RISK_LEVEL,
+vbase.CLIENT_CHLD_WELL_SERVICES_GOALS,
+vbase.CLIENT_CHLD_WELL_STAGE_CHANGE,
+vbase.CLIENT_CHLD_WELL_UNDERSTANDS_RISK,
+vbase.CLIENT_COMM_SVCS_FRIENDS_FAM,
+vbase.CLIENT_COMM_SVCS_RISK_LEVEL,
+vbase.CLIENT_COMM_SVCS_SERVICES_GOALS,
+vbase.CLIENT_COMM_SVCS_STAGE_CHANGE,
+vbase.CLIENT_COMM_SVCS_UNDERSTANDS_RISK,
+vbase.CLIENT_COMPLICATION_ILL_FRIENDS_FAM,
+vbase.CLIENT_COMPLICATION_ILL_RISK_LEVEL,
+vbase.CLIENT_COMPLICATION_ILL_SERVICES_GOALS,
+vbase.CLIENT_COMPLICATION_ILL_STAGE_CHANGE,
+vbase.CLIENT_COMPLICATION_ILL_UNDERSTANDS_RISK,
+vbase.CLIENT_CRIMINAL_FRIENDS_FAM,
+vbase.CLIENT_CRIMINAL_RISK_LEVEL,
+vbase.CLIENT_CRIMINAL_SERVICES_GOALS,
+vbase.CLIENT_CRIMINAL_STAGE_CHANGE,
+vbase.CLIENT_CRIMINAL_UNDERSTANDS_RISK,
+vbase.CLIENT_DISABILITY_FRIENDS_FAM,
+vbase.CLIENT_DISABILITY_RISK_LEVEL,
+vbase.CLIENT_DISABILITY_SERVICES_GOALS,
+vbase.CLIENT_DISABILITY_STAGE_CHANGE,
+vbase.CLIENT_DISABILITY_UNDERSTANDS_RISK,
+vbase.CLIENT_ECONOMIC_FRIENDS_FAM,
+vbase.CLIENT_ECONOMIC_RISK_LEVEL,
+vbase.CLIENT_ECONOMIC_SERVICES_GOALS,
+vbase.CLIENT_ECONOMIC_STAGE_CHANGE,
+vbase.CLIENT_ECONOMIC_UNDERSTANDS_RISK,
+vbase.CLIENT_EDUC_FRIENDS_FAM,
+vbase.CLIENT_EDUC_RISK_LEVEL,
+vbase.CLIENT_EDUC_SERVICES_GOALS,
+vbase.CLIENT_EDUC_STAGE_CHANGE,
+vbase.CLIENT_EDUC_UNDERSTANDS_RISK,
+vbase.CLIENT_ENGLIT_FRIENDS_FAM,
+vbase.CLIENT_ENGLIT_RISK_LEVEL,
+vbase.CLIENT_ENGLIT_SERVICES_GOALS,
+vbase.CLIENT_ENGLIT_STAGE_CHANGE,
+vbase.CLIENT_ENGLIT_UNDERSTANDS_RISK,
+vbase.CLIENT_ENVIRO_HEALTH_FRIENDS_FAM,
+vbase.CLIENT_ENVIRO_HEALTH_RISK_LEVEL,
+vbase.CLIENT_ENVIRO_HEALTH_SERVICES_GOALS,
+vbase.CLIENT_ENVIRO_HEALTH_STAGE_CHANGE,
+vbase.CLIENT_ENVIRO_HEALTH_UNDERSTANDS_RISK,
+vbase.CLIENT_HLTH_SVCS_FRIENDS_FAM,
+vbase.CLIENT_HLTH_SVCS_RISK_LEVEL,
+vbase.CLIENT_HLTH_SVCS_SERVICES_GOALS,
+vbase.CLIENT_HLTH_SVCS_STAGE_CHANGE,
+vbase.CLIENT_HLTH_SVCS_UNDERSTANDS_RISK,
+vbase.CLIENT_HOME_SAFETY_FRIENDS_FAM,
+vbase.CLIENT_HOME_SAFETY_RISK_LEVEL,
+vbase.CLIENT_HOME_SAFETY_SERVICES_GOALS,
+vbase.CLIENT_HOME_SAFETY_STAGE_CHANGE,
+vbase.CLIENT_HOME_SAFETY_UNDERSTANDS_RISK,
+vbase.CLIENT_HOMELESS_FRIENDS_FAM,
+vbase.CLIENT_HOMELESS_RISK_LEVEL,
+vbase.CLIENT_HOMELESS_SERVICES_GOALS,
+vbase.CLIENT_HOMELESS_STAGE_CHANGE,
+vbase.CLIENT_HOMELESS_UNDERSTANDS_RISK,
+vbase.CLIENT_IPV_FRIENDS_FAM,
+vbase.CLIENT_IPV_RISK_LEVEL,
+vbase.CLIENT_IPV_SERVICES_GOALS,
+vbase.CLIENT_IPV_STAGE_CHANGE,
+vbase.CLIENT_IPV_UNDERSTANDS_RISK,
+vbase.CLIENT_LONELY_FRIENDS_FAM,
+vbase.CLIENT_LONELY_RISK_LEVEL,
+vbase.CLIENT_LONELY_SERVICES_GOALS,
+vbase.CLIENT_LONELY_STAGE_CHANGE,
+vbase.CLIENT_LONELY_UNDERSTANDS_RISK,
+vbase.CLIENT_MENTAL_HEALTH_FRIENDS_FAM,
+vbase.CLIENT_MENTAL_HEALTH_RISK_LEVEL,
+vbase.CLIENT_MENTAL_HEALTH_SERVICES_GOALS,
+vbase.CLIENT_MENTAL_HEALTH_STAGE_CHANGE,
+vbase.CLIENT_MENTAL_HEALTH_UNDERSTANDS_RISK,
+vbase.CLIENT_PREGPLAN_FRIENDS_FAM,
+vbase.CLIENT_PREGPLAN_RISK_LEVEL,
+vbase.CLIENT_PREGPLAN_SERVICES_GOALS,
+vbase.CLIENT_PREGPLAN_STAGE_CHANGE,
+vbase.CLIENT_PREGPLAN_UNDERSTANDS_RISK,
+vbase.CLIENT_SUBSTANCE_FRIENDS_FAM,
+vbase.CLIENT_SUBSTANCE_RISK_LEVEL,
+vbase.CLIENT_SUBSTANCE_SERVICES_GOALS,
+vbase.CLIENT_SUBSTANCE_STAGE_CHANGE,
+vbase.CLIENT_SUBSTANCE_UNDERSTANDS_RISK,
+vbase.CLIENT_UNSAFE_NTWK_FRIENDS_FAM,
+vbase.CLIENT_UNSAFE_NTWK_RISK_LEVEL,
+vbase.CLIENT_UNSAFE_NTWK_SERVICES_GOALS,
+vbase.CLIENT_UNSAFE_NTWK_STAGE_CHANGE,
+vbase.CLIENT_UNSAFE_NTWK_UNDERSTANDS_RISK,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.NURSE_PERSONAL_0_NAME,
+
+from survey_views.f_select_ Star (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ SurveyIDs  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SiteID,
+vbase.SurveyID,
+vbase.SurveyName,
+
+from survey_views.f_select_ SurveyIDs (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Telehealth  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.Master_SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.CLIENT_TELEHEALTH_REASON,
+vbase.CLIENT_TELEHEALTH_TYPE,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.CLIENT_TELEHEALTH_REASON_OTHER,
+vbase.CLIENT_TELEHEALTH_TYPE_OTHER,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.LastModified,
+
+from survey_views.f_select_ Telehealth (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Transfers  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. TransferID,
+vbase.Datasource,
+vbase.CLReferralID,
+vbase.CLID,
+vbase.ProgramID_From,
+vbase.ReferredTo,
+vbase.EntityID,
+vbase.TargetSiteID,
+vbase.TargetProgramID,
+vbase.ReferralDate,
+vbase.DateReferralClosed,
+vbase.ReasonForDismissal,
+vbase.ReasonForReferral,
+vbase.CLReferralHxID,
+vbase.ReferralStatus,
+vbase.Notes,
+vbase.TimeSpentonReferral,
+vbase.AuditStaffID,
+vbase.AuditDate,
+vbase.DW_TableName,
+vbase.DW_AuditDate,
+vbase.Datasource_ID,
+
+from survey_views.f_select_ Transfers (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ Tribal  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.DW_AuditDate,
+vbase.CLIENT_TRIBAL_0_PARITY,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.DataSource,
+vbase.CLIENT_TRIBAL_CHILD_1_LIVING,
+vbase.CLIENT_TRIBAL_CHILD_10_LIVING,
+vbase.CLIENT_TRIBAL_CHILD_2_LIVING,
+vbase.CLIENT_TRIBAL_CHILD_3_LIVING,
+vbase.CLIENT_TRIBAL_CHILD_4_LIVING,
+vbase.CLIENT_TRIBAL_CHILD_5_LIVING,
+vbase.CLIENT_TRIBAL_CHILD_6_LIVING,
+vbase.CLIENT_TRIBAL_CHILD_7_LIVING,
+vbase.CLIENT_TRIBAL_CHILD_8_LIVING,
+vbase.CLIENT_TRIBAL_CHILD_9_LIVING,
+vbase.CLIENT_TRIBAL_CHILD_1_DOB,
+vbase.CLIENT_TRIBAL_CHILD_10_DOB,
+vbase.CLIENT_TRIBAL_CHILD_2_DOB,
+vbase.CLIENT_TRIBAL_CHILD_3_DOB,
+vbase.CLIENT_TRIBAL_CHILD_4_DOB,
+vbase.CLIENT_TRIBAL_CHILD_5_DOB,
+vbase.CLIENT_TRIBAL_CHILD_6_DOB,
+vbase.CLIENT_TRIBAL_CHILD_7_DOB,
+vbase.CLIENT_TRIBAL_CHILD_8_DOB,
+vbase.CLIENT_TRIBAL_CHILD_9_DOB,
+vbase.Master_SurveyID,
+
+from survey_views.f_select_ Tribal (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ TX_SupMiechv12mo  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.Master_SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.MIECHV_READ_12MO_PP_1,
+vbase.MIECHV_READ_12MO_PP_2,
+vbase.MIECHV_READ_12MO_PP_3,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.MIECHV_READ_IID_12MO_PP_1,
+vbase.MIECHV_READ_IID_12MO_PP_2,
+vbase.MIECHV_READ_IID_12MO_PP_3,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.MIECHV_PFS_CHILD_DEV_12_12MO_PP,
+vbase.MIECHV_PFS_CHILD_DEV_13_12MO_PP,
+vbase.MIECHV_PFS_CHILD_DEV_14_12MO_PP,
+vbase.MIECHV_PFS_CHILD_DEV_15_12MO_PP,
+vbase.MIECHV_PFS_CHILD_DEV_16_12MO_PP,
+vbase.MIECHV_PFS_CONCRETE_12MO_PP,
+vbase.MIECHV_PFS_FAMILY_12MO_PP,
+vbase.MIECHV_PFS_NURTURE_12MO_PP,
+vbase.MIECHV_PFS_SOCIAL_12MO_PP,
+vbase.MIECHV_SUPPORTED_BY_INCOME_12MO_PP,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.TX_FUNDING_SOURCE_12MO_PP,
+
+from survey_views.f_select_ TX_SupMiechv12mo (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ TX_SupMiechv2mo  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.Master_SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.MIECHV_READ_12MO_PP_1,
+vbase.MIECHV_READ_12MO_PP_2,
+vbase.MIECHV_READ_12MO_PP_3,
+vbase.MIECHV_READ_2MO_PP_1,
+vbase.MIECHV_READ_2MO_PP_2,
+vbase.MIECHV_READ_2MO_PP_3,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.MIECHV_READ_IID_12MO_PP_1,
+vbase.MIECHV_READ_IID_12MO_PP_2,
+vbase.MIECHV_READ_IID_12MO_PP_3,
+vbase.MIECHV_READ_IID_2MO_PP_1,
+vbase.MIECHV_READ_IID_2MO_PP_2,
+vbase.MIECHV_READ_IID_2MO_PP_3,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.MIECHV_PFS_CHILD_DEV_12_12MO_PP,
+vbase.MIECHV_PFS_CHILD_DEV_12_2MO_PP,
+vbase.MIECHV_PFS_CHILD_DEV_13_12MO_PP,
+vbase.MIECHV_PFS_CHILD_DEV_13_2MO_PP,
+vbase.MIECHV_PFS_CHILD_DEV_14_12MO_PP,
+vbase.MIECHV_PFS_CHILD_DEV_14_2MO_PP,
+vbase.MIECHV_PFS_CHILD_DEV_15_12MO_PP,
+vbase.MIECHV_PFS_CHILD_DEV_15_2MO_PP,
+vbase.MIECHV_PFS_CHILD_DEV_16_12MO_PP,
+vbase.MIECHV_PFS_CHILD_DEV_16_2MO_PP,
+vbase.MIECHV_PFS_CONCRETE_12MO_PP,
+vbase.MIECHV_PFS_FAMILY_12MO_PP,
+vbase.MIECHV_PFS_NURTURE_12MO_PP,
+vbase.MIECHV_PFS_NURTURE_2MO_PP,
+vbase.MIECHV_PFS_SOCIAL_12MO_PP,
+vbase.MIECHV_SUPPORTED_BY_INCOME_12MO_PP,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.TX_FUNDING_SOURCE_2MO_PP,
+vbase.Archive_Record,
+
+from survey_views.f_select_ TX_SupMiechv2mo (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ TX_SupMiechv3rdTri  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.Master_SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.MIECHV_BIRTH_SPACING_THIRD_TRI,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.TX_FUNDING_SOURCE_THIRD_TRI,
+
+from survey_views.f_select_ TX_SupMiechv3rdTri (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ TX_SupMiechv6mo  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.Master_SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.MIECHV_BIRTH_SPACING_SIX_MO_PP,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.TX_FUNDING_SOURCE_6MO_PP,
+
+from survey_views.f_select_ TX_SupMiechv6mo (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ TX_SupMiechvIntake  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.Master_SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.MIECHV_INTAKE_COMM_REF,
+vbase.CLIENT_0_ID_NSO,
+vbase.CLIENT_PERSONAL_0_NAME_FIRST,
+vbase.CLIENT_PERSONAL_0_NAME_LAST,
+vbase.CLIENT_0_ID_AGENCY,
+vbase.MIECHV_PFS_CONCRETE_INTAKE,
+vbase.MIECHV_PFS_FAMILY_INTAKE,
+vbase.MIECHV_PFS_SOCIAL_INTAKE,
+vbase.MIECHV_SUPPORTED_BY_INCOME_INTAKE,
+vbase.CLIENT_PERSONAL_0_DOB_INTAKE,
+vbase.NURSE_PERSONAL_0_NAME,
+vbase.TX_FUNDING_SOURCE_INTAKE,
+
+from survey_views.f_select_ TX_SupMiechvIntake (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ WA_MIECHV  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_id);
+
+--print  @p_export_profile_id;
+--print  @_hash_profile;
+
+
+select 
+
+vbase. SurveyResponseID,
+vbase.ElementsProcessed,
+vbase.SurveyID,
+vbase.Master_SurveyID,
+vbase.SurveyDate,
+vbase.AuditDate,
+vbase.CL_EN_GEN_ID,
+vbase.SiteID,
+vbase.ProgramID,
+vbase.IA_StaffID,
+vbase.ClientID,
+vbase.RespondentID,
+vbase.DW_AuditDate,
+vbase.DataSource,
+vbase.CLIENT_O_ID_NSO,
+vbase.CLIENT_PERSONAL_O_NAME_FIRST,
+vbase.CLIENT_PERSONAL_O_NAME_LAST,
+vbase.WA_HVEF_SUPPLEMENT_DELAYED_PREG,
+vbase.WA_HVEF_SUPPLEMENT_IPV,
+vbase.CLIENT_PERSONAL_O_DOB_INTAKE,
+vbase.NURSE_PERSONAL_0_NAME,
+
+from survey_views.f_select_ WA_MIECHV (@_hash_profile,@p_export_profile_id) vbase
+where
+vbase.CL_EN_GEN_ID in (select * from survey_views.f_list_client_inclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+and
+vbase.CL_EN_GEN_ID not in (select * from survey_views.f_list_client_exclusions(vbase.ProgramID, vbase.SiteID,vbase.CL_EN_GEN_ID,@p_entity_filter))
+
+ 
+end;
+
+
+
+create procedure [survey_views].usp_etl_select_ WeeklySupervision  
+(
+ @p_export_profile_id int,
+  @p_entity_filter char(5)=null
+)
+as
+begin
+
+declare  @_hash_profile   char(10);
+set   @_hash_profile   = (select top 1 isnull('SA',hash_policy) from survey_views.f_get_survey_etl_work() where ExportProfileID=@p_export_profile_

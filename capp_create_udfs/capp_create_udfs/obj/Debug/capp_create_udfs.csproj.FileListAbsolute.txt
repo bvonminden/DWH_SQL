@@ -1,0 +1,9 @@
+C:\Users\bvonminden\source\repos\capp_create_udfs\capp_create_udfs\bin\Debug\udf_template.txt
+C:\Users\bvonminden\source\repos\capp_create_udfs\capp_create_udfs\bin\Debug\capp_create_udfs.exe.config
+C:\Users\bvonminden\source\repos\capp_create_udfs\capp_create_udfs\bin\Debug\capp_create_udfs.exe
+C:\Users\bvonminden\source\repos\capp_create_udfs\capp_create_udfs\bin\Debug\capp_create_udfs.pdb
+C:\Users\bvonminden\source\repos\capp_create_udfs\capp_create_udfs\obj\Debug\capp_create_udfs.csprojResolveAssemblyReference.cache
+C:\Users\bvonminden\source\repos\capp_create_udfs\capp_create_udfs\obj\Debug\capp_create_udfs.csproj.CoreCompileInputs.cache
+C:\Users\bvonminden\source\repos\capp_create_udfs\capp_create_udfs\obj\Debug\capp_create_udfs.exe
+C:\Users\bvonminden\source\repos\capp_create_udfs\capp_create_udfs\obj\Debug\capp_create_udfs.pdb
+C:\Users\bvonminden\source\repos\capp_create_udfs\capp_create_udfs\bin\Debug\pseudo_work.txt

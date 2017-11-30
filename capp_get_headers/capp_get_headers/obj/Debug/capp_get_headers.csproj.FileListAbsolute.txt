@@ -1,0 +1,6 @@
+C:\Users\bvonminden\source\repos\capp_get_headers\capp_get_headers\bin\Debug\capp_get_headers.exe.config
+C:\Users\bvonminden\source\repos\capp_get_headers\capp_get_headers\bin\Debug\capp_get_headers.exe
+C:\Users\bvonminden\source\repos\capp_get_headers\capp_get_headers\bin\Debug\capp_get_headers.pdb
+C:\Users\bvonminden\source\repos\capp_get_headers\capp_get_headers\obj\Debug\capp_get_headers.csproj.CoreCompileInputs.cache
+C:\Users\bvonminden\source\repos\capp_get_headers\capp_get_headers\obj\Debug\capp_get_headers.exe
+C:\Users\bvonminden\source\repos\capp_get_headers\capp_get_headers\obj\Debug\capp_get_headers.pdb
